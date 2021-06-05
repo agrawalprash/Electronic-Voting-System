@@ -1,28 +1,55 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <openssl/crypto.h>
+#include <openssl/bn.h>
+#include "constants.hpp"
 
 using namespace std;
 
 #include <math.h>
 #include "FiniteFieldElement.hpp"
 
+// BIGNUM * int
+// FiniteFieldElement<P> operator*(BIGNUM* lhs, int n)
+// {
+//     BIGNUM* tmp2 = BN_new();
+//     BN_set_word(tmp2, n); 
+
+//     BN_CTX *ctx = BN_CTX_new();
+//     BIGNUM* tmp = BN_new();
+//     BN_mul(tmp, lhs, tmp2, ctx);
+//     return FiniteFieldElement<P>( tmp );
+// }
+// // int * BIGNUM
+// FiniteFieldElement<P> operator*(int n, BIGNUM* rhs)
+// {
+//     BIGNUM* tmp2 = BN_new();
+//     BN_set_word(tmp2, n); 
+
+//     BN_CTX *ctx = BN_CTX_new();
+//     BIGNUM* tmp = BN_new();
+//     BN_mul(tmp, tmp2, rhs, ctx);
+//     return FiniteFieldElement<P>( tmp );
+// }
 
 namespace Crypto
 {
     /*
         Elliptic Curve over a finite field of order P:
+        
         y^2 mod P = x^3 + ax + b mod P
                 
         Template parameter P is the order of the finite field Fp over which this curve is defined
     */
-   template<int P>
+
+//    template<BIGNUM* P>
    class EllipticCurve
    {
         public:
             // this curve is defined over the finite field (Galois field) Fp, this is the 
             // typedef of elements in it
-            typedef FiniteFieldElement<P> ffe_t;
+            typedef FiniteFieldElement ffe_t;
 
         /*
             A point, or group element, on the EC, consisting of two elements of the field FP
@@ -31,7 +58,7 @@ namespace Crypto
         */
         class Point
         {
-            friend class EllipticCurve<P>;
+            friend class EllipticCurve;
             ffe_t  x_;
             ffe_t  y_;
             EllipticCurve *ec_;
@@ -52,23 +79,26 @@ namespace Crypto
             // multiplies a by k by expanding in multiplies by 2
             // a is also an accumulator that stores the intermediate results
             // between the "1s" of the binary form of the input scalar k
-            Point scalarMultiply(int k, const Point& a)
+            Point scalarMultiply(BIGNUM* k, const Point& a)
             {
                 Point acc = a;
                 Point res = Point(0,0,*ec_);
                 int i = 0, j = 0;
-                int b = k;
+                string b = BN_bn2dec(k);
+                int n = b.size();
                 
-                while( b )
+                while( n > 0 )
                 {
-                    if ( b & 1 )
+                    if ( b[n-1] == '1' )
                     {
                         // bit is set; acc = 2^(i-j)*acc
                         addDouble(i-j,acc);
                         res += acc;           
                         j = i;  // last bit set
                     }
-                    b >>= 1;
+                    n--;
+                    if(n == 0)break;
+                    b = b.substr(0, n);
                     ++i;
                 }
                 return res;
@@ -93,7 +123,9 @@ namespace Crypto
                 // Symmetric
                 if ( y1 == -y2 ) 
                 {
-                    xR = yR = 0;
+                    
+                    xR = 0;
+                    yR = 0; // Vertical Line
                     return;
                 }
 
@@ -102,7 +134,8 @@ namespace Crypto
                 {
                     //2P
                     // Desired expression can be obtained by solving for tangent on x1
-                    s = (3*(x1.i()*x1.i()) + ec_->a()) / (2*y1);
+                    // s = (3*(x1.i()*x1.i()) + ec_->a()) / (2*y1);
+                    s = (3*(x1*x1) + ec_->a()) / (2*y1);
                     xR = ((s*s) - 2*x1);                            
                 }
                 else
@@ -110,12 +143,17 @@ namespace Crypto
                     //P+Q
                     s = (y1 - y2) / (x1 - x2);
                     xR = ((s*s) - x1 - x2);
+
+                    
                 }
 
                 if ( s != 0 )
                 {
-                    yR = (-y1 + s*(x1 - xR));
+                    yR = (-y1 + s*(x1 - xR));  // We have to use this formula for yR calculation
+                                               // Reference -> https://asecuritysite.com/encryption/ecc_points_add3
+                                               // We have to find the 3rd point and then take its negative i.e. Reflection aroundn X-axis
                     // yR = (y1 - s*(x1 - xR)); // Using  (y-y1) = m*(x-x1)
+
                 }
                 else
                 {
@@ -124,13 +162,22 @@ namespace Crypto
                 }
             }
 
-            Point(int x, int y) : x_(x),y_(y),ec_(0)
+            Point(BIGNUM* x, BIGNUM* y) : x_(x),y_(y)/*,ec_(BN_ZERO, BN_ZERO)*/
             {}
 
-            Point(int x, int y, EllipticCurve<P> & EllipticCurve) : x_(x), y_(y),ec_(&EllipticCurve)
+            Point(int x, int y) : x_(x), y_(y)
             {}
 
-            Point(const ffe_t& x, const ffe_t& y, EllipticCurve<P> & EllipticCurve): x_(x),y_(y),ec_(&EllipticCurve)
+            Point(BIGNUM* x, BIGNUM* y, EllipticCurve & EllipticCurve) : x_(x), y_(y),ec_(&EllipticCurve)
+            {}
+
+            Point(int x, int y, EllipticCurve & EllipticCurve) : x_(x), y_(y),ec_(&EllipticCurve)
+            {}
+
+            Point(const ffe_t& x, const ffe_t& y, EllipticCurve & EllipticCurve): x_(x),y_(y),ec_(&EllipticCurve)
+            {}
+
+            Point(const ffe_t& x, const ffe_t& y): x_(x),y_(y)
             {}
 
             public:                    
@@ -159,7 +206,7 @@ namespace Crypto
                 // calculate the order of this point by brute-force additions
                 // WARNING: this can be VERY slow if the period is long and might not even converge 
                 // so maxPeriod should probably be set to something sensible...
-                unsigned int     Order(unsigned int maxPeriod = 1000) const
+                unsigned int     PointOrder(unsigned int maxPeriod = 1000) const
                 {
                     Point r = *this;
                     unsigned int n = 0;
@@ -195,8 +242,8 @@ namespace Crypto
                     lhs.add(lhs.x_,lhs.y_,rhs.x_,rhs.y_,xR,yR);
                     return Point(xR,yR,*lhs.ec_);    
                 }
-                // a * int
-                friend  Point operator*(int k, const Point& rhs)
+                // BIGNUM * a
+                friend  Point operator*(BIGNUM* k, const Point& rhs)
                 {
                     return Point(rhs).operator*=(k);
                 }
@@ -206,8 +253,8 @@ namespace Crypto
                     add(x_,y_,rhs.x_,rhs.y_,x_,y_);
                     return *this;  
                 }
-                // a *= int
-                Point& operator*=(int k)
+                // a *= BIGNUM
+                Point& operator*=(BIGNUM* k)
                 {
                     return (*this = scalarMultiply(k,*this));
                 }                    
@@ -220,29 +267,48 @@ namespace Crypto
         
         // ==================================================== EllipticCurve impl
                 
-        typedef EllipticCurve<P> this_t;
-        typedef class EllipticCurve<P>::Point point_t;
+        typedef EllipticCurve this_t;
+        typedef class EllipticCurve::Point point_t;
         
         // Initialize EC as y^2 = x^3 + ax + b
         EllipticCurve(int a, int b): a_(a),b_(b),m_table_(),table_filled_(false)
+        {}
+
+        EllipticCurve(BIGNUM* a, BIGNUM* b): a_(a),b_(b),m_table_(),table_filled_(false)
+        {}
+
+        EllipticCurve(int a, BIGNUM* b): a_(a),b_(b),m_table_(),table_filled_(false)
+        {}
+
+        EllipticCurve(BIGNUM* a, int b): a_(a),b_(b),m_table_(),table_filled_(false)
         {}
 
         // Calculate *all* the points (group elements) for this EC
         //NOTE: if the order of this curve is large this could take some time...
         void    CalculatePoints()
         {
-            int x_val[P];
-            int y_val[P];
-            for ( int n = 0; n < P; ++n )
+            // ONLY FOR TESTING WITH SMALL INTEGERS
+            int P_temp = stoi(BN_bn2dec(PRIME));
+            int Px, Py;
+            int x_val[P_temp];
+            int y_val[P_temp];
+
+            BIGNUM* tmp = BN_new();
+            BN_CTX* ctx = BN_CTX_new();
+
+            for ( int n = 0; n < P_temp; ++n )
             {
-                int nsq = n*n;
-                x_val[n] = ((n*nsq) + a_.i() * n + b_.i()) % P;
-                y_val[n] = nsq % P;                        
+                int nsq = n*n;                
+                BN_set_word(tmp, nsq);
+                BN_mod(tmp, tmp, PRIME, ctx);
+                auto elem = ((n*nsq) + a_ * n + b_) % PRIME;
+                x_val[n] = stoi(BN_bn2dec( elem.i() ));
+                y_val[n] = stoi(BN_bn2dec( tmp ));
             }
             
-            for ( int n = 0; n < P; ++n )
+            for ( int n = 0; n < P_temp; ++n )
             {
-                for ( int m = 0; m < P; ++m )
+                for ( int m = 0; m < P_temp; ++m )
                 {
                     if ( x_val[n] == y_val[m] )
                     {
@@ -268,24 +334,24 @@ namespace Crypto
         // number of elements in this group
         size_t  Size() const 
         {
-            if( !table_filled_ )
-            {
-                CalculatePoints();
-            } 
+            // if( !table_filled_ )
+            // {
+            //     CalculatePoints<P>();
+            // } 
             return m_table_.size(); 
         }
 
         // the degree P of this EC
-        int     Degree() const { return P; }
+        BIGNUM*     Degree() const { return PRIME; }
 
         // the parameter a (as an element of Fp)
-        FiniteFieldElement<P>  a() const { return a_; }
+        FiniteFieldElement  a() const { return a_; }
         // the paramter b (as an element of Fp)
-        FiniteFieldElement<P>  b() const { return b_; }
+        FiniteFieldElement  b() const { return b_; }
 
         // ostream handler: print this curve in human readable form
-        template<int T>
-        friend ostream& operator <<(ostream& os, const EllipticCurve<T>& EllipticCurve);                       
+        // template<BIGNUM* T>
+        friend ostream& operator <<(ostream& os, const EllipticCurve& EllipticCurve);
         // print all the elements of the EC group
         ostream&    PrintTable(ostream &os, int columns=4);
 
@@ -293,39 +359,39 @@ namespace Crypto
             typedef std::vector<Point>  m_table_t;
             
             m_table_t                   m_table_;   // table of points
-            FiniteFieldElement<P>       a_;         // paramter a of the EC equation
-            FiniteFieldElement<P>       b_;         // parameter b of the EC equation
+            FiniteFieldElement       a_;         // paramter a of the EC equation
+            FiniteFieldElement       b_;         // parameter b of the EC equation
             bool    table_filled_;                  // true if the table has been calculated
    };
 
-    template<int T>
-        typename EllipticCurve<T>::Point EllipticCurve<T>::Point::ONE(0,0); // Identity
+    // template<BIGNUM* T>
+        // typename EllipticCurve::Point EllipticCurve::Point::ONE(0,0); // Identity
     
-    template<int T>
-    ostream& operator <<(ostream& os, const EllipticCurve<T>& EllipticCurve)
+    // template<BIGNUM* T>
+    ostream& operator <<(ostream& os, const EllipticCurve& EllipticCurve)
     {
-        os << "y^2 mod " << T << " = (x^3" << showpos;
+        os << "y^2 (mod " << PRIME << ") = (x^3";
         if ( EllipticCurve.a_ != 0 )
         {
-            os << EllipticCurve.a_ << "x";                
+            os << " + " << EllipticCurve.a_ << "x";
         }
         
         if ( EllipticCurve.b_.i() != 0 )
         {
-            os << EllipticCurve.b_; 
+            os << " + " << EllipticCurve.b_; 
         }
         
-        os << noshowpos << ") mod " << T;
+        os << noshowpos << ") mod ( " << PRIME << ")";
         return os;
     }
 
-    template<int P>
-        ostream&    EllipticCurve<P>::PrintTable(ostream &os, int columns)
+    // template<BIGNUM* P>
+        ostream&    EllipticCurve::PrintTable(ostream &os, int columns)
         {
             if ( table_filled_ )
             {
                 int col = 0;
-                typename EllipticCurve<P>::m_table_t::iterator iter = m_table_.begin();
+                typename EllipticCurve::m_table_t::iterator iter = m_table_.begin();
                 for ( ; iter!=m_table_.end(); ++iter )
                 {
                     os << "(" << (*iter).x_.i() << ", " << (*iter).y_.i() << ") ";
@@ -338,13 +404,11 @@ namespace Crypto
             }
             else
             {
-                os << "EllipticCurve, F_" << P;
+                os << "EllipticCurve, F_" << PRIME;
             }
             return os;
         }
 }
-
-
 
 namespace   utils
 {    
@@ -365,37 +429,101 @@ using namespace utils;
 
 int main(int argc, char *argv[])
 {
-    typedef EllipticCurve<997> ec_t;
-    ec_t EC(1,1);
+    function();
 
-    // print out a little info and test some properties
+    typedef EllipticCurve ec_t;
+    ec_t EC(1,1); // For generating the Polynomial
+
     cout << "The elliptic curve: " << EC << "\n";
 
     // calulate all the points for this curve. NOTE: in the real world this would not 
     // be a very sensible thing to do. If the period is very large this is big and slow
     EC.CalculatePoints();
 
-    // cout << "\nPoints on the curve (i.e. the group elements):n";
+    // cout << "\nPoints on the curve (i.e. the group elements):\n";
     // EC.PrintTable(cout,5);
     // cout << "\n\n";
 
-    ec_t::Point P = EC[2];
-    cout << "some point P = " << P << ", 2P = " << (P+P) << "\n";    
+    ec_t::Point P = EC[2]; // Need to use Group generator and raising them to a number r, 1 <= r <= p-1
+    cout << "some point P = " << P << ", 2P = " << (P+P) << "\n"; 
+    cout << "4P = " << (P + P + P + P) << "\n"; 
 
     ec_t::Point Q = EC[3];
     cout << "some point Q = " << Q << ", P+Q = " << (P+Q) << "\n"; 
+    
 
     ec_t::Point R = P;
-    R += Q;
-    cout << "P += Q = " << R << "\n";
 
+    R += Q;
+
+    cout << "P += Q = P + Q = " << R << "\n";
     R = P;
     R += R;
     cout << "P += P = 2P = " << R << "\n";
 
+    
 
+    // // Encrytion using ECC
 
+    // ec_t::Point G = EC[0]; // Kind of Group Generator
+    // while( (G.y() == 0 || G.x() == 0) || (G.PointOrder()<2) )
+    // {
+    //     int n = (int)(frand()*EC.Size());
+    //     G = EC[n];
+    // }
+    
+    // cout << "G = " << G << ", order(G) is " << G.PointOrder() << "\n";
 
+    // // Alice
+    // int a = irand(1,EC.Degree()-1);
+    // ec_t::Point Pa = a*G;  // public key
+    // cout << "Alice' public key Pa = " << a << "*" << G << " = " << Pa << endl;    
 
-    return EXIT_SUCCESS;
+    // // Bob
+    // int b = irand(1,EC.Degree()-1);;
+    // ec_t::Point Pb = b*G;  // public key       
+    // cout << "Bob's  public key Pb = " << b << "*" << G << " = " << Pb << endl;    
+
+    // int j = irand(1,EC.Degree()-1);;
+    // ec_t::Point Pj = j*G;
+    // cout << "Jane's public key Pj = " << j << "*" << G << " = " << Pj << endl;    
+
+    // // Alice encrypts her message to send to Bob    
+    // // NOTE: the message first has to be split up into chunks that are in the Galois field F_p that is 
+    // // the domain of the EC
+    // // With P quite small (like in these examples) this is a serious limitation, but in the real world 
+    // // P could be very sizeable indeed, thus providing enough bits for good chunks
+    // int m1 = 19;
+    // int m2 = 72;
+
+    // cout << "\n\e[1mPlain text message from Alice to Bob\e: (" << m1 << ", " << m2 << ")\n";
+
+    // // encrypt using Bob`s key
+    // ec_t::Point Pk = a*Pb;
+    // ec_t::ffe_t c1( m1*Pk.x() );
+    // ec_t::ffe_t c2( m2*Pk.y() );
+    
+    // // cout << "Pk: (" << Pk.x() << ", " << Pk.y() << ")\n";
+    // // encrypted message is: Pa,c1,c2
+    // cout << "\nEncrypted message from Alice to Bob = {Pa,c1,c2} = {" << Pa << ", " << c1 << ", " << c2 << "}\n";
+
+    // Pk = b * Pa;
+
+    // // Bob now decrypts Alice`s message, using her public key and his session integer "b" which was also used to generate his public key
+    // Pk = b*Pa;
+    // ec_t::ffe_t m1d = c1/Pk.x();
+    // ec_t::ffe_t m2d = c2/Pk.y();
+
+    // cout << "\nBob's decrypted message from Alice = (" << m1d << ", " << m2d << ")" << endl;
+
+    // // Jane intercepts the message and tries to decrypt it using her key
+    // Pk = j*Pa;
+    // m1d = c1/Pk.x();
+    // m2d = c2/Pk.y();
+
+    // cout << "\nJane's decrypted message from Alice = (" << m1d << ", " << m2d << ")" << endl;
+    
+    // cout << endl;
+
+    // return EXIT_SUCCESS;
 }
