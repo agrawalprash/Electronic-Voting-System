@@ -1,5 +1,5 @@
 GCC = g++
-TARGET = main_bn
+TARGET = main
 FLAGS = -g3 -ggdb -O0  -Wno-unused
 WARNING = -Wall -Wextra
 
