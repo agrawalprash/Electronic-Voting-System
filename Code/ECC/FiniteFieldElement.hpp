@@ -21,6 +21,20 @@ namespace Crypto
     namespace helper
     {
         // Constants::constants();
+        string  bn_to_bin(BIGNUM* a)
+        {
+            a = BN_dup(a);
+            string b = "";
+            BIGNUM* rem = BN_new();
+            BN_CTX *ctx = BN_CTX_new();
+            while( BN_cmp(a, BN_ZERO) == 1)
+            {
+                BN_div(a, rem, a, BN_TWO, ctx);
+                if(BN_cmp(rem, BN_ZERO) == 0)b = "0" + b;
+                else b = "1" + b;
+            }
+            return b;
+        }
 
         BIGNUM* ExtendedGCD(BIGNUM* a, BIGNUM* b, BIGNUM* &x, BIGNUM* &y)
         {
@@ -68,9 +82,11 @@ namespace Crypto
             
             BIGNUM* g = ExtendedGCD(a, m, x, y);
 
+            // cout << a << " " << m << " " << x << " " << y << endl;
+
             if( BN_cmp(g, BN_ONE) != 0) // Returns Zero if a == b
             {
-                std::cout << "ERROR: For MulInverse, numbers should be Coprime\n";
+                std::cerr << "ERROR: For MulInverse, numbers should be Coprime\n";
                 BN_set_word(x, -1);
                 return x;
             }
@@ -247,7 +263,12 @@ namespace Crypto
             {
                 BN_CTX *ctx = BN_CTX_new();
                 BIGNUM* tmp = BN_new();
+
+                // cout << lhs << " " << rhs << " " << PRIME << endl;
+                // cout << lhs.i_ << " " << rhs.i_ << " " << PRIME << endl;
+                // cout << rhs.i_ << "  " << PRIME << endl;
                 BN_mul(tmp, lhs.i_, helper::MultiplicativeInverse(rhs.i_,PRIME), ctx);
+                // cout << rhs.i_ << "  " << PRIME << endl;
                 return FiniteFieldElement(tmp);
                 // return FiniteFieldElement( lhs.i_ * helper::MultiplicativeInverse(rhs.i_,PRIME));
             }
