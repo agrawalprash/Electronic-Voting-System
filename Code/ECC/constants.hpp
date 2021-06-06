@@ -4,13 +4,15 @@
 #include <openssl/bn.h>
 #include <string>
 
+#define BN_TWO bignum_two
 #define BN_ONE bignum_one
 #define BN_ZERO bignum_zero
 #define BN_MINUS_ONE bignum_minus_one
 #define PRIME Prime
-#define PRIME_LENGTH 10
+#define PRIME_LENGTH 15
 #define SAFE true
 
+BIGNUM* bignum_two = NULL;
 BIGNUM *bignum_one = NULL;
 BIGNUM *bignum_zero = NULL;
 BIGNUM *bignum_minus_one = NULL;
@@ -52,6 +54,9 @@ void generate()
         return;
     }
 
+    // BN_set_word(Prime, 839);
+    // return;
+
     BN_generate_prime_ex(Prime, PRIME_LENGTH, SAFE, NULL, NULL, NULL);
     
 }
@@ -64,6 +69,8 @@ void function()
     BN_dec2bn(&bignum_zero, s.c_str());
     s = "1";
     BN_dec2bn(&bignum_one, s.c_str());
+    s = "2";
+    BN_dec2bn(&bignum_two, s.c_str());
     generate();    
 }
 
