@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <cstring>
 #include <openssl/crypto.h>
 #include <openssl/bn.h>
 #include "constants.hpp"
@@ -84,7 +85,7 @@ namespace Crypto
                 Point acc = a;
                 Point res = Point(0,0,*ec_);
                 int i = 0, j = 0;
-                string b = BN_bn2dec(k);
+                string b = Crypto::helper::bn_to_bin(k);
                 int n = b.size();
                 
                 while( n > 0 )
@@ -93,14 +94,21 @@ namespace Crypto
                     {
                         // bit is set; acc = 2^(i-j)*acc
                         addDouble(i-j,acc);
-                        res += acc;           
+                        // cout << "Res: " <<  res.x_ << "  " << res.y_ <<endl;
+                        // cout << "Acc: " <<  acc.x_ << "  " << acc.y_ <<endl;
+                        res += acc;
+                        // cout << "Res: " <<  res.x_ << "  " << res.y_ <<endl;
                         j = i;  // last bit set
                     }
                     n--;
                     if(n == 0)break;
                     b = b.substr(0, n);
                     ++i;
+                    // cout << "Res: " <<  res.x_ << "  " << res.y_ <<endl;
+                    // cout << "Acc: " <<  acc.x_ << "  " << acc.y_ <<endl;
                 }
+                // cout << "Res: " <<  res.x_ << "  " << res.y_ <<endl;
+                
                 return res;
             }
 
@@ -121,7 +129,7 @@ namespace Crypto
                     return;
                 }
                 // Symmetric
-                if ( y1 == -y2 ) 
+                if ( y1 == -y2 && x1 == x2)
                 {
                     
                     xR = 0;
@@ -193,15 +201,28 @@ namespace Crypto
                 // assignment
                 Point& operator=(const Point& rhs)
                 {
+                    // cout << rhs.x_ << " " << rhs.y_ << endl;
                     x_ = rhs.x_;
                     y_ = rhs.y_;
                     ec_ = rhs.ec_;
+                    // cout << x_ << " " << y_ << endl;
+                    // cout << this->x_ << " " << this->y_ << endl;
                     return *this;
                 }
                 // access x component as element of Fp
                 ffe_t x() const { return x_; }
                 // access y component as element of Fp
                 ffe_t y() const { return y_; }
+
+                void set_x(const int n)
+                {
+                    x_ = FiniteFieldElement(n);
+                }
+
+                void set_y(const int n)
+                {
+                    y_ = FiniteFieldElement(n);
+                }
             
                 // calculate the order of this point by brute-force additions
                 // WARNING: this can be VERY slow if the period is long and might not even converge 
@@ -247,6 +268,11 @@ namespace Crypto
                 {
                     return Point(rhs).operator*=(k);
                 }
+                // int * a
+                friend  Point operator*(int k, const Point& rhs)
+                {
+                    return Point(rhs).operator*=(k);
+                }
                 // +=
                 Point& operator+=(const Point& rhs)
                 {   
@@ -257,7 +283,15 @@ namespace Crypto
                 Point& operator*=(BIGNUM* k)
                 {
                     return (*this = scalarMultiply(k,*this));
-                }                    
+                }
+                // a *= int
+                Point& operator*=(int k)
+                {
+                    BIGNUM* tmp = BN_new();
+                    BN_dec2bn(&tmp, to_string(k).c_str());
+                    return (*this = scalarMultiply(tmp,*this));                    
+                }
+
                 // ostream handler: print this point
                 friend ostream& operator <<(ostream& os, const Point& p)
                 {
@@ -422,6 +456,11 @@ namespace   utils
     {
         return min+(int)(frand()*(float)(max-min));
     }
+    int irand(int min, BIGNUM* max)
+    {
+        int max_ = stoi(BN_bn2dec(max)) - 1;
+        return min+(int)(frand()*(float)(max_-min));
+    }
 }
 
 using namespace Crypto;
@@ -434,7 +473,7 @@ int main(int argc, char *argv[])
     typedef EllipticCurve ec_t;
     ec_t EC(1,1); // For generating the Polynomial
 
-    cout << "The elliptic curve: " << EC << "\n";
+    cout << "\nThe elliptic curve: " << EC << "\n\n";
 
     // calulate all the points for this curve. NOTE: in the real world this would not 
     // be a very sensible thing to do. If the period is very large this is big and slow
@@ -445,11 +484,11 @@ int main(int argc, char *argv[])
     // cout << "\n\n";
 
     ec_t::Point P = EC[2]; // Need to use Group generator and raising them to a number r, 1 <= r <= p-1
-    cout << "some point P = " << P << ", 2P = " << (P+P) << "\n"; 
-    cout << "4P = " << (P + P + P + P) << "\n"; 
+    cout << "Some Point P = " << P << ", 2P = " << (P+P) << ", 4P = " << 4*P << "\n";
+    // cout << "4P = " << (P + P + P + P) << "\n"; 
 
     ec_t::Point Q = EC[3];
-    cout << "some point Q = " << Q << ", P+Q = " << (P+Q) << "\n"; 
+    cout << "Some Point Q = " << Q << ", P+Q = " << (P+Q) << "\n\n"; 
     
 
     ec_t::Point R = P;
@@ -463,67 +502,134 @@ int main(int argc, char *argv[])
 
     
 
-    // // Encrytion using ECC
+    // Encrytion using ECC
 
-    // ec_t::Point G = EC[0]; // Kind of Group Generator
-    // while( (G.y() == 0 || G.x() == 0) || (G.PointOrder()<2) )
-    // {
-    //     int n = (int)(frand()*EC.Size());
-    //     G = EC[n];
-    // }
+    cout << "\n\e[1mENCRYPTION\n\n";
+
+    ec_t::Point G = EC[0]; // Kind of Group Generator
+    // ec_t::Point G(224, 539);
+    while( (G.y() == 0 || G.x() == 0) || (G.PointOrder()<2) )
+    {
+        int n = (int)(frand()*EC.Size());
+        G = EC[n];
+    }
+    // G.set_x(224);
+    // G.set_y(539);
     
-    // cout << "G = " << G << ", order(G) is " << G.PointOrder() << "\n";
-
-    // // Alice
-    // int a = irand(1,EC.Degree()-1);
-    // ec_t::Point Pa = a*G;  // public key
-    // cout << "Alice' public key Pa = " << a << "*" << G << " = " << Pa << endl;    
-
-    // // Bob
-    // int b = irand(1,EC.Degree()-1);;
-    // ec_t::Point Pb = b*G;  // public key       
-    // cout << "Bob's  public key Pb = " << b << "*" << G << " = " << Pb << endl;    
-
-    // int j = irand(1,EC.Degree()-1);;
-    // ec_t::Point Pj = j*G;
-    // cout << "Jane's public key Pj = " << j << "*" << G << " = " << Pj << endl;    
-
-    // // Alice encrypts her message to send to Bob    
-    // // NOTE: the message first has to be split up into chunks that are in the Galois field F_p that is 
-    // // the domain of the EC
-    // // With P quite small (like in these examples) this is a serious limitation, but in the real world 
-    // // P could be very sizeable indeed, thus providing enough bits for good chunks
-    // int m1 = 19;
-    // int m2 = 72;
-
-    // cout << "\n\e[1mPlain text message from Alice to Bob\e: (" << m1 << ", " << m2 << ")\n";
-
-    // // encrypt using Bob`s key
-    // ec_t::Point Pk = a*Pb;
-    // ec_t::ffe_t c1( m1*Pk.x() );
-    // ec_t::ffe_t c2( m2*Pk.y() );
     
-    // // cout << "Pk: (" << Pk.x() << ", " << Pk.y() << ")\n";
-    // // encrypted message is: Pa,c1,c2
-    // cout << "\nEncrypted message from Alice to Bob = {Pa,c1,c2} = {" << Pa << ", " << c1 << ", " << c2 << "}\n";
+    cout << "G = " << G << ", order(G) is " << G.PointOrder() << "\n\n";
 
-    // Pk = b * Pa;
+    // Alice
+    int a = irand(1,EC.Degree());
+    // int a = 73;
+    ec_t::Point Pa = a*G;  // public key
+    cout << "Alice' public key Pa = " << a << "*" << G << " = " << Pa << endl;    
 
-    // // Bob now decrypts Alice`s message, using her public key and his session integer "b" which was also used to generate his public key
-    // Pk = b*Pa;
-    // ec_t::ffe_t m1d = c1/Pk.x();
-    // ec_t::ffe_t m2d = c2/Pk.y();
+    // Bob
+    int b = irand(1,EC.Degree());
+    // int b = 869;
+    ec_t::Point Pb = b*G;  // public key       
+    cout << "Bob's  public key Pb = " << b << "*" << G << " = " << Pb << endl;    
 
-    // cout << "\nBob's decrypted message from Alice = (" << m1d << ", " << m2d << ")" << endl;
+    int j = irand(1,EC.Degree());
+    // int j = 493;
+    ec_t::Point Pj = j*G;
+    cout << "Jane's public key Pj = " << j << "*" << G << " = " << Pj << endl;    
 
-    // // Jane intercepts the message and tries to decrypt it using her key
-    // Pk = j*Pa;
-    // m1d = c1/Pk.x();
-    // m2d = c2/Pk.y();
+    // Alice encrypts her message to send to Bob    
+    // NOTE: the message first has to be split up into chunks that are in the Galois field F_p that is 
+    // the domain of the EC
+    // With P quite small (like in these examples) this is a serious limitation, but in the real world 
+    // P could be very sizeable indeed, thus providing enough bits for good chunks
+    int m1 = 19;
+    int m2 = 72;
 
-    // cout << "\nJane's decrypted message from Alice = (" << m1d << ", " << m2d << ")" << endl;
+    cout << "\n\e[1mPlain text message from Alice to Bob\e: (" << m1 << ", " << m2 << ")\n";
+
+    // encrypt using Bob`s key
+    ec_t::Point Pk = a*Pb;
+    // cout << Pk.x() << " " << Pk.y() << endl;
+    ec_t::ffe_t c1( m1*Pk.x() );
+    ec_t::ffe_t c2( m2*Pk.y() );
+    // cout << Pk.x() << " " << Pk.y() << endl;
     
-    // cout << endl;
+    // cout << "Pk: (" << Pk.x() << ", " << Pk.y() << ")\n";
+    // encrypted message is: Pa,c1,c2
+    cout << "\nEncrypted message from Alice to Bob = {Pa,c1,c2} = {" << Pa << ", " << c1 << ", " << c2 << "}\n";
 
-    // return EXIT_SUCCESS;
+    // cout << Pk.x() << " " << Pk.y() << endl;
+    Pk = b * Pa;
+    // cout << Pk.x() << " " << Pk.y() << endl;
+    // cout << Pk.x().i() << " " << Pk.y().i() << endl;
+
+    // Bob now decrypts Alice`s message, using her public key and his session integer "b" which was also used to generate his public key
+    Pk = b*Pa;
+    // cout << Pk.x() << " " << Pk.y() << endl;
+    // cout << c1 << " " << c2 << endl;
+    ec_t::ffe_t m1d = c1/Pk.x();
+    ec_t::ffe_t m2d = c2/Pk.y();
+
+    cout << "\nBob's decrypted message from Alice = (" << m1d << ", " << m2d << ")" << endl;
+
+    // Jane intercepts the message and tries to decrypt it using her key
+    // cout << Pk.x() << " " << Pk.y() << endl;
+    Pk = j*Pa;
+    // cout << Pk.x() << " " << Pk.y() << endl;
+    m1d = c1/Pk.x();
+    m2d = c2/Pk.y();
+
+    cout << "\nJane's decrypted message from Alice = (" << m1d << ", " << m2d << ")\n\n";
+
+    return EXIT_SUCCESS;
 }
+
+// /*
+
+// g++ -g3 -ggdb -O0  -Wno-unused -o main_bn main_bn.cpp -lcryptopp -lcrypto
+// ./main_bn
+// The elliptic curve: y^2 (mod 887) = (x^3 + 1x + 1) mod ( 887)
+// some point P = (1, 186), 2P = (295, 612)
+// 4P = (112, 550)
+// some point Q = (1, 701), P+Q = (0, 0)
+// P += Q = P + Q = (0, 0)
+// P += P = 2P = (295, 612)
+// G = (224, 539), order(G) is 174
+// Alice' public key Pa = 73*(224, 539) = (36, 110)
+// Bob's  public key Pb = 869*(224, 539) = (782, 247)
+// Jane's public key Pj = 493*(224, 539) = (714, 749)
+
+// Plain text message from Alice to Bob (19, 72)
+
+// Encrypted message from Alice to Bob = {Pa,c1,c2} = {(36, 110), 881, 685}
+
+// Bob's decrypted message from Alice = (19, 72)
+// ERROR: For MulInverse, numbers should be Coprime
+// ERROR: For MulInverse, numbers should be Coprime
+
+// Jane's decrypted message from Alice = (336, 668)
+
+
+// /*
+
+
+
+// The elliptic curve: y^2 (mod 839) = (x^3 + 1x + 1) mod ( 839)
+// some point P = (1, 41), 2P = (279, 191)
+// 4P = (108, 436)
+// some point Q = (1, 798), P+Q = ERROR: For MulInverse, numbers should be Coprime
+// (120, 465)
+// ERROR: For MulInverse, numbers should be Coprime
+// P += Q = P + Q = (120, 465)
+// P += P = 2P = (279, 191)
+// G = (79, 48), order(G) is 107
+// Alice' public key Pa = 266*(79, 48) = (681, 268)
+// Bob's  public key Pb = 353*(79, 48) = (790, 465)
+// Jane's public key Pj = 245*(79, 48) = (799, 666)
+
+// Plain text message from Alice to Bob (19, 72)
+
+// Encrypted message from Alice to Bob = {Pa,c1,c2} = {(681, 268), 86, 555}
+
+// Bob's decrypted message from Alice = (19, 72)
+
+// Jane's decrypted message from Alice = (19, 72)
