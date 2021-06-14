@@ -8,7 +8,7 @@ RPATH=$(LIB_DIR)
 TARGET=main
 
 build:
-	gcc -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).c -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp
+	gcc -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp
 
 all:
 	echo $(HOME)
