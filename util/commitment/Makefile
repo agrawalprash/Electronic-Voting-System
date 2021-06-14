@@ -12,14 +12,9 @@ build:
 
 all:
 	echo $(HOME)
-	gcc -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).c -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp
-	./$(TARGET) < a.param
-
-all_cpp:
-	echo $(HOME)
 	g++ -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp
-	./$(TARGET) < a.param
+	./$(TARGET)
 
 
 clean:
-	rm -rf pbcb
+	rm -rf $(TARGET)
