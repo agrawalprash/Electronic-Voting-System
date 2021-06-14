@@ -8,6 +8,51 @@ using namespace std;
 pairing_t pairing;
 element_t g, h; // Generators of Gq
 
+void initialize_a();
+void initialize_a1();
+void commitment(element_t &Commitment, element_t Message);
+void commitment(element_t &Commitment, unsigned long long Message_);
+
+
+int main(int argc, char* argv[])
+{
+    clock_t begin, end;
+    int    Iterations = 1000;
+    double TotalTime = 0;
+    double PairingTime = 0;
+    unsigned long long Message = 100;
+
+    begin = clock();
+    
+    initialize_a();
+    
+    end = clock();
+    PairingTime = double(end - begin)/CLOCKS_PER_SEC;
+    // cout << "Time taken to generate the Pairing: " << (double)(end - begin)*1000/CLOCKS_PER_SEC << " ms\n";
+
+    begin = clock();
+    
+    for(int i=0;i < Iterations; i++)
+    {    
+        element_t c;
+        
+        commitment(c, Message);
+        
+        end = clock();
+        TotalTime+=(double)(end-begin);
+        cout << "Processed: " << i+1 << "\n";
+
+        element_clear(c);
+        // cout << "Time taken to generate the Commitment of Message \""<< Message << "\": " << (double)(end - begin)*1000/CLOCKS_PER_SEC << " ms\n";
+        // element_printf("%B\n", c);
+    }
+
+    cout << "Time taken to generate the Pairing: " << PairingTime*1000 << " ms\n";
+    cout << "Avg.( over "<< Iterations << " iterations ) Time taken to generate the Pederson Commitment of Message \""<< Message << "\": " << (double)(end - begin)*1000/(CLOCKS_PER_SEC*Iterations) << " ms\n";
+
+    return 0;
+}
+
 void initialize_a1()
 {
     mpz_t p, q, N;
@@ -94,43 +139,4 @@ void commitment(element_t &Commitment, unsigned long long Message_)
     element_pow2_zn(Commitment, g, Message, h, r);
     element_clear(r);
     return;
-}
-
-int main(int argc, char* argv[])
-{
-    clock_t begin, end;
-    int    Iterations = 1000;
-    double TotalTime = 0;
-    double PairingTime = 0;
-    unsigned long long Message = 100;
-
-    begin = clock();
-    
-    initialize_a();
-    
-    end = clock();
-    PairingTime = double(end - begin)/CLOCKS_PER_SEC;
-    // cout << "Time taken to generate the Pairing: " << (double)(end - begin)*1000/CLOCKS_PER_SEC << " ms\n";
-
-    begin = clock();
-    
-    for(int i=0;i < Iterations; i++)
-    {    
-        element_t c;
-        
-        commitment(c, Message);
-        
-        end = clock();
-        TotalTime+=(double)(end-begin);
-        cout << "Processed: " << i+1 << "\n";
-
-        element_clear(c);
-        // cout << "Time taken to generate the Commitment of Message \""<< Message << "\": " << (double)(end - begin)*1000/CLOCKS_PER_SEC << " ms\n";
-        // element_printf("%B\n", c);
-    }
-
-    cout << "Time taken to generate the Pairing: " << PairingTime*1000 << " ms\n";
-    cout << "Avg.( over "<< Iterations << " iterations ) Time taken to generate the Pederson Commitment of Message \""<< Message << "\": " << (double)(end - begin)*1000/(CLOCKS_PER_SEC*Iterations) << " ms\n";
-
-    return 0;
 }
