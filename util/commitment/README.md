@@ -6,5 +6,6 @@ Use `make all` to generate the executable file and to run the program.
 
 This program assumes that you have: <br/>
 a) followed gmp install instructions from https://gmplib.org/#DOWNLOAD <br/>
-b) followed pbc install instructions from https://crypto.stanford.edu/pbc/howto.html
+b) followed pbc install instructions from https://crypto.stanford.edu/pbc/howto.html <br/>
 
+GMP and PBC library can be installed using `make install` command
