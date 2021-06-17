@@ -2,25 +2,42 @@
 # a) followed gmp install instructions from https://gmplib.org/#DOWNLOAD
 # b) followed pbc install instructions from https://crypto.stanford.edu/pbc/howto.html
 
+# INCLUDE_DIR = $(HOME)/../../usr/local/include
+
 INCLUDE_DIR = $(HOME)/.local/include/pbc
 LIB_DIR = $(HOME)/.local/lib
 RPATH = $(LIB_DIR)
-TARGET = main
 CURRENT_DIR = $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
-GMP_FOLDER = gmp
+GMP_FOLDER = gmp_
 GMP_VERSION_TAR = gmp-6.2.1.tar.lz
 GMP_VERSION_NAME = gmp-6.2.1
-PBC_FOLDER = pbc
+PBC_FOLDER = pbc_
 PBC_VERSION_TAR = pbc-0.5.14.tar.gz
 PBC_VERSION_NAME = pbc-0.5.14
+
+GCC = g++
+FLAGS = -g3 -ggdb -O0  -Wno-unused
+TARGET  = main
+TARGET2 = pair
+TARGET3 = commitment
+
+TARGET_RUN=sample
+
+all:
+	echo $(HOME)
+	$(GCC) $(FLAGS) -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp $(TARGET2).cpp $(TARGET3).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp -fstack-protector
+	./$(TARGET)
 
 build:
 	gcc -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp
 
-all:
-	echo $(HOME)
-	g++ -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp
-	./$(TARGET) < a.param
+run:
+	g++ -o $(TARGET_RUN) $(TARGET_RUN).cpp -I ~/.local/include/pbc -L ~/.local/lib -Wl,-rpath ~/.local/lib  -lpbc -lgmp
+	./$(TARGET_RUN)
+
+run_c:
+	gcc -o $(TARGET_RUN) $(TARGET_RUN).c -I ~/.local/include/pbc -L ~/.local/lib -Wl,-rpath ~/.local/lib  -lpbc -lgmp
+	./$(TARGET_RUN)
 
 dependencies:
 	@echo "Installing Dependencies ...\n"
