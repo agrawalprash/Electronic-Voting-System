@@ -28,6 +28,11 @@ all:
 	$(GCC) $(FLAGS) -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp $(TARGET2).cpp $(TARGET3).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp -fstack-protector
 	./$(TARGET)
 
+all_old:
+	echo $(HOME)
+	$(GCC) $(FLAGS) -I$(INCLUDE_DIR) -o $(TARGET)_old $(TARGET)_old.cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp -fstack-protector
+	./$(TARGET)_old
+
 build:
 	gcc -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp
 
