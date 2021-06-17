@@ -1,6 +1,6 @@
 #include <iostream>
 #include "constant_old.hpp"
-#include "group.hpp"
+#include "pbc.h"
 
 using namespace std;
 
@@ -107,7 +107,7 @@ void commitment(element_t &Commitment, unsigned long long Message_)
 int main(int argc, char* argv[])
 {
     clock_t begin, end;
-    int    Iterations = 1000;
+    int    Iterations = 3000;
     double TotalTime = 0;
     double PairingTime = 0;
     unsigned long long Message = 100;
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
         
         end = clock();
         TotalTime+=(double)(end-begin);
-        cout << "Processed: " << i+1 << "\n";
+        cout << "Processed: " << i+1 << "/" << Iterations  << "    " << '\r' << flush;
 
         element_clear(c);
         // cout << "Time taken to generate the Commitment of Message \""<< Message << "\": " << (double)(end - begin)*1000/CLOCKS_PER_SEC << " ms\n";
