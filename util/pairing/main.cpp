@@ -17,7 +17,7 @@ void testing(Pairing* pg, float PairingTime)
         pg->random_G1(c);
         // cout << "g1        : " << c << "\n";
         // cout << "g2        : " << t << "\n\n";
-        pg->random_Zr(pow1);
+        pg->random_Zr(pow1); 
         pg->random_Zr(pow2);
         
         element_init_same_as(pow3, pow1);
