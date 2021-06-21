@@ -220,32 +220,44 @@ void Pairing::random_Zr(element_t t)
 
 void Pairing::add(element_t t, element_t a, element_t b)
 {
-    element_init_same_as(t, a);
+    element_t temp;
+    element_init_same_as(temp, a);
     if(a->field != b->field)
     {
         cerr << "Exception: add operation is valid on elements of same field\n";
         exit(0);
     }
-    element_add(t, a, b);
+    element_add(temp, a, b);
+    element_init_same_as(t, a);
+    element_set(t, temp);
+    element_clear(temp);
 }
 
 void Pairing::sub(element_t t, element_t a, element_t b)
 {
-    element_init_same_as(t, a);
+    element_t temp;
+    element_init_same_as(temp, a);
     if(a->field != b->field)
     {
         cerr << "Exception: add operation is valid on elements of same field\n";
         exit(0);
     }
-    element_sub(t, a, b);
+    element_sub(temp, a, b);
+    element_init_same_as(t, a);
+    element_set(t, temp);
+    element_clear(temp);
 }
 
 void Pairing::mul(element_t t, element_t a, element_t b)
 {
-    element_init_same_as(t, a);
+    element_t temp;
+    element_init_same_as(temp, a);
     if(b->field == gen_Zr->field)
     {
-        element_mul_zn(t, a, b);
+        element_mul_zn(temp, a, b);
+        element_init_same_as(t, a);
+        element_set(t, temp);
+        element_clear(temp);
         return;
     }
     if(a->field != b->field)
@@ -253,30 +265,45 @@ void Pairing::mul(element_t t, element_t a, element_t b)
         cerr << "Exception: add operation is valid on elements of same field\n";
         exit(0);
     }
-    element_mul(t, a, b);
+    element_mul(temp, a, b);
+    element_init_same_as(t, a);
+    element_set(t, temp);
+    element_clear(temp);
 }
 
 void Pairing::mul(element_t t, element_t a, mpz_t b)
 {
-    element_init_same_as(t, a);    
-    element_mul_mpz(t,a,b);
+    element_t temp;
+    element_init_same_as(temp, a);
+    element_mul_mpz(temp,a,b);
+    element_init_same_as(t, a);
+    element_set(t, temp);
+    element_clear(temp);
 }
 
 void Pairing::mul(element_t t, element_t a, long long b)
 {
+    element_t temp;
+    element_init_same_as(temp, a);
+    element_mul_si(temp,a,b);
     element_init_same_as(t, a);
-    element_mul_si(t,a,b);
+    element_set(t, temp);
+    element_clear(temp);
 }
 
 void Pairing::div(element_t t, element_t a, element_t b_)
 {
-    element_init_same_as(t, a);
+    element_t temp;
+    element_init_same_as(temp, a);
     element_t b;
     element_init_same_as(b, b_);
     element_invert(b, b_);
     if(b->field == gen_Zr->field)
     {
-        element_mul_zn(t, a, b);
+        element_mul_zn(temp, a, b);
+        element_init_same_as(t, a);
+        element_set(t, temp);
+        element_clear(temp);
         return;
     }
     if(a->field != b->field)
@@ -284,17 +311,24 @@ void Pairing::div(element_t t, element_t a, element_t b_)
         cerr << "Exception: add operation is valid on elements of same field\n";
         exit(0);
     }
-    element_mul(t, a, b);
-    
+    element_mul(temp, a, b);
+    element_init_same_as(t, a);
+    element_set(t, temp);
+
+    element_clear(temp);
     element_clear(b);
 }
 
 void Pairing::exp(element_t t, element_t a, element_t b)
 {
-    element_init_same_as(t, a);
+    element_t temp;
+    element_init_same_as(temp, a);
     if(b->field == gen_Zr->field)
     {
-        element_pow_zn(t, a, b);
+        element_pow_zn(temp, a, b);
+        element_init_same_as(t, a);
+        element_set(t, temp);
+        element_clear(temp);
         return;
     }
     else
@@ -306,30 +340,47 @@ void Pairing::exp(element_t t, element_t a, element_t b)
 
 void Pairing::exp(element_t t, element_t a, mpz_t b)
 {
+    element_t temp;
+    element_init_same_as(temp, a);
+    element_pow_mpz(temp, a, b);    
     element_init_same_as(t, a);
-    element_pow_mpz(t, a, b);    
+    element_set(t, temp);
+    element_clear(temp);
 }
 
 void Pairing::exp(element_t t, element_t a, unsigned long x)
 {
-    element_init_same_as(t, a);
+    element_t temp;
+    element_init_same_as(temp, a);
     mpz_t b;
     mpz_init(b);
     mpz_set_ui(b,x);
 
-    element_pow_mpz(t, a, b);
-    
+    element_pow_mpz(temp, a, b);
+    element_init_same_as(t, a);
+    element_set(t, temp);
+    element_clear(temp);
     mpz_clear(b);    
 }
 
 void Pairing::negate(element_t t, element_t a)
 {
+    element_t temp;
+    element_init_same_as(temp, a);
+
+    element_neg(temp, a);
     element_init_same_as(t, a);
-    element_neg(t, a);
+    element_set(t, temp);
+    element_clear(temp);
 }
 
 void Pairing::inverse(element_t t, element_t a)
 {
+    element_t temp;
+    element_init_same_as(temp, a);
+
+    element_invert(temp, a);
     element_init_same_as(t, a);
-    element_invert(t, a);
+    element_set(t, temp);
+    element_clear(temp);
 }

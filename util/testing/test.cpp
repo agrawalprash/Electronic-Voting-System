@@ -89,7 +89,7 @@ TEST(Commitment, Equality)
 
 }
 
-TEST(Pairing, Inverse)
+TEST(GroupOperation, Inverse)
 {
     Pairing* pg = new Pairing("a", RBITS, QBITS);
     
@@ -123,7 +123,7 @@ TEST(Pairing, Inverse)
     }
 }
 
-TEST(Pairing, Negate)
+TEST(GroupOperation, Negate)
 {
     Pairing* pg = new Pairing("a", RBITS, QBITS);
     
@@ -156,6 +156,26 @@ TEST(Pairing, Negate)
         element_clear(t_fin);
 
     }    
+}
+
+TEST(GroupOperation, add_sub)
+{
+    Pairing* pg = new Pairing("a", RBITS, QBITS);
+    element_t a, b, c;
+
+    for(int i=0;i<ITERATIONS;i++)
+    {
+        pg->random_G1(a);
+        pg->random_G1(b);
+        pg->random_G1(c);
+
+        element_set(c, a);
+
+        pg->add(a, a, b);
+        pg->sub(a, a, b);
+
+        GTEST_ASSERT_EQ(0, element_cmp(a, c));
+    }
 }
 
 int main(int argc, char* argv[])
