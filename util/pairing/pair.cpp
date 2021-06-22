@@ -150,26 +150,6 @@ Pairing::Pairing(string type, unsigned long pbits, unsigned long qbits)
     pbc_param_clear(param);
 }
 
-// void Pairing::generator(element_t t)
-// {
-//     if(t->field == gen_G1->field)
-//     {
-//         generator_G1(t);
-//     }
-//     else if(t->field == gen_G2->field)
-//     {
-//         generator_G2(t);
-//     }
-//     else if(t->field == gen_GT->field)
-//     {
-//         generator_GT(t);
-//     }
-//     else if(t->field == gen_Zr->field)
-//     {
-//         generator_Zr(t);
-//     }
-// }
-
 void Pairing::generator_G1(element_t t)
 {
     element_init_G1(t, pairing);
