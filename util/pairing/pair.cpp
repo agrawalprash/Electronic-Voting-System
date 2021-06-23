@@ -1,5 +1,24 @@
 #include "pair.hpp"
 
+Pairing::Pairing(FILE *f)
+{
+    char s[8192];
+    size_t count = fread(s, 1, 8192, *(FILE **) &f);
+    if(count)
+    {
+        pairing_init_set_buf(pairing, s, count);
+    }
+    element_init_G1(gen_G1, pairing);
+    element_init_G2(gen_G2, pairing);
+    element_init_GT(gen_GT, pairing);
+    element_init_Zr(gen_Zr, pairing);
+
+    element_set(gen_Zr, field_get_nqr(pairing->Zr));
+    element_random(gen_G1);
+    element_random(gen_G2);
+    element_random(gen_GT);
+}
+
 Pairing::Pairing(string type, mpz_t p, mpz_t q)
 {
     if(type == "a1")
@@ -25,7 +44,7 @@ Pairing::Pairing(string type, mpz_t p, mpz_t q)
     element_init_GT(gen_GT, pairing);
     element_init_Zr(gen_Zr, pairing);
 
-    element_set(gen_Zr, pairing->Zr->nqr);
+    element_set(gen_Zr, field_get_nqr(pairing->Zr));
     element_random(gen_G1);
     element_random(gen_G2);
     element_random(gen_GT);
@@ -59,7 +78,7 @@ Pairing::Pairing(string type, mpz_t p, unsigned long q_)
     element_init_GT(gen_GT, pairing);
     element_init_Zr(gen_Zr, pairing);
 
-    element_set(gen_Zr, pairing->Zr->nqr);
+    element_set(gen_Zr, field_get_nqr(pairing->Zr));
     element_random(gen_G1);
     element_random(gen_G2);
     element_random(gen_GT);
@@ -93,7 +112,7 @@ Pairing::Pairing(string type, unsigned long p_, mpz_t q)
     element_init_GT(gen_GT, pairing);
     element_init_Zr(gen_Zr, pairing);
 
-    element_set(gen_Zr, pairing->Zr->nqr);
+    element_set(gen_Zr, field_get_nqr(pairing->Zr));
     element_random(gen_G1);
     element_random(gen_G2);
     element_random(gen_GT);

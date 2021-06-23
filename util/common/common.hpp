@@ -1,0 +1,42 @@
+#ifndef _COMMON_H_
+#define _COMMON_H
+
+#include <vector>
+#include <string>
+#include "../pairing/pair.hpp"
+#include "../pairing/helper_functions.hpp"
+#include "../pairing/BilinearMapping.hpp"
+#include "../pairing/commitment.hpp"
+// #include "../pairing/constant.hpp"
+
+extern Pairing* pg;
+extern std::vector<std::string> Candidate_List;
+
+extern void initialize();
+
+namespace PairingGeneration
+{
+    void initialize();
+}
+
+// ================================ a ==============================
+// type a (PBC)
+#define RBITS      160
+#define QBITS      512
+#define ITERATIONS 100
+// ================================ a ==============================
+
+// ================================ a1 ==============================
+// type a1 (PBC)
+#define P_BITS 256
+#define Q_BITS 256
+// ================================ a1 ==============================
+
+
+// ================================ a1 ==============================
+#define _VOTERS_    1000
+#define _CANDIDATES_ Candidate_List.size()
+// ================================ a1 ==============================
+
+
+#endif

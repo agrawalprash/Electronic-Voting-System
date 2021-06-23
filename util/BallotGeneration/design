@@ -1,0 +1,8 @@
+voter proceeds to the polling booth and selects the candidate. 
+A commitment will be generated corresponding to the vote using randomness r_vote.
+(Note that the ballot which contains obfuscation token is not used yet)
+(So the commitment to be generated will be index based and not w_m)
+
+The voter matches the w(m) on the EVM printout receipt against the one next to her candidate in her ballot. She also
+checks the clear text vote on the VVPR slip. If the voter is satisfied with the EVM printout receipt as well as
+the VVPR slip, she presses OK button; otherwise she presses Error, following which similar steps as Protocol I are taken.

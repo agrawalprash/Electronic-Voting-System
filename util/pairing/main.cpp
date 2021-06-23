@@ -2,10 +2,11 @@
 #include "commitment.hpp"
 #include "BilinearMapping.hpp"
 #include "helper_functions.hpp"
-#include "constant.hpp"
+#include "../common/common.hpp"
 
 using namespace std;
-
+using namespace BilinearMapping;
+using namespace Commitment;
 
 void testing(Pairing* pg, float PairingTime)
 {
@@ -27,9 +28,9 @@ void testing(Pairing* pg, float PairingTime)
 
         start = clock();
 
-        BilinearMapping(mapping1, c, pow1, t, pow2, pg);
-        BilinearMapping(mapping2, c, 1, t, pow3, pg);
-        BilinearMapping(mapping3, c, pow3, t, 1, pg);
+        BilinearMapping::BilinearMapping(mapping1, c, pow1, t, pow2, pg);
+        BilinearMapping::BilinearMapping(mapping2, c, 1, t, pow3, pg);
+        BilinearMapping::BilinearMapping(mapping3, c, pow3, t, 1, pg);
 
         end = clock();
 
@@ -61,25 +62,29 @@ void testing(Pairing* pg, float PairingTime)
 
 int main(int argc, char* argv[])
 {
+    FILE* f = fopen("param", "r");
 
     float PairingTime = 0.0f;
 
     clock_t start,end;
     
     start = clock();
-    Pairing *pg = new Pairing("a", RBITS, QBITS);    
+    
+    // Pairing *pg = new Pairing("a", RBITS, QBITS);  
+    Pairing *pg = new Pairing(f);
+
     end = clock();
     
     PairingTime = (float)(end-start)*1000/CLOCKS_PER_SEC;
     testing(pg, PairingTime);
     
-    // string msg = "169820918169820918169820918169820918169820918";
-    // string randomness   = "38296988012992130686";
+    string msg = "169820918169820918169820918169820918169820918";
+    string randomness   = "38296988012992130686";
     
-    // element_t c,t,mapping1, mapping2, mapping3;
-    // commit(c, msg, randomness, pg);
-    // cout << "\e[1m\nMessage: " << msg << endl;
-    // cout << "Commitment: " << c << "\n\n";
+    element_t c,t,mapping1, mapping2, mapping3;
+    Commitment::commit(c, msg, randomness, pg);
+    cout << "\e[1m\nMessage: " << msg << endl;
+    cout << "Commitment: " << c << "\n\n";
 
     return EXIT_SUCCESS;
 }

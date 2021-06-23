@@ -3,3 +3,5 @@ build
 main
 .vscode
 *.zip
+util/commitment/param
+util/pairing/param

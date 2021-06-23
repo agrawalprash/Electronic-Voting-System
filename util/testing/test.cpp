@@ -7,8 +7,13 @@
 #include "../pairing/pair.hpp"
 #include "../pairing/BilinearMapping.hpp"
 #include "../pairing/commitment.hpp"
-#include "../pairing/constant.hpp"
+// #include "../pairing/constant.hpp"
+#include "../common/common.hpp"
 
+using namespace HelperFunctions;
+using namespace BilinearMapping;
+using namespace Commitment;
+ 
 TEST(Prime_Generator_Validity, check_prime)
 {
     mpz_t t;
@@ -16,7 +21,7 @@ TEST(Prime_Generator_Validity, check_prime)
 
     for(int i=0;i<ITERATIONS;i++)
     {
-        PrimeGenerator(t, 150);
+        HelperFunctions::PrimeGenerator(t, 150);
         GTEST_ASSERT_GT(mpz_probab_prime_p(t, 5), 0);
     }
     
@@ -39,9 +44,9 @@ TEST(BilinearMapping, Equality)
         element_init_same_as(pow3, pow1);
         element_mul(pow3, pow1, pow2);
 
-        BilinearMapping(mapping1, c, pow1, t, pow2, pg);
-        BilinearMapping(mapping2, c, 1, t, pow3, pg);
-        BilinearMapping(mapping3, c, pow3, t, 1, pg);
+        BilinearMapping::BilinearMapping(mapping1, c, pow1, t, pow2, pg);
+        BilinearMapping::BilinearMapping(mapping2, c, 1, t, pow3, pg);
+        BilinearMapping::BilinearMapping(mapping3, c, pow3, t, 1, pg);
 
         GTEST_ASSERT_EQ(0, element_cmp(mapping1,mapping2));
         GTEST_ASSERT_EQ(0, element_cmp(mapping2,mapping3));
@@ -70,7 +75,7 @@ TEST(Commitment, Equality)
 
         pg->random_Zr(msg);
         pg->random_Zr(ran);
-        commit(commitment, g, msg, h, ran);
+        Commitment::commit(commitment, g, msg, h, ran);
 
         element_clear(g);
         element_clear(h);

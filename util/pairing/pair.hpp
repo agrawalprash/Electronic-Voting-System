@@ -16,6 +16,9 @@ class Pairing
 
     // Initialization
 
+        // Initializing using param file
+        Pairing(FILE* paramFile);
+
         // type a1 (User can select prime p,q)
         Pairing(string type, mpz_t p, mpz_t q); 
         Pairing(string type, mpz_t p, unsigned long q); 
