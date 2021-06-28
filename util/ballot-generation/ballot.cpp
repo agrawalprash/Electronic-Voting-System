@@ -50,6 +50,18 @@ void Ballot::get_rid(element_t t)
     element_set(t, rid);
 }
 
+void Ballot::get_C_rid(element_t t)
+{
+    element_init_same_as(t, C_rid);
+    element_set(t, C_rid);
+}
+
+void Ballot::get_C_u(element_t t)
+{
+    element_init_same_as(t, C_obf_token);
+    element_set(t, C_obf_token);
+}
+
 void Ballot::get_obf_token(element_t t)
 {
     element_init_same_as(t, obfuscation_token);
@@ -64,4 +76,13 @@ void Ballot::get_total_candidates(int &t)
 void Ballot::get_obf_token_rem(int &t)
 {
     t = u;
+}
+
+void Ballot::get_w_m_list(vector<int> &v)
+{
+    v.clear();
+    for(size_t i=0;i<candidates.size();i++)
+    {
+        v.push_back(w_m[i]);
+    }
 }

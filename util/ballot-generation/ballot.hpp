@@ -14,10 +14,13 @@ class Ballot
         ~Ballot();
 
         void get_rid(element_t t);
+        void get_C_rid(element_t t);
+        void get_C_u(element_t t);
         void get_r_obf_token(element_t t);
         void get_obf_token(element_t t);
         void get_total_candidates(int &t);
         void get_obf_token_rem(int &t);
+        void get_w_m_list(vector<int> &v);
 
     private:
         

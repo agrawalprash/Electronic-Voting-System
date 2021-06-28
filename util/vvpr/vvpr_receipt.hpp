@@ -4,7 +4,11 @@
 
 struct VVPR_Receipt
 {
-    int vote = 0;
-    std::string name = ""; 
+    int vote = 0; 
     element_t rid;
+
+    ~VVPR_Receipt()
+    {
+        element_clear(rid);
+    }
 };

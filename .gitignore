@@ -5,3 +5,4 @@ main
 *.zip
 util/commitment/param
 util/pairing/param
+util/ballot-generation/param

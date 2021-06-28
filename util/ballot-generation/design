@@ -6,3 +6,31 @@ A commitment will be generated corresponding to the vote using randomness r_vote
 The voter matches the w(m) on the EVM printout receipt against the one next to her candidate in her ballot. She also
 checks the clear text vote on the VVPR slip. If the voter is satisfied with the EVM printout receipt as well as
 the VVPR slip, she presses OK button; otherwise she presses Error, following which similar steps as Protocol I are taken.
+
+Ballot Paper:
+	Bottom Right QR code:
+		Commitments for Ballot id (rid) and obfuscation token (u).
+	Bottom Left QR code:
+		Obfuscation token (u)
+		r_rid, r_u		
+
+Steps:
+	After identity and eligibilty verification, voter proceeds to the polling booth.
+	EVM displays the candidates in the same order as they are on the voter's ballot paper.
+	Voter selects the candidate by press of a button.
+	EVM prints a commitment C_vote using r_vote.
+	After generating the commitment, voter is asked to scan the ballot paper.
+	QR codes on the ballot paper are scanned
+	After scanning the ballot paper, EVM computes w which is sum of vote and obfuscation token (u: determined after scanning)
+	Using w, w_m is computed (w_m = w mod m)
+	EVM will generate a recipet containing (w_m, w, r_w) where r_w = r_u + r_vote (mod q)
+	EMV will also generate VVPR receipt (rid, vote) showing selected candidate's name.
+	The voter leaves with two receipts - one from the right hand side of the ballot, and the other one from the EVM
+	Voter's take home receipt contains (C_rid, C_u, C_vote, P) where P is (w_m, w, r_w).
+	So, voter leaves with (C_rid, C_u, C_vote, w_m, w, r_w).
+
+
+        // 1st we will have the vote
+        // then scan the ballot
+        // print voter receipt
+        // print vvpr receipt

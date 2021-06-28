@@ -21,7 +21,7 @@ namespace PairingGeneration
 
 // ================================ a ==============================
 // type a (PBC)
-#define RBITS      160
+#define RBITS      126
 #define QBITS      512
 #define ITERATIONS 100
 // ================================ a ==============================
@@ -38,5 +38,10 @@ namespace PairingGeneration
 #define _CANDIDATES_ Candidate_List.size()
 // ================================ a1 ==============================
 
+// ================================ main_code ==============================
+#define PRINT_PROCEDURE     true
+#define VVPR_ONLY           true
+#define REMAINDER_FOR_PRINT (_VOTERS_/5)
+// ================================ main_code ==============================
 
 #endif

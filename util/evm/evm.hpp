@@ -1,19 +1,23 @@
 #pragma once
 
 #include "../ballot-generation/ballot.hpp"
-#include "../vvpr/vvpr.hpp"
+#include "../vvpr/vvpr_receipt.hpp"
+#include "evm_receipt.hpp"
+#include "voter_receipt.hpp"
 
 class EVM
 {
     public:
         
         EVM(int vote, Ballot* ballot);
+        EVM(int vote);
         ~EVM();
         void get_vvpr_receipt(VVPR_Receipt* t);
-        // 1st we will have the vote
-        // then scan the ballot
-        // print voter receipt
-        // print vvpr receipt
+        void get_evm_receipt(EVM_Receipt* t);
+        void get_voter_receipt(Voter_Receipt* t);
+        void get_C_vote(element_t t);
+        void ballot_scanning(Ballot *ballot);
+
 
     private:
 
@@ -27,7 +31,11 @@ class EVM
 
         // Selected Candidate
         int w_m;
+        int vote;
 
         // VVPR_Receipt
         VVPR_Receipt vvpr;
+
+        // EVM_Receipt
+        EVM_Receipt evm_receipt;
 };
