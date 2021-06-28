@@ -1,4 +1,4 @@
-#include "BilinearMapping.hpp"
+#include "bilinear_mapping.hpp"
 
 namespace BilinearMapping
 {

@@ -5,6 +5,6 @@
 struct VVPR_Receipt
 {
     int vote = 0;
-    std::string name = "";
+    std::string name = ""; 
     element_t rid;
 };

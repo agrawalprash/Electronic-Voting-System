@@ -1,8 +1,8 @@
 #pragma once
 
-#include "pbc.h"
 #include <string>
 #include <iostream>
+#include "pbc.h"
 
 using namespace std;
 

@@ -1,6 +1,6 @@
 #include "pair.hpp"
-#include "commitment.hpp"
-#include "BilinearMapping.hpp"
+#include "../commitment/commitment.hpp"
+#include "../bilinear-mapping/bilinear_mapping.hpp"
 #include "helper_functions.hpp"
 #include "../common/common.hpp"
 

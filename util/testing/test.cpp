@@ -5,9 +5,8 @@
 
 #include "../pairing/helper_functions.hpp"
 #include "../pairing/pair.hpp"
-#include "../pairing/BilinearMapping.hpp"
-#include "../pairing/commitment.hpp"
-// #include "../pairing/constant.hpp"
+#include "../bilinear-mapping/bilinear_mapping.hpp"
+#include "../commitment/commitment.hpp"
 #include "../common/common.hpp"
 
 using namespace HelperFunctions;

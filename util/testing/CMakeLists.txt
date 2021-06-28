@@ -16,8 +16,8 @@ add_executable(
     test.cpp
     ../pairing/pair.cpp
     ../pairing/helper_functions.cpp
-    ../pairing/commitment.cpp
-    ../pairing/BilinearMapping.cpp
+    ../commitment/commitment.cpp
+    ../bilinear-mapping/bilinear_mapping.cpp
 ) # add this executable
 
 target_link_libraries(

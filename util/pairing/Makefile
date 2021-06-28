@@ -19,8 +19,8 @@ GCC = g++
 FLAGS = -g3 -ggdb -O0  -Wno-unused
 TARGET  = main
 TARGET2 = pair
-TARGET3 = commitment
-TARGET4 = BilinearMapping
+TARGET3 = ../commitment/commitment
+TARGET4 = ../bilinear-mapping/bilinear_mapping
 TARGET5 = helper_functions
 
 TARGET_RUN=sample

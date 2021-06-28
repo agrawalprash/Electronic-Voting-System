@@ -3,10 +3,9 @@
 #include <string>
 #include "../pairing/helper_functions.hpp"
 #include "../pairing/pair.hpp"
-#include "../pairing/BilinearMapping.hpp"
-#include "../pairing/commitment.hpp"
+#include "../bilinear-mapping/bilinear_mapping.hpp"
+#include "../commitment/commitment.hpp"
 #include "../common/common.hpp"
-#include "../vvpr/vvpr.hpp"
 
 class Ballot
 {
@@ -29,7 +28,9 @@ class Ballot
         int u;
         
         // Ballot id
-        element_t rid; 
+        element_t rid;
+        // Proves by birthday paradox 
+        // Two ballot id's should not have same rid
         element_t C_rid;
         element_t r_rid;
         
@@ -41,7 +42,5 @@ class Ballot
         // bottom right QR code contains (C_rid, C_obf_token)
 
         std::vector<std::string> candidates;
-        std::vector<int> w_m;
-
-        
+        std::vector<int> w_m;        
 };

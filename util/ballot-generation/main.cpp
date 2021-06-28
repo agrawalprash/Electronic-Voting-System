@@ -90,3 +90,9 @@ int main(int argc, char *argv[])
     // cout << vvpr->name << " " << vvpr->vote << "\n";
 }
 
+
+// interactive protocols (code formatting)
+// Not all inputs are known to every party
+// interactive turing machine
+
+// EVM also record an electronic copy of the vote.

@@ -1,4 +1,4 @@
-#include "pair.hpp"
+#include "../pairing/pair.hpp"
 
 namespace BilinearMapping
 {
