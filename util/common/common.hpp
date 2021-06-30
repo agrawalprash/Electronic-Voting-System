@@ -40,7 +40,7 @@ namespace PairingGeneration
 
 // ================================ main_code ==============================
 #define PRINT_PROCEDURE     true
-#define VVPR_ONLY           true
+#define VVPR_ONLY           false
 #define REMAINDER_FOR_PRINT (_VOTERS_/5)
 // ================================ main_code ==============================
 

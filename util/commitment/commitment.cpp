@@ -96,4 +96,17 @@ namespace Commitment
         element_clear(t);
         return false;
     }
+
+    bool open(element_t Commitment, element_t Message, element_t random, Pairing *pairing)
+    {
+        element_t t;
+        commit(t, Message, random, pairing);
+        if(element_cmp(Commitment, t) == 0)
+        {
+            element_clear(t);
+            return true;
+        }
+        element_clear(t);
+        return false;
+    }
 }

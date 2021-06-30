@@ -20,6 +20,8 @@ namespace Commitment
     bool open(element_t Commitment, element_t g, element_t Message, element_t h, element_t random);
 
     bool open(element_t Commitment, element_t g, mpz_t Message, element_t h, mpz_t random);
+
+    bool open(element_t Commitment, element_t Message, element_t random, Pairing *pairing);
 }
 
 // Class for Commitment, Setup, commit, open
