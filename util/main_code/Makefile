@@ -9,7 +9,7 @@ LIB_DIR = $(HOME)/.local/lib
 RPATH = $(LIB_DIR)
 
 GCC = g++
-FLAGS = -g3 -ggdb -O0  -Wno-unused -Wall
+FLAGS = -g3 -ggdb -O0 -std=c++11 -Wno-unused -Wall
 TARGET  = main
 TARGET2 = ../pairing/pair
 TARGET3 = ../commitment/commitment

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Ballot* Ballot_Paper[max(1004, _VOTERS_+4)];
+Ballot* Ballot_Paper[_VOTERS_+1];
 EVM *ev;
 int CheckVote;
 
@@ -84,15 +84,19 @@ void voter_receipt(int VoterIndex)
         cout << "\nVoter Receipt (w_m): " << vt_receipt->w_m << "\n";
     }
 
-    if(CheckVote != vt_receipt->w_m)
+    element_t C_w;
+
+    pg->mul(C_w, vt_receipt->C_u, vt_receipt->C_vote);
+    bool proof = Commitment::open(C_w, vt_receipt->w, vt_receipt->r_w, pg);
+
+    if(CheckVote != vt_receipt->w_m || !proof)
     {
         cerr << "ERROR: Vote does not match\n\n";
         exit(0);
     }
 
-    delete(vt_receipt);
-
-    
+    element_clear(C_w);
+    delete(vt_receipt);    
 }
 
 // DEBUG__ CODE
@@ -178,7 +182,9 @@ int main(int argc, char *argv[])
 
     d2 = (double)(end-start)*1000/(double)CLOCKS_PER_SEC;
     
+    cout << "----------------------------------------------------\n";
     cout << "\nSUCCESS\n";
+    cout << "C_u * C_vote is a commitment for w\n\n";
 
     cout << "Avg. Time for ballot generation: " << d1/max(1004, _VOTERS_+4) << "ms\n";
     cout << "Avg. Time for voting procedure : " << d2/Voters << "ms\n";
