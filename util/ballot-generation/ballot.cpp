@@ -5,8 +5,8 @@ using namespace Commitment;
 Ballot::~Ballot()
 {
     element_clear(rid);
-    element_clear(C_rid);
-    element_clear(C_obf_token);
+    element_clear(c_rid);
+    element_clear(c_obf_token);
     element_clear(r_rid);    
     element_clear(obfuscation_token);
     element_clear(r_obf_token);    
@@ -34,8 +34,8 @@ Ballot::Ballot(Pairing* p, vector<string> c)
     for(int i=0;i<m;i++)w_m.push_back((w+i)%m);
     mpz_clear(u_);
 
-    Commitment::commit(C_rid, rid, r_rid, p);
-    Commitment::commit(C_obf_token, obfuscation_token, r_obf_token, p);
+    Commitment::commit(c_rid, rid, r_rid, p);
+    Commitment::commit(c_obf_token, obfuscation_token, r_obf_token, p);
 }
 
 void Ballot::get_r_obf_token(element_t t)
@@ -50,16 +50,16 @@ void Ballot::get_rid(element_t t)
     element_set(t, rid);
 }
 
-void Ballot::get_C_rid(element_t t)
+void Ballot::get_c_rid(element_t t)
 {
-    element_init_same_as(t, C_rid);
-    element_set(t, C_rid);
+    element_init_same_as(t, c_rid);
+    element_set(t, c_rid);
 }
 
-void Ballot::get_C_u(element_t t)
+void Ballot::get_c_u(element_t t)
 {
-    element_init_same_as(t, C_obf_token);
-    element_set(t, C_obf_token);
+    element_init_same_as(t, c_obf_token);
+    element_set(t, c_obf_token);
 }
 
 void Ballot::get_obf_token(element_t t)

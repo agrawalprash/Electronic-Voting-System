@@ -8,7 +8,7 @@ EVM::EVM(int vote_)
     element_t temp;
     element_init_same_as(temp, r_vote);
     element_set_si(temp, vote_);
-    Commitment::commit(C_vote, temp, r_vote, pg);
+    Commitment::commit(c_vote, temp, r_vote, pg);
 
     element_clear(temp);
 }
@@ -24,7 +24,7 @@ EVM::EVM(int vote_, Ballot* b)
     element_t vote;
     element_init_same_as(vote, r_vote);
     element_set_si(vote, vote_);
-    Commitment::commit(C_vote, vote, r_vote, pg);
+    Commitment::commit(c_vote, vote, r_vote, pg);
 
     element_init_same_as(w, obf_token);
     element_add_ui(w, obf_token, vote_);
@@ -67,8 +67,8 @@ void EVM::get_evm_receipt(EVM_Receipt* t)
     element_init_same_as(t->r_w, evm_receipt.r_w);    
     element_set(t->r_w, evm_receipt.r_w);
 
-    element_init_same_as(t->C_vote, evm_receipt.C_vote);
-    element_set(t->C_vote, evm_receipt.C_vote);
+    element_init_same_as(t->c_vote, evm_receipt.c_vote);
+    element_set(t->c_vote, evm_receipt.c_vote);
 }
 
 void EVM::get_voter_receipt(Voter_Receipt* t)
@@ -81,14 +81,14 @@ void EVM::get_voter_receipt(Voter_Receipt* t)
     element_init_same_as(t->r_w, evm_receipt.r_w);    
     element_set(t->r_w, evm_receipt.r_w);
 
-    element_init_same_as(t->C_vote, evm_receipt.C_vote);
-    element_set(t->C_vote, evm_receipt.C_vote);
+    element_init_same_as(t->c_vote, evm_receipt.c_vote);
+    element_set(t->c_vote, evm_receipt.c_vote);
 }
 
-void EVM::get_C_vote(element_t t)
+void EVM::get_c_vote(element_t t)
 {
-    element_init_same_as(t, C_vote);
-    element_set(t, C_vote);
+    element_init_same_as(t, c_vote);
+    element_set(t, c_vote);
 }
 
 void EVM::ballot_scanning(Ballot *b)
@@ -120,8 +120,8 @@ void EVM::ballot_scanning(Ballot *b)
 
     //evm_receipt
     evm_receipt.w_m = w_m;
-    element_init_same_as(evm_receipt.C_vote, C_vote);
-    element_set(evm_receipt.C_vote, C_vote);
+    element_init_same_as(evm_receipt.c_vote, c_vote);
+    element_set(evm_receipt.c_vote, c_vote);
     element_init_same_as(evm_receipt.w, w);
     element_set(evm_receipt.w, w);
     element_init_same_as(evm_receipt.r_w, r_w);

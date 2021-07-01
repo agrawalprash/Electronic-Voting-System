@@ -8,9 +8,9 @@
 #include <string>
 #include <iostream>
 
-extern Ballot* Ballot_Paper[_VOTERS_+1];
+extern Ballot* ballot_paper[_VOTERS_+1];
 extern EVM *ev;
-extern int CheckVote;
+extern int check_vote;
 
 void generateBallot(int TotalCount);
 

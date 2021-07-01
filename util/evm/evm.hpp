@@ -15,14 +15,14 @@ class EVM
         void get_vvpr_receipt(VVPR_Receipt* t);
         void get_evm_receipt(EVM_Receipt* t);
         void get_voter_receipt(Voter_Receipt* t);
-        void get_C_vote(element_t t);
+        void get_c_vote(element_t t);
         void ballot_scanning(Ballot *ballot);
 
 
     private:
 
         Ballot*   ballot;
-        element_t C_vote;
+        element_t c_vote;
         element_t r_vote;
         element_t r_u;
         element_t r_w;

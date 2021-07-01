@@ -1,9 +1,9 @@
 #include "../common/defines.hpp"
 #include "protocol.hpp"
 
-Ballot* Ballot_Paper[_VOTERS_+1];
+Ballot* ballot_paper[_VOTERS_+1];
 EVM *ev;
-int CheckVote;
+int check_vote;
 
 using namespace std;
 
@@ -18,7 +18,7 @@ void generateBallot(int TotalCount)
     for(int i=0; i < TotalCount+1; ++i)
     {
         bt = new Ballot(pg, Candidate_List);
-        Ballot_Paper[i] = bt;
+        ballot_paper[i] = bt;
 
         #ifndef __TESTING__
         if(i == TotalCount - 1)std::cout << "Generated: " << i+1 << "/" << TotalCount<<"\n";
@@ -36,12 +36,12 @@ void generateBallot(int TotalCount)
 void partial_evm_receipt(int VoterIndex, int vote)
 {
     element_t t;
-    ev->get_C_vote(t);
+    ev->get_c_vote(t);
     
     #ifndef __TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {
-        cout << "C_vote: " << t;
+        cout << "c_vote: " << t;
         cout << "\n\nScan the ballot paper ... \n\n";        
     }
     #endif
@@ -61,7 +61,7 @@ void evm_vvpr_receipt(int VoterIndex)
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {
         cout << "EVM Receipt:\n";
-        cout << "(C_vote, w_m, w, r_w): (" << e_r->C_vote << ", " << e_r->w_m << ", " << e_r->w << ", " << e_r->r_w << ")\n";
+        cout << "(c_vote, w_m, w, r_w): (" << e_r->c_vote << ", " << e_r->w_m << ", " << e_r->w << ", " << e_r->r_w << ")\n";
     }
     
     if(PRINT_PROCEDURE && VoterIndex%REMAINDER_FOR_PRINT==0)
@@ -79,15 +79,15 @@ void voter_receipt(int VoterIndex)
 {    
     Voter_Receipt* vt_receipt = new Voter_Receipt();
     ev->get_voter_receipt(vt_receipt);
-    Ballot_Paper[VoterIndex]->get_C_rid(vt_receipt->C_rid);
-    Ballot_Paper[VoterIndex]->get_C_u(vt_receipt->C_u);
+    ballot_paper[VoterIndex]->get_c_rid(vt_receipt->c_rid);
+    ballot_paper[VoterIndex]->get_c_u(vt_receipt->C_u);
 
     #ifndef __TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {    
         cout << "\nVoter Receipt:\n";
-        cout << "(C_rid, C_u, C_vote, w_m, w, r_w): (" << vt_receipt->C_rid << ", " 
-             << vt_receipt->C_u << ", " << vt_receipt->C_vote << ", " 
+        cout << "(c_rid, C_u, c_vote, w_m, w, r_w): (" << vt_receipt->c_rid << ", " 
+             << vt_receipt->C_u << ", " << vt_receipt->c_vote << ", " 
              << vt_receipt->w_m << ", " << vt_receipt->w << ", " << vt_receipt->r_w << ")\n";
     }
     
@@ -99,11 +99,11 @@ void voter_receipt(int VoterIndex)
 
     element_t C_w;
 
-    pg->mul(C_w, vt_receipt->C_u, vt_receipt->C_vote);
+    pg->mul(C_w, vt_receipt->C_u, vt_receipt->c_vote);
     bool proof = Commitment::open(C_w, vt_receipt->w, vt_receipt->r_w, pg);
 
     #ifndef __TESTING__
-    if(CheckVote != vt_receipt->w_m || !proof)
+    if(check_vote != vt_receipt->w_m || !proof)
     {
         cerr << "ERROR: Vote does not match\n\n";
         exit(0);
@@ -148,8 +148,8 @@ void procedure(int TotalCount)
         ev = new EVM(vote);
 
         vector<int> w_m;
-        Ballot_Paper[i]->get_w_m_list(w_m);
-        CheckVote = w_m[vote];
+        ballot_paper[i]->get_w_m_list(w_m);
+        check_vote = w_m[vote];
         
         #ifndef __TESTING__
         if(PRINT_PROCEDURE && i%REMAINDER_FOR_PRINT==0)
@@ -165,7 +165,7 @@ void procedure(int TotalCount)
 
         partial_evm_receipt(i,vote);
         
-        ev->ballot_scanning(Ballot_Paper[i]); // EVM receipt and VVPR receipt generated
+        ev->ballot_scanning(ballot_paper[i]); // EVM receipt and VVPR receipt generated
 
         evm_vvpr_receipt(i);
 
