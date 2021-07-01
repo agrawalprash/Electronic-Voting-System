@@ -1,8 +1,8 @@
-util/testing/googletest/
+googletest
 build
-main
-.vscode
+output
 *.zip
-util/commitment/param
-util/pairing/param
-util/ballot-generation/param
+TodoList
+Makefile_pbc_installation
+.vscode
+testing

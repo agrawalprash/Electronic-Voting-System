@@ -1,6 +1,0 @@
-If some source element is passed as target, then it will affect the implementation because of 
-initializing the target element inside the function which will change the value of source element also.
-
-Encryption
-Signatures
-Al-gamal Encryption
