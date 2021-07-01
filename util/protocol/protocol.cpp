@@ -1,30 +1,35 @@
-#include "../evm/evm.hpp"
-#include "../common/common.hpp"
-#include "../ballot-generation/ballot.hpp"
-
-#include <vector>
-#include <string>
-#include <iostream>
-
-using namespace std;
+#include "../common/defines.hpp"
+#include "protocol.hpp"
 
 Ballot* Ballot_Paper[_VOTERS_+1];
 EVM *ev;
 int CheckVote;
 
+using namespace std;
+
 void generateBallot(int TotalCount)
 {
     Ballot *bt;
+    
+    #ifndef __TESTING__
     cout << "\e[1m\nBallot Generation ... \n";
-    for(int i=0; i < TotalCount+2; ++i)
+    #endif
+
+    for(int i=0; i < TotalCount+1; ++i)
     {
         bt = new Ballot(pg, Candidate_List);
         Ballot_Paper[i] = bt;
 
+        #ifndef __TESTING__
         if(i == TotalCount - 1)std::cout << "Generated: " << i+1 << "/" << TotalCount<<"\n";
         else if(i<TotalCount) std::cout << "Generated: " << i+1 << "/" << TotalCount  << "    " << '\r' << flush;
+        #endif
     }
+
+    #ifndef __TESTING__
     cout << "\nVoting Procedure ...\n";
+    #endif
+
     delete(bt);
 }
 
@@ -33,11 +38,14 @@ void partial_evm_receipt(int VoterIndex, int vote)
     element_t t;
     ev->get_C_vote(t);
     
+    #ifndef __TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {
         cout << "C_vote: " << t;
         cout << "\n\nScan the ballot paper ... \n\n";        
     }
+    #endif
+
     element_clear(t);
 }
 
@@ -49,6 +57,7 @@ void evm_vvpr_receipt(int VoterIndex)
     ev->get_evm_receipt(e_r);
     ev->get_vvpr_receipt(v_r);
 
+    #ifndef __TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {
         cout << "EVM Receipt:\n";
@@ -60,6 +69,8 @@ void evm_vvpr_receipt(int VoterIndex)
         cout << "\nVVPR Receipt:\n";
         cout << "(name, rid): (" << Candidate_List[v_r->vote] << ", " << v_r->rid << ")\n";
     }
+    #endif
+
     delete(e_r);
     delete(v_r);
 }
@@ -71,6 +82,7 @@ void voter_receipt(int VoterIndex)
     Ballot_Paper[VoterIndex]->get_C_rid(vt_receipt->C_rid);
     Ballot_Paper[VoterIndex]->get_C_u(vt_receipt->C_u);
 
+    #ifndef __TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {    
         cout << "\nVoter Receipt:\n";
@@ -83,17 +95,20 @@ void voter_receipt(int VoterIndex)
     {
         cout << "\nVoter Receipt (w_m): " << vt_receipt->w_m << "\n";
     }
+    #endif
 
     element_t C_w;
 
     pg->mul(C_w, vt_receipt->C_u, vt_receipt->C_vote);
     bool proof = Commitment::open(C_w, vt_receipt->w, vt_receipt->r_w, pg);
 
+    #ifndef __TESTING__
     if(CheckVote != vt_receipt->w_m || !proof)
     {
         cerr << "ERROR: Vote does not match\n\n";
         exit(0);
     }
+    #endif
 
     element_clear(C_w);
     delete(vt_receipt);    
@@ -135,7 +150,8 @@ void procedure(int TotalCount)
         vector<int> w_m;
         Ballot_Paper[i]->get_w_m_list(w_m);
         CheckVote = w_m[vote];
-                
+        
+        #ifndef __TESTING__
         if(PRINT_PROCEDURE && i%REMAINDER_FOR_PRINT==0)
         {            
             cout << "\e[1m\n\n========================================= Voter: " << i+1 << " =========================================" << endl;
@@ -145,6 +161,7 @@ void procedure(int TotalCount)
             }
             cout << "\nVote: " << vote << "\n\n";            
         }
+        #endif
 
         partial_evm_receipt(i,vote);
         
@@ -154,39 +171,13 @@ void procedure(int TotalCount)
 
         voter_receipt(i);
 
+        #ifndef __TESTING__
         if(i == TotalCount - 1)std::cout << "Processed: " << i+1 << "/" << TotalCount<<"\n";
         else std::cout << "Processed: " << i+1 << "/" << TotalCount  << "    " << '\r' << flush;
         // else std::cout << "Processed: " << i+1 << "/" << TotalCount  << "\n";
+        #endif
+        
     }
 }
 
 
-int main(int argc, char *argv[])
-{
-    PairingGeneration::initialize();
-
-    int Voters = (argc > 1)? stoi(argv[1]) : _VOTERS_;
-
-    double d1,d2;
-    clock_t start,end;
-
-    start = clock();
-    generateBallot(Voters);
-    end = clock();
-
-    d1 = (double)(end-start)*1000/(double)CLOCKS_PER_SEC;
-
-    start = clock();
-    procedure(Voters);
-    end = clock();
-
-    d2 = (double)(end-start)*1000/(double)CLOCKS_PER_SEC;
-    
-    cout << "----------------------------------------------------\n";
-    cout << "\nSUCCESS\n";
-    cout << "C_u * C_vote is a commitment for w\n\n";
-
-    cout << "Avg. Time for ballot generation: " << d1/max(1004, _VOTERS_+4) << "ms\n";
-    cout << "Avg. Time for voting procedure : " << d2/Voters << "ms\n";
-    return EXIT_SUCCESS;
-}

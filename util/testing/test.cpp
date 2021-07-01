@@ -8,6 +8,9 @@
 #include "../bilinear-mapping/bilinear_mapping.hpp"
 #include "../commitment/commitment.hpp"
 #include "../common/common.hpp"
+#include "../evm/evm.hpp"
+#include "../protocol/protocol.hpp"
+#include "../ballot-generation/ballot.hpp"
 
 using namespace HelperFunctions;
 using namespace BilinearMapping;
@@ -179,6 +182,46 @@ TEST(GroupOperation, add_sub)
         pg->sub(a, a, b);
 
         GTEST_ASSERT_EQ(0, element_cmp(a, c));
+    }
+    element_clear(a);
+    element_clear(b);
+    element_clear(c);
+}
+
+TEST(VotingProtocol, Protocol)
+{
+    int TotalCount = _VOTERS_;
+    
+    PairingGeneration::initialize();
+    
+    generateBallot(TotalCount);
+
+    for(int i=0; i < TotalCount; ++i)
+    {        
+        int vote = rand() % _CANDIDATES_;
+        
+        ev = new EVM(vote);
+
+        vector<int> w_m;
+        Ballot_Paper[i]->get_w_m_list(w_m);
+        CheckVote = w_m[vote];
+
+        ev->ballot_scanning(Ballot_Paper[i]); // EVM receipt and VVPR receipt generated
+
+        Voter_Receipt* vt_receipt = new Voter_Receipt();
+        ev->get_voter_receipt(vt_receipt);
+        Ballot_Paper[i]->get_C_rid(vt_receipt->C_rid);
+        Ballot_Paper[i]->get_C_u(vt_receipt->C_u);
+
+        element_t C_w;
+        pg->mul(C_w, vt_receipt->C_u, vt_receipt->C_vote);
+        bool proof = Commitment::open(C_w, vt_receipt->w, vt_receipt->r_w, pg);
+
+        GTEST_ASSERT_EQ(CheckVote, vt_receipt->w_m);
+        GTEST_ASSERT_TRUE(proof);
+
+        element_clear(C_w);
+        delete(vt_receipt);    
     }
 }
 

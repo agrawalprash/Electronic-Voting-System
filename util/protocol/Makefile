@@ -18,11 +18,12 @@ TARGET5 = ../pairing/helper_functions
 TARGET6 = ../ballot-generation/ballot
 TARGET7 = ../common/common
 TARGET8 = ../evm/evm
+TARGET9 = protocol
 
 all:
 	echo $(HOME)
-	$(GCC) $(FLAGS) -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp $(TARGET2).cpp $(TARGET3).cpp $(TARGET4).cpp $(TARGET5).cpp $(TARGET6).cpp $(TARGET7).cpp $(TARGET8).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp -fstack-protector
+	$(GCC) $(FLAGS) -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp $(TARGET2).cpp $(TARGET3).cpp $(TARGET4).cpp $(TARGET5).cpp $(TARGET6).cpp $(TARGET7).cpp $(TARGET8).cpp $(TARGET9).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp -fstack-protector
 	./$(TARGET)
 
 build:
-	$(GCC) $(FLAGS) -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp $(TARGET2).cpp $(TARGET3).cpp $(TARGET4).cpp $(TARGET5).cpp $(TARGET6).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp -fstack-protector
+	$(GCC) $(FLAGS) -I$(INCLUDE_DIR) -o $(TARGET) $(TARGET).cpp $(TARGET2).cpp $(TARGET3).cpp $(TARGET4).cpp $(TARGET5).cpp $(TARGET6).cpp $(TARGET7).cpp $(TARGET8).cpp $(TARGET9).cpp -L$(LIB_DIR) -Wl,-rpath $(RPATH) -lpbc -lgmp -fstack-protector

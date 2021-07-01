@@ -18,6 +18,10 @@ add_executable(
     ../pairing/helper_functions.cpp
     ../commitment/commitment.cpp
     ../bilinear-mapping/bilinear_mapping.cpp
+    ../evm/evm.cpp
+    ../ballot-generation/ballot.cpp
+    ../common/common.cpp
+    ../protocol/protocol.cpp
 ) # add this executable
 
 target_link_libraries(
