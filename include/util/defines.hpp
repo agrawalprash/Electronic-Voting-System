@@ -1,1 +1,1 @@
-// #define __TESTING__
+#define __TESTING__

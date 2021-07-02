@@ -2,7 +2,8 @@ googletest
 build
 output
 *.zip
+testing/include
 TodoList
 Makefile_pbc_installation
 .vscode
-testing
+param

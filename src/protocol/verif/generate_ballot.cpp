@@ -1,3 +1,4 @@
+#include "defines.hpp"
 #include "evm/receipt.hpp"
 #include "verif/generate_ballot.hpp"
 

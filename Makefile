@@ -14,7 +14,7 @@ INCLUDEDIRS	:= $(shell find $(INCLUDE) -type d)
 LIBDIRS		:= $(shell find $(LIB) -type d)
 
 FIXPATH = $1
-RM      = rm -r
+RM      = rm -rf
 MD	   := mkdir -p
 
 INCLUDES	:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
@@ -56,6 +56,10 @@ clean:
 complete_clean:
 	$(RM) build
 	$(RM) output
+	$(RM) testing/build
+	$(RM) testing/include
+	$(RM) testing/googletest
+	$(RM) testing/master.zip
 
 run: all
 	./$(OUTPUTMAIN) ${args}
