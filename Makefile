@@ -30,6 +30,10 @@ LIB_PBC_PATH := -Wl,-rpath $(HOME)/.local/lib
 # FILE_TO_RUN
 TARGET        := main
 
+# Google Test
+GOOGLE_TEST   := googletest
+GOOGLE_BUILD  := build
+
 OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
 
 all: $(OUTPUT) $(BUILDDIRS) $(MAIN)
@@ -56,14 +60,34 @@ clean:
 complete_clean:
 	$(RM) build
 	$(RM) output
-	$(RM) testing/build
-	$(RM) testing/include
-	$(RM) testing/googletest
-	$(RM) testing/master.zip
+	$(RM) googletest
+	$(RM) master.zip
 
 run: all
 	./$(OUTPUTMAIN) ${args}
 	@echo Executing 'run: all' complete!
+
+test:install
+	echo "Building files ..."
+	mkdir $(BUILD)/$(GOOGLE_BUILD); \
+	cmake -S . -B $(BUILD)/$(GOOGLE_BUILD); \
+	cd $(BUILD)/$(GOOGLE_BUILD); \
+	make;\
+	./test
+
+install:
+	mkdir $(BUILD);\
+	cd $(BUILD);\
+	if mkdir $(GOOGLE_TEST); then \
+		echo "Installing Googletest ... ";\
+		wget https://github.com/google/googletest/archive/refs/heads/master.zip --no-check-certificate;\
+		rm -rf googletest-master;\
+		rm -rf googletest;\
+		unzip master.zip;\
+		mv googletest-master googletest;\
+	else\
+		echo "Already installed";\
+	fi
 
 help:
 	@echo "usage: make <command>"
@@ -74,5 +98,7 @@ help:
 
 	@echo "    all:\tcompile all files and generate the executable target file"
 	@echo "    run:\tcompile the main file and run the executable target file"
+	@echo "    test:\tunit testing"
+	@echo "    install:\tinstalls googletest in build"
 	@echo "    clean:\tremove build, output directory"
 	@echo "    help:\tdisplay help"
