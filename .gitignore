@@ -8,3 +8,5 @@ Makefile_pbc_installation
 .vscode
 main
 param
+docs/html
+docs/latex
