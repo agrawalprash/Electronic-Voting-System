@@ -20,7 +20,7 @@ namespace PairingGeneration
 
 // ================================= defines  ===============================
 #define __DEBUG__
-// #define __UNIT_TESTING__
+#define __UNIT_TESTING__
 // #define __INTERACTIVE__
 #define PRINT_PROCEDURE     true
 #define VVPR_ONLY           false

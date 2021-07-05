@@ -13,6 +13,7 @@
 #include "evm/evm.hpp"
 #include "evm/receipt.hpp"
 #include "verif/generate_ballot.hpp"
+#include "encryption/encryption.hpp"
 
 using namespace HelperFunctions;
 using namespace BilinearMapping;
@@ -225,6 +226,12 @@ TEST(VotingProtocol, Protocol)
         element_clear(C_w);
         delete(vt_receipt);    
     }
+}
+
+TEST(ElgamalEncryptionScheme, Encryption)
+{
+    bool result = Encryption::encryption();
+    GTEST_ASSERT_TRUE(result);
 }
 
 int main(int argc, char* argv[])

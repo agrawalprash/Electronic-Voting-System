@@ -31,6 +31,7 @@ include_directories(
     include/util/pairing
     include/util/bilinear-mapping
     include/util/commitment
+    include/util/encryption
     include/protocol
     include/protocol/ea
     include/protocol/ea/ballot
@@ -54,6 +55,7 @@ add_executable(
     src/util/common.cpp
     src/protocol/evm/receipt.cpp
     src/protocol/verif/generate_ballot.cpp    
+    src/util/encryption/encryption.cpp
 ) # add this executable
 
 target_link_libraries(

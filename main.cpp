@@ -1,6 +1,7 @@
 #include "common.hpp"
 #include "evm/receipt.hpp"
 #include "verif/generate_ballot.hpp"
+#include "encryption/encryption.hpp"
 
 using namespace std;
 
@@ -33,6 +34,8 @@ int main(int argc, char *argv[])
     cout << "Avg. Time for ballot generation: " << d1/(_VOTERS_+1) << "ms\n";
     cout << "Avg. Time for voting procedure : " << d2/Voters << "ms\n";
     #endif
+
+    Encryption::encryption();
 
     return EXIT_SUCCESS;
 }
