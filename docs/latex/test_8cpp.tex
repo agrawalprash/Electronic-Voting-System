@@ -1,0 +1,101 @@
+\hypertarget{test_8cpp}{}\doxysection{testing/test.cpp File Reference}
+\label{test_8cpp}\index{testing/test.cpp@{testing/test.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$gtest/gtest.\+h$>$}\newline
+{\ttfamily \#include $<$pbc/pbc.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}helper\+\_\+functions.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pairing/pairing.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}bilinear-\/mapping/bilinear\+\_\+mapping.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}commitment/commitment.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}common.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ballot/ballot.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}evm/evm.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}evm/receipt.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}verif/generate\+\_\+ballot.\+hpp\char`\"{}}\newline
+Include dependency graph for test.\+cpp\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{test_8cpp_aa1a941573a2cbcc7590cd5835878e5da}{\+\_\+\+\_\+\+U\+N\+I\+T\+\_\+\+T\+E\+S\+T\+I\+N\+G\+\_\+\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test_8cpp_a0b89c8d695b635b70538a16bb777dfc9}{T\+E\+ST}} (Prime\+\_\+\+Generator\+\_\+\+Validity, check\+\_\+prime)
+\item 
+\mbox{\hyperlink{test_8cpp_a35448458f1ba30439aed21b243268d44}{T\+E\+ST}} (Bilinear\+Mapping, Equality)
+\item 
+\mbox{\hyperlink{test_8cpp_abf2d9ea523753fcc9746ae0a6b4d12fd}{T\+E\+ST}} (Commitment, Equality)
+\item 
+\mbox{\hyperlink{test_8cpp_a8661605f0ffb77be55633a46ad277410}{T\+E\+ST}} (Group\+Operation, Inverse)
+\item 
+\mbox{\hyperlink{test_8cpp_aec5ced828f136c341f8da765ca1d52f7}{T\+E\+ST}} (Group\+Operation, Negate)
+\item 
+\mbox{\hyperlink{test_8cpp_a38ec1bd8097e9f00831dea25d0e18d4c}{T\+E\+ST}} (Group\+Operation, add\+\_\+sub)
+\item 
+\mbox{\hyperlink{test_8cpp_abed5c44b4884b327927b074fab01be11}{T\+E\+ST}} (Voting\+Protocol, Protocol)
+\item 
+int \mbox{\hyperlink{test_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{test_8cpp_aa1a941573a2cbcc7590cd5835878e5da}\label{test_8cpp_aa1a941573a2cbcc7590cd5835878e5da}} 
+\index{test.cpp@{test.cpp}!\_\_UNIT\_TESTING\_\_@{\_\_UNIT\_TESTING\_\_}}
+\index{\_\_UNIT\_TESTING\_\_@{\_\_UNIT\_TESTING\_\_}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{\_\_UNIT\_TESTING\_\_}{\_\_UNIT\_TESTING\_\_}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+U\+N\+I\+T\+\_\+\+T\+E\+S\+T\+I\+N\+G\+\_\+\+\_\+}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{test_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{test.cpp@{test.cpp}!main@{main}}
+\index{main@{main}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a35448458f1ba30439aed21b243268d44}\label{test_8cpp_a35448458f1ba30439aed21b243268d44}} 
+\index{test.cpp@{test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [1/7]}}
+{\footnotesize\ttfamily T\+E\+ST (\begin{DoxyParamCaption}\item[{Bilinear\+Mapping}]{,  }\item[{Equality}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_abf2d9ea523753fcc9746ae0a6b4d12fd}\label{test_8cpp_abf2d9ea523753fcc9746ae0a6b4d12fd}} 
+\index{test.cpp@{test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [2/7]}}
+{\footnotesize\ttfamily T\+E\+ST (\begin{DoxyParamCaption}\item[{Commitment}]{,  }\item[{Equality}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a38ec1bd8097e9f00831dea25d0e18d4c}\label{test_8cpp_a38ec1bd8097e9f00831dea25d0e18d4c}} 
+\index{test.cpp@{test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [3/7]}}
+{\footnotesize\ttfamily T\+E\+ST (\begin{DoxyParamCaption}\item[{Group\+Operation}]{,  }\item[{add\+\_\+sub}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a8661605f0ffb77be55633a46ad277410}\label{test_8cpp_a8661605f0ffb77be55633a46ad277410}} 
+\index{test.cpp@{test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [4/7]}}
+{\footnotesize\ttfamily T\+E\+ST (\begin{DoxyParamCaption}\item[{Group\+Operation}]{,  }\item[{Inverse}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_aec5ced828f136c341f8da765ca1d52f7}\label{test_8cpp_aec5ced828f136c341f8da765ca1d52f7}} 
+\index{test.cpp@{test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [5/7]}}
+{\footnotesize\ttfamily T\+E\+ST (\begin{DoxyParamCaption}\item[{Group\+Operation}]{,  }\item[{Negate}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a0b89c8d695b635b70538a16bb777dfc9}\label{test_8cpp_a0b89c8d695b635b70538a16bb777dfc9}} 
+\index{test.cpp@{test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [6/7]}}
+{\footnotesize\ttfamily T\+E\+ST (\begin{DoxyParamCaption}\item[{Prime\+\_\+\+Generator\+\_\+\+Validity}]{,  }\item[{check\+\_\+prime}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_abed5c44b4884b327927b074fab01be11}\label{test_8cpp_abed5c44b4884b327927b074fab01be11}} 
+\index{test.cpp@{test.cpp}!TEST@{TEST}}
+\index{TEST@{TEST}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST()}{TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [7/7]}}
+{\footnotesize\ttfamily T\+E\+ST (\begin{DoxyParamCaption}\item[{Voting\+Protocol}]{,  }\item[{Protocol}]{ }\end{DoxyParamCaption})}
+

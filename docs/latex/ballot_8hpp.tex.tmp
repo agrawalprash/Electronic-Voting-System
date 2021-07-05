@@ -1,0 +1,18 @@
+\hypertarget{ballot_8hpp}{}\doxysection{include/protocol/ea/ballot/ballot.hpp File Reference}
+\label{ballot_8hpp}\index{include/protocol/ea/ballot/ballot.hpp@{include/protocol/ea/ballot/ballot.hpp}}
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include \char`\"{}helper\+\_\+functions.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pairing/pairing.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}bilinear-\/mapping/bilinear\+\_\+mapping.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}commitment/commitment.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}common.\+hpp\char`\"{}}\newline
+Include dependency graph for ballot.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_ballot}{Ballot}}
+\begin{DoxyCompactList}\small\item\em Description for this class. \end{DoxyCompactList}\end{DoxyCompactItemize}

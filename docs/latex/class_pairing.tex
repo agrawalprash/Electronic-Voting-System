@@ -1,0 +1,293 @@
+\hypertarget{class_pairing}{}\doxysection{Pairing Class Reference}
+\label{class_pairing}\index{Pairing@{Pairing}}
+
+
+{\ttfamily \#include $<$pairing.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pairing_a60a8492f7247f09b735b7c1e423e691e}{Pairing}} (F\+I\+LE $\ast$param\+File)
+\item 
+\mbox{\hyperlink{class_pairing_a87d1b35f3a4784049dd17e2018be39ec}{Pairing}} (string type, mpz\+\_\+t p, mpz\+\_\+t q)
+\item 
+\mbox{\hyperlink{class_pairing_a768eb8fe7d0fe1c5119794b95e11c21b}{Pairing}} (string type, mpz\+\_\+t p, unsigned long q)
+\item 
+\mbox{\hyperlink{class_pairing_a7152ba4d8eae6fa4330152c903ee6513}{Pairing}} (string type, unsigned long p, mpz\+\_\+t q)
+\item 
+\mbox{\hyperlink{class_pairing_ab3998b5acbcd08691932d96dffa72bf8}{Pairing}} (string type, unsigned long rbits, unsigned long qbits)
+\item 
+\mbox{\hyperlink{class_pairing_a5f0558e7e7d3100f6fdc11a589ac3f9f}{Pairing}} (string type, mpz\+\_\+t Discriminant)
+\item 
+\mbox{\hyperlink{class_pairing_a3436a525ed6899d7e173d30a2906efeb}{Pairing}} (string type, unsigned long Discriminant)
+\item 
+\mbox{\hyperlink{class_pairing_ac862dbefef309d60ebc76b7c3c09d21b}{$\sim$\+Pairing}} ()
+\item 
+void \mbox{\hyperlink{class_pairing_a7b324f62229ed59477f264f870b48626}{generator\+\_\+\+G1}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_a9ab92389278eca52cc6ec6cf0ff00833}{generator\+\_\+\+G2}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_acf4143589d0765a2329d57441f0eeae4}{generator\+\_\+\+GT}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_adc8a4ad404539cad9192028cc4e1f539}{generator\+\_\+\+Zr}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_af5e63bfbe1658057712487ae1f8a79d1}{random\+\_\+\+G1}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_a27e75a2d69f5edc850ce4c62ec361eda}{random\+\_\+\+G2}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_a730c7b2d6fae612c6aa7c1aabb930208}{random\+\_\+\+GT}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_a3bf12bbb27d6baa570a70561286e4401}{random\+\_\+\+Zr}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_af4967c95389cef82567bed0c03c3ea40}{add}} (element\+\_\+t t, element\+\_\+t a, element\+\_\+t b)
+\item 
+void \mbox{\hyperlink{class_pairing_a95ada5835958ce2d973f3de6d7a11fee}{sub}} (element\+\_\+t t, element\+\_\+t a, element\+\_\+t b)
+\item 
+void \mbox{\hyperlink{class_pairing_a1dd76cf0953d20830a194bf5d4e68a32}{mul}} (element\+\_\+t t, element\+\_\+t a, element\+\_\+t b)
+\item 
+void \mbox{\hyperlink{class_pairing_ae1294a68fbddfba1fe625c0204d6e00e}{div}} (element\+\_\+t t, element\+\_\+t a, element\+\_\+t b)
+\item 
+void \mbox{\hyperlink{class_pairing_a293310ee66d21b6efbd1fad6cf608f63}{exp}} (element\+\_\+t t, element\+\_\+t a, element\+\_\+t x)
+\item 
+void \mbox{\hyperlink{class_pairing_a5dbba2cba4fd2f5bb020d0ac38b0f52d}{negate}} (element\+\_\+t t, element\+\_\+t a)
+\item 
+void \mbox{\hyperlink{class_pairing_a82f81d590c6269e4e82d2fdaf92fd387}{identity}} (element\+\_\+t t)
+\item 
+void \mbox{\hyperlink{class_pairing_a9b870def692371bbbefe3991d9b28ce0}{inverse}} (element\+\_\+t t, element\+\_\+t a)
+\item 
+void \mbox{\hyperlink{class_pairing_a31d7deb794002ed10524e6c8e42f6c86}{order}} ()
+\item 
+void \mbox{\hyperlink{class_pairing_a3c74563d6fc78671141f9c74e599f631}{mul}} (element\+\_\+t t, element\+\_\+t a, mpz\+\_\+t b\+\_\+)
+\item 
+void \mbox{\hyperlink{class_pairing_a74aceb4a2df6848d5b1b00ff501aad91}{mul}} (element\+\_\+t t, element\+\_\+t a, long long b)
+\item 
+void \mbox{\hyperlink{class_pairing_a0f15149ce5ab6ac138c794f1cd65313b}{exp}} (element\+\_\+t t, element\+\_\+t a, mpz\+\_\+t x)
+\item 
+void \mbox{\hyperlink{class_pairing_a4b1e2ce257537850991c006b5daed926}{exp}} (element\+\_\+t t, element\+\_\+t a, unsigned long x)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+pairing\+\_\+t \mbox{\hyperlink{class_pairing_a1728bea966a98b08ba230a4c8c702bc8}{pairing}}
+\item 
+element\+\_\+t \mbox{\hyperlink{class_pairing_ab5050a352eeed86579de8e701987f817}{gen\+\_\+\+G1}}
+\item 
+element\+\_\+t \mbox{\hyperlink{class_pairing_a99a0f6565e9167d38aeca3fdecc7c3cc}{gen\+\_\+\+G2}}
+\item 
+element\+\_\+t \mbox{\hyperlink{class_pairing_a46b3d670325c4e74d5d286a016220efd}{gen\+\_\+\+GT}}
+\item 
+element\+\_\+t \mbox{\hyperlink{class_pairing_ad6b1aefff01fc25e5bfe6da07940835e}{gen\+\_\+\+Zr}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pairing_a60a8492f7247f09b735b7c1e423e691e}\label{class_pairing_a60a8492f7247f09b735b7c1e423e691e}} 
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{Pairing()}{Pairing()}\hspace{0.1cm}{\footnotesize\ttfamily [1/7]}}
+{\footnotesize\ttfamily Pairing\+::\+Pairing (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{param\+File }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a87d1b35f3a4784049dd17e2018be39ec}\label{class_pairing_a87d1b35f3a4784049dd17e2018be39ec}} 
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{Pairing()}{Pairing()}\hspace{0.1cm}{\footnotesize\ttfamily [2/7]}}
+{\footnotesize\ttfamily Pairing\+::\+Pairing (\begin{DoxyParamCaption}\item[{string}]{type,  }\item[{mpz\+\_\+t}]{p,  }\item[{mpz\+\_\+t}]{q }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a768eb8fe7d0fe1c5119794b95e11c21b}\label{class_pairing_a768eb8fe7d0fe1c5119794b95e11c21b}} 
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{Pairing()}{Pairing()}\hspace{0.1cm}{\footnotesize\ttfamily [3/7]}}
+{\footnotesize\ttfamily Pairing\+::\+Pairing (\begin{DoxyParamCaption}\item[{string}]{type,  }\item[{mpz\+\_\+t}]{p,  }\item[{unsigned long}]{q }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a7152ba4d8eae6fa4330152c903ee6513}\label{class_pairing_a7152ba4d8eae6fa4330152c903ee6513}} 
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{Pairing()}{Pairing()}\hspace{0.1cm}{\footnotesize\ttfamily [4/7]}}
+{\footnotesize\ttfamily Pairing\+::\+Pairing (\begin{DoxyParamCaption}\item[{string}]{type,  }\item[{unsigned long}]{p,  }\item[{mpz\+\_\+t}]{q }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_ab3998b5acbcd08691932d96dffa72bf8}\label{class_pairing_ab3998b5acbcd08691932d96dffa72bf8}} 
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{Pairing()}{Pairing()}\hspace{0.1cm}{\footnotesize\ttfamily [5/7]}}
+{\footnotesize\ttfamily Pairing\+::\+Pairing (\begin{DoxyParamCaption}\item[{string}]{type,  }\item[{unsigned long}]{rbits,  }\item[{unsigned long}]{qbits }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a5f0558e7e7d3100f6fdc11a589ac3f9f}\label{class_pairing_a5f0558e7e7d3100f6fdc11a589ac3f9f}} 
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{Pairing()}{Pairing()}\hspace{0.1cm}{\footnotesize\ttfamily [6/7]}}
+{\footnotesize\ttfamily Pairing\+::\+Pairing (\begin{DoxyParamCaption}\item[{string}]{type,  }\item[{mpz\+\_\+t}]{Discriminant }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a3436a525ed6899d7e173d30a2906efeb}\label{class_pairing_a3436a525ed6899d7e173d30a2906efeb}} 
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\index{Pairing@{Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{Pairing()}{Pairing()}\hspace{0.1cm}{\footnotesize\ttfamily [7/7]}}
+{\footnotesize\ttfamily Pairing\+::\+Pairing (\begin{DoxyParamCaption}\item[{string}]{type,  }\item[{unsigned long}]{Discriminant }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_ac862dbefef309d60ebc76b7c3c09d21b}\label{class_pairing_ac862dbefef309d60ebc76b7c3c09d21b}} 
+\index{Pairing@{Pairing}!````~Pairing@{$\sim$Pairing}}
+\index{````~Pairing@{$\sim$Pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{$\sim$Pairing()}{~Pairing()}}
+{\footnotesize\ttfamily Pairing\+::$\sim$\+Pairing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pairing_af4967c95389cef82567bed0c03c3ea40}\label{class_pairing_af4967c95389cef82567bed0c03c3ea40}} 
+\index{Pairing@{Pairing}!add@{add}}
+\index{add@{add}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void Pairing\+::add (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{element\+\_\+t}]{b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_ae1294a68fbddfba1fe625c0204d6e00e}\label{class_pairing_ae1294a68fbddfba1fe625c0204d6e00e}} 
+\index{Pairing@{Pairing}!div@{div}}
+\index{div@{div}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{div()}{div()}}
+{\footnotesize\ttfamily void Pairing\+::div (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{element\+\_\+t}]{b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a293310ee66d21b6efbd1fad6cf608f63}\label{class_pairing_a293310ee66d21b6efbd1fad6cf608f63}} 
+\index{Pairing@{Pairing}!exp@{exp}}
+\index{exp@{exp}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{exp()}{exp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Pairing\+::exp (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{element\+\_\+t}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a0f15149ce5ab6ac138c794f1cd65313b}\label{class_pairing_a0f15149ce5ab6ac138c794f1cd65313b}} 
+\index{Pairing@{Pairing}!exp@{exp}}
+\index{exp@{exp}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{exp()}{exp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Pairing\+::exp (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{mpz\+\_\+t}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a4b1e2ce257537850991c006b5daed926}\label{class_pairing_a4b1e2ce257537850991c006b5daed926}} 
+\index{Pairing@{Pairing}!exp@{exp}}
+\index{exp@{exp}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{exp()}{exp()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Pairing\+::exp (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{unsigned long}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a7b324f62229ed59477f264f870b48626}\label{class_pairing_a7b324f62229ed59477f264f870b48626}} 
+\index{Pairing@{Pairing}!generator\_G1@{generator\_G1}}
+\index{generator\_G1@{generator\_G1}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{generator\_G1()}{generator\_G1()}}
+{\footnotesize\ttfamily void Pairing\+::generator\+\_\+\+G1 (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a9ab92389278eca52cc6ec6cf0ff00833}\label{class_pairing_a9ab92389278eca52cc6ec6cf0ff00833}} 
+\index{Pairing@{Pairing}!generator\_G2@{generator\_G2}}
+\index{generator\_G2@{generator\_G2}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{generator\_G2()}{generator\_G2()}}
+{\footnotesize\ttfamily void Pairing\+::generator\+\_\+\+G2 (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_acf4143589d0765a2329d57441f0eeae4}\label{class_pairing_acf4143589d0765a2329d57441f0eeae4}} 
+\index{Pairing@{Pairing}!generator\_GT@{generator\_GT}}
+\index{generator\_GT@{generator\_GT}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{generator\_GT()}{generator\_GT()}}
+{\footnotesize\ttfamily void Pairing\+::generator\+\_\+\+GT (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_adc8a4ad404539cad9192028cc4e1f539}\label{class_pairing_adc8a4ad404539cad9192028cc4e1f539}} 
+\index{Pairing@{Pairing}!generator\_Zr@{generator\_Zr}}
+\index{generator\_Zr@{generator\_Zr}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{generator\_Zr()}{generator\_Zr()}}
+{\footnotesize\ttfamily void Pairing\+::generator\+\_\+\+Zr (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a82f81d590c6269e4e82d2fdaf92fd387}\label{class_pairing_a82f81d590c6269e4e82d2fdaf92fd387}} 
+\index{Pairing@{Pairing}!identity@{identity}}
+\index{identity@{identity}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{identity()}{identity()}}
+{\footnotesize\ttfamily void Pairing\+::identity (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a9b870def692371bbbefe3991d9b28ce0}\label{class_pairing_a9b870def692371bbbefe3991d9b28ce0}} 
+\index{Pairing@{Pairing}!inverse@{inverse}}
+\index{inverse@{inverse}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{inverse()}{inverse()}}
+{\footnotesize\ttfamily void Pairing\+::inverse (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a1dd76cf0953d20830a194bf5d4e68a32}\label{class_pairing_a1dd76cf0953d20830a194bf5d4e68a32}} 
+\index{Pairing@{Pairing}!mul@{mul}}
+\index{mul@{mul}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{mul()}{mul()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Pairing\+::mul (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{element\+\_\+t}]{b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a74aceb4a2df6848d5b1b00ff501aad91}\label{class_pairing_a74aceb4a2df6848d5b1b00ff501aad91}} 
+\index{Pairing@{Pairing}!mul@{mul}}
+\index{mul@{mul}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{mul()}{mul()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Pairing\+::mul (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{long long}]{b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a3c74563d6fc78671141f9c74e599f631}\label{class_pairing_a3c74563d6fc78671141f9c74e599f631}} 
+\index{Pairing@{Pairing}!mul@{mul}}
+\index{mul@{mul}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{mul()}{mul()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Pairing\+::mul (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{mpz\+\_\+t}]{b\+\_\+ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a5dbba2cba4fd2f5bb020d0ac38b0f52d}\label{class_pairing_a5dbba2cba4fd2f5bb020d0ac38b0f52d}} 
+\index{Pairing@{Pairing}!negate@{negate}}
+\index{negate@{negate}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{negate()}{negate()}}
+{\footnotesize\ttfamily void Pairing\+::negate (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a31d7deb794002ed10524e6c8e42f6c86}\label{class_pairing_a31d7deb794002ed10524e6c8e42f6c86}} 
+\index{Pairing@{Pairing}!order@{order}}
+\index{order@{order}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{order()}{order()}}
+{\footnotesize\ttfamily void Pairing\+::order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_af5e63bfbe1658057712487ae1f8a79d1}\label{class_pairing_af5e63bfbe1658057712487ae1f8a79d1}} 
+\index{Pairing@{Pairing}!random\_G1@{random\_G1}}
+\index{random\_G1@{random\_G1}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{random\_G1()}{random\_G1()}}
+{\footnotesize\ttfamily void Pairing\+::random\+\_\+\+G1 (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a27e75a2d69f5edc850ce4c62ec361eda}\label{class_pairing_a27e75a2d69f5edc850ce4c62ec361eda}} 
+\index{Pairing@{Pairing}!random\_G2@{random\_G2}}
+\index{random\_G2@{random\_G2}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{random\_G2()}{random\_G2()}}
+{\footnotesize\ttfamily void Pairing\+::random\+\_\+\+G2 (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a730c7b2d6fae612c6aa7c1aabb930208}\label{class_pairing_a730c7b2d6fae612c6aa7c1aabb930208}} 
+\index{Pairing@{Pairing}!random\_GT@{random\_GT}}
+\index{random\_GT@{random\_GT}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{random\_GT()}{random\_GT()}}
+{\footnotesize\ttfamily void Pairing\+::random\+\_\+\+GT (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a3bf12bbb27d6baa570a70561286e4401}\label{class_pairing_a3bf12bbb27d6baa570a70561286e4401}} 
+\index{Pairing@{Pairing}!random\_Zr@{random\_Zr}}
+\index{random\_Zr@{random\_Zr}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{random\_Zr()}{random\_Zr()}}
+{\footnotesize\ttfamily void Pairing\+::random\+\_\+\+Zr (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pairing_a95ada5835958ce2d973f3de6d7a11fee}\label{class_pairing_a95ada5835958ce2d973f3de6d7a11fee}} 
+\index{Pairing@{Pairing}!sub@{sub}}
+\index{sub@{sub}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{sub()}{sub()}}
+{\footnotesize\ttfamily void Pairing\+::sub (\begin{DoxyParamCaption}\item[{element\+\_\+t}]{t,  }\item[{element\+\_\+t}]{a,  }\item[{element\+\_\+t}]{b }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_pairing_ab5050a352eeed86579de8e701987f817}\label{class_pairing_ab5050a352eeed86579de8e701987f817}} 
+\index{Pairing@{Pairing}!gen\_G1@{gen\_G1}}
+\index{gen\_G1@{gen\_G1}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{gen\_G1}{gen\_G1}}
+{\footnotesize\ttfamily element\+\_\+t Pairing\+::gen\+\_\+\+G1}
+
+\mbox{\Hypertarget{class_pairing_a99a0f6565e9167d38aeca3fdecc7c3cc}\label{class_pairing_a99a0f6565e9167d38aeca3fdecc7c3cc}} 
+\index{Pairing@{Pairing}!gen\_G2@{gen\_G2}}
+\index{gen\_G2@{gen\_G2}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{gen\_G2}{gen\_G2}}
+{\footnotesize\ttfamily element\+\_\+t Pairing\+::gen\+\_\+\+G2}
+
+\mbox{\Hypertarget{class_pairing_a46b3d670325c4e74d5d286a016220efd}\label{class_pairing_a46b3d670325c4e74d5d286a016220efd}} 
+\index{Pairing@{Pairing}!gen\_GT@{gen\_GT}}
+\index{gen\_GT@{gen\_GT}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{gen\_GT}{gen\_GT}}
+{\footnotesize\ttfamily element\+\_\+t Pairing\+::gen\+\_\+\+GT}
+
+\mbox{\Hypertarget{class_pairing_ad6b1aefff01fc25e5bfe6da07940835e}\label{class_pairing_ad6b1aefff01fc25e5bfe6da07940835e}} 
+\index{Pairing@{Pairing}!gen\_Zr@{gen\_Zr}}
+\index{gen\_Zr@{gen\_Zr}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{gen\_Zr}{gen\_Zr}}
+{\footnotesize\ttfamily element\+\_\+t Pairing\+::gen\+\_\+\+Zr}
+
+\mbox{\Hypertarget{class_pairing_a1728bea966a98b08ba230a4c8c702bc8}\label{class_pairing_a1728bea966a98b08ba230a4c8c702bc8}} 
+\index{Pairing@{Pairing}!pairing@{pairing}}
+\index{pairing@{pairing}!Pairing@{Pairing}}
+\doxysubsubsection{\texorpdfstring{pairing}{pairing}}
+{\footnotesize\ttfamily pairing\+\_\+t Pairing\+::pairing}
+
