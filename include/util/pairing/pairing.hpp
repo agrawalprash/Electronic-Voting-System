@@ -71,7 +71,3 @@ class Pairing
         void exp(element_t t, element_t a, mpz_t x);
         void exp(element_t t, element_t a, unsigned long x);    
 };
-
-// namespaces
-// virtual functions
-// friend functions

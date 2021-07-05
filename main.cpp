@@ -1,4 +1,4 @@
-#include "defines.hpp"
+#include "common.hpp"
 #include "evm/receipt.hpp"
 #include "verif/generate_ballot.hpp"
 
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
     d2 = (double)(end-start)*1000/(double)CLOCKS_PER_SEC;
     
-    #ifndef __TESTING__
+    #ifndef __UNIT_TESTING__
     cout << "----------------------------------------------------\n";
     cout << "\nSUCCESS\n";
     cout << "C_u * c_vote is a commitment for w\n\n";

@@ -1,3 +1,4 @@
+#define __UNIT_TESTING__
 #include <iostream>
 #include <string>
 #include <gtest/gtest.h>
@@ -194,6 +195,7 @@ TEST(VotingProtocol, Protocol)
     int TotalCount = _VOTERS_;
     
     PairingGeneration::initialize();
+    ev = new EVM();
     
     generateBallot(TotalCount);
 
@@ -201,12 +203,11 @@ TEST(VotingProtocol, Protocol)
     {        
         int vote = rand() % _CANDIDATES_;
         
-        ev = new EVM(vote);
-
         vector<int> w_m;
         ballot_paper[i]->get_w_m_list(w_m);
         check_vote = w_m[vote];
 
+        ev->candidate_selection(vote);
         ev->ballot_scanning(ballot_paper[i]); // EVM receipt and VVPR receipt generated
 
         Voter_Receipt* vt_receipt = new Voter_Receipt();

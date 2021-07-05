@@ -6,6 +6,24 @@ add_subdirectory(
     build/googletest
 ) # add googletest subdirectory
 
+MACRO(SUBDIRLIST result firstdir curdir)
+    file(GLOB ENDF6_SRC_TOP RELATIVE
+        ${curdir} ${curdir}/*)
+    file(GLOB_RECURSE ENDF6_SRC_NESTED ${curdir}/*)
+    set(children ${ENDF6_SRC_TOP} ${ENDF6_SRC_NESTED})
+
+    SET(dirlist "${firstdir}")
+    FOREACH(child ${children})
+        IF(IS_DIRECTORY ${curdir}/${child})
+            LIST(APPEND dirlist ${curdir}/${child})
+        ENDIF()
+    ENDFOREACH()
+    SET(${result} ${dirlist})
+ENDMACRO()
+
+SUBDIRLIST(result . .)
+message("Value: ${result}")
+
 include_directories(
     googletest/include
     /usr/local/include/pbc

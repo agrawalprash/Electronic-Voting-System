@@ -23,10 +23,3 @@ namespace Commitment
 
     bool open(element_t Commitment, element_t Message, element_t random, Pairing *pairing);
 }
-
-// Class for Commitment, Setup, commit, open
-// virtual functions <- modularize
-// UML diagrams
-// Class diagrams
-// activity, behaviour diagrams
-// How these diagrams can be used to stitch together

@@ -86,3 +86,12 @@ void Ballot::get_w_m_list(vector<int> &v)
         v.push_back(w_m[i]);
     }
 }
+
+void Ballot::get_candidate_list(vector<string> &v)
+{
+    v.clear();
+    for(size_t i=0;i<candidates.size();i++)
+    {
+        v.push_back(candidates[i]);
+    }
+}

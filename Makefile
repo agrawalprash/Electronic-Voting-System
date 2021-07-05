@@ -39,6 +39,8 @@ OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
 all: $(OUTPUT) $(BUILDDIRS) $(MAIN)
 	@echo Executing 'all' complete!
 
+full: complete_clean all run
+
 $(OUTPUT):
 	$(MD) $(OUTPUT)
 

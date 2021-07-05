@@ -21,6 +21,7 @@ class Ballot
         void get_total_candidates(int &t);
         void get_obf_token_rem(int &t);
         void get_w_m_list(vector<int> &v);
+        void get_candidate_list(vector<string> &v);
 
     private:
         

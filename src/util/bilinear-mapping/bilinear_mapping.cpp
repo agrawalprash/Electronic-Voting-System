@@ -33,17 +33,10 @@ namespace BilinearMapping
         
         element_init_same_as(temp2, g2);
         
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
         element_init_GT(t, pairing->pairing);
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
-
         
         element_pow_zn(temp1, g1, a);
         element_pow_mpz(temp2, g2, b);
-
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
-        // element_printf("%B %B",temp1,temp2);
-        
 
         pairing_apply(t, temp1, temp2, pairing->pairing);
 
@@ -58,19 +51,10 @@ namespace BilinearMapping
         element_init_same_as(temp1, g1);
         
         element_init_same_as(temp2, g2);
-        
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
         element_init_GT(t, pairing->pairing);
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
-
-        
+    
         element_pow_mpz(temp1, g1, a);
         element_pow_zn(temp2, g2, b);
-
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
-        // element_printf("%B %B",temp1,temp2);
-        
-
         pairing_apply(t, temp1, temp2, pairing->pairing);
 
         element_clear(temp1);
@@ -85,19 +69,10 @@ namespace BilinearMapping
         element_init_same_as(temp1, g1);
         
         element_init_same_as(temp2, g2);
-        
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
         element_init_GT(t, pairing->pairing);
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
-
         
         element_pow_mpz(temp1, g1, a);
         element_pow_mpz(temp2, g2, b);
-
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
-        // element_printf("%B %B",temp1,temp2);
-        
-
         pairing_apply(t, temp1, temp2, pairing->pairing);
 
         element_clear(temp1);
@@ -111,7 +86,6 @@ namespace BilinearMapping
         mpz_init(b);
         mpz_set_ui(a,a_);
         mpz_set_ui(b,b_);
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
         BilinearMapping(t, g1, a, g2, b, pairing);
     }
 
@@ -119,8 +93,7 @@ namespace BilinearMapping
     {
         mpz_t a;
         mpz_init(a);
-        mpz_set_ui(a,a_);
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
+        mpz_set_ui(a,a_);        
         BilinearMapping(t, g1, a, g2, b_, pairing);
     }
 
@@ -129,7 +102,6 @@ namespace BilinearMapping
         mpz_t b;
         mpz_init(b);
         mpz_set_ui(b,b_);
-        // element_printf("%B %Zd %B %Zd\n",g1,a,g2,b);
         BilinearMapping(t, g1, a_, g2, b, pairing);
     }
 }
