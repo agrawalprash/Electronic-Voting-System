@@ -54,16 +54,15 @@ $(BUILD)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE_PBC) $(INCLUDES) -c $< -o $@ 
 
 .PHONY: clean
-clean:
-	$(RM) $(OUTPUTMAIN)
-	$(RM) $(call FIXPATH,$(OBJECTS))
-	@echo Cleanup complete!
+# clean:
+# 	$(RM) $(OUTPUTMAIN)
+# 	$(RM) $(call FIXPATH,$(OBJECTS))
+# 	@echo Cleanup complete!
 
-complete_clean:
-	$(RM) build
-	$(RM) output
-	$(RM) googletest
-	$(RM) master.zip
+clean:
+	$(RM) $(BUILD)
+	$(RM) $(OUTPUT)
+	@echo Cleanup complete!
 
 run: all
 	./$(OUTPUTMAIN) ${args}
@@ -101,6 +100,7 @@ help:
 	@echo "    all:\tcompile all files and generate the executable target file"
 	@echo "    run:\tcompile the main file and run the executable target file"
 	@echo "    test:\tunit testing"
+	@echo "    full:\trebuild the object files and the executable target file"
 	@echo "    install:\tinstalls googletest in build"
 	@echo "    clean:\tremove build, output directory"
 	@echo "    help:\tdisplay help"
