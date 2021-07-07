@@ -214,16 +214,16 @@ TEST(VotingProtocol, Protocol)
         Voter_Receipt* vt_receipt = new Voter_Receipt();
         ev->get_voter_receipt(vt_receipt);
         ballot_paper[i]->get_c_rid(vt_receipt->c_rid);
-        ballot_paper[i]->get_c_u(vt_receipt->C_u);
+        ballot_paper[i]->get_c_u(vt_receipt->c_u);
 
-        element_t C_w;
-        pg->mul(C_w, vt_receipt->C_u, vt_receipt->c_vote);
-        bool proof = Commitment::open(C_w, vt_receipt->w, vt_receipt->r_w, pg);
+        element_t c_w;
+        pg->mul(c_w, vt_receipt->c_u, vt_receipt->c_vote);
+        bool proof = Commitment::open(c_w, vt_receipt->w, vt_receipt->r_w, pg);
 
         GTEST_ASSERT_EQ(check_vote, vt_receipt->w_m);
         GTEST_ASSERT_TRUE(proof);
 
-        element_clear(C_w);
+        element_clear(c_w);
         delete(vt_receipt);    
     }
 }

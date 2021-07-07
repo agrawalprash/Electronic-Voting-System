@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "time.h": "c",
+        "vector": "cpp"
+    },
+    "files.maxMemoryForLargeFilesMB": 2048,
+    "C_Cpp.errorSquiggles": "Enabled"
+}

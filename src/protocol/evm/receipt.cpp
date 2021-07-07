@@ -67,14 +67,14 @@ void voter_receipt(int VoterIndex)
     Voter_Receipt* vt_receipt = new Voter_Receipt();
     ev->get_voter_receipt(vt_receipt);
     ballot_paper[VoterIndex]->get_c_rid(vt_receipt->c_rid);
-    ballot_paper[VoterIndex]->get_c_u(vt_receipt->C_u);
+    ballot_paper[VoterIndex]->get_c_u(vt_receipt->c_u);
 
     #ifndef __UNIT_TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {    
         cout << "\nVoter Receipt:\n";
-        cout << "(c_rid, C_u, c_vote, w_m, w, r_w): (" << vt_receipt->c_rid << ", " 
-             << vt_receipt->C_u << ", " << vt_receipt->c_vote << ", " 
+        cout << "(c_rid, c_u, c_vote, w_m, w, r_w): (" << vt_receipt->c_rid << ", " 
+             << vt_receipt->c_u << ", " << vt_receipt->c_vote << ", " 
              << vt_receipt->w_m << ", " << vt_receipt->w << ", " << vt_receipt->r_w << ")\n";
     }
     
@@ -86,14 +86,14 @@ void voter_receipt(int VoterIndex)
 
     #ifdef __INTERACTIVE__
         cout << "\nVoter Receipt:\n";
-        cout << "(c_rid, C_u, c_vote, w_m, w, r_w): (" << vt_receipt->c_rid << ", " 
-             << vt_receipt->C_u << ", " << vt_receipt->c_vote << ", " 
+        cout << "(c_rid, c_u, c_vote, w_m, w, r_w): (" << vt_receipt->c_rid << ", " 
+             << vt_receipt->c_u << ", " << vt_receipt->c_vote << ", " 
              << vt_receipt->w_m << ", " << vt_receipt->w << ", " << vt_receipt->r_w << ")\n";
     #endif
 
     element_t c_w;
 
-    pg->mul(c_w, vt_receipt->C_u, vt_receipt->c_vote);
+    pg->mul(c_w, vt_receipt->c_u, vt_receipt->c_vote);
     bool proof = Commitment::open(c_w, vt_receipt->w, vt_receipt->r_w, pg);
 
     #ifndef __UNIT_TESTING__

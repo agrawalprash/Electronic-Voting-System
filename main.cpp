@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     #ifndef __UNIT_TESTING__
     cout << "----------------------------------------------------\n";
     cout << "\nSUCCESS\n";
-    cout << "C_u * c_vote is a commitment for w\n\n";
+    cout << "c_u * c_vote is a commitment for w\n\n";
 
     cout << "Avg. Time for ballot generation: " << d1/(_VOTERS_+1) << "ms\n";
     cout << "Avg. Time for voting procedure : " << d2/Voters << "ms\n";

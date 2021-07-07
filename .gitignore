@@ -1,11 +1,6 @@
-googletest
 build
 output
-*.zip
-testing/include
-TodoList
-Makefile_pbc_installation
-.vscode
+/.vscode
 main
 param
 docs/html

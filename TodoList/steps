@@ -1,0 +1,44 @@
+// virtual functions <- modularize
+// UML diagrams
+// Class diagrams
+// activity, behaviour diagrams
+// How these diagrams can be used to stitch together
+
+
+// namespaces
+// virtual functions
+// friend functions
+
+
+// DEBUG__ CODE
+// precondtion and postcondition (For every function as  an assert expression)
+
+// Pass a flag while compilation and use it as #ifdef DEBUG then print the values
+
+// Make a note of replications
+// Each function should come with Doxygen (search) annotated summary
+// Annotation languages
+// Document code
+// Each class should have pretty printing functions (DEBUGGING)
+
+// Exceptions
+// Protocol Exception
+// Input    Exceptions
+// Use try and catch block
+// Exception object
+// Error code
+// Guard
+
+// Collecting all the votes (Table)
+// API for the EVM
+
+Encryption
+Signatures
+Elgamal Encryption
+
+Remove group operations from Pairing class and make them global
+
+
+Interface with PDF library
+QR code libraries
+Convert bits to QR code (Integrate them with the model)
