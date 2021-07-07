@@ -1,5 +1,6 @@
 #include "common.hpp"
 #include "evm/receipt.hpp"
+#include "signature/signature.hpp"
 
 Ballot* ballot_paper[_VOTERS_+1];
 EVM *ev = new EVM();
@@ -69,6 +70,16 @@ void voter_receipt(int VoterIndex)
     ballot_paper[VoterIndex]->get_c_rid(vt_receipt->c_rid);
     ballot_paper[VoterIndex]->get_c_u(vt_receipt->c_u);
 
+    element_t private_key;
+    element_t signature_c_rid;
+    element_t signature_c_u;
+    element_t signature_c_vote;
+    pg->random_Zr(private_key);
+
+    Signature::bls_signature(signature_c_rid, vt_receipt->c_rid, private_key);
+    Signature::bls_signature(signature_c_u, vt_receipt->c_u, private_key);
+    Signature::bls_signature(signature_c_vote, vt_receipt->c_vote, private_key);
+
     #ifndef __UNIT_TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {    
@@ -76,6 +87,11 @@ void voter_receipt(int VoterIndex)
         cout << "(c_rid, c_u, c_vote, w_m, w, r_w): (" << vt_receipt->c_rid << ", " 
              << vt_receipt->c_u << ", " << vt_receipt->c_vote << ", " 
              << vt_receipt->w_m << ", " << vt_receipt->w << ", " << vt_receipt->r_w << ")\n";
+            
+        cout << "\nDigital Signature:\n\n";
+        cout << "Private key: " << private_key << "\n";
+        cout << "c_rid, c_u, c_vote: " << signature_c_rid << ", " << 
+                signature_c_u << ", " << signature_c_vote << "\n\n";
     }
     
     if(PRINT_PROCEDURE && VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)

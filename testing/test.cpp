@@ -14,6 +14,7 @@
 #include "evm/receipt.hpp"
 #include "verif/generate_ballot.hpp"
 #include "encryption/encryption.hpp"
+#include "signature/signature.hpp"
 
 using namespace HelperFunctions;
 using namespace BilinearMapping;
@@ -232,6 +233,61 @@ TEST(ElgamalEncryptionScheme, Encryption)
 {
     bool result = Encryption::encryption();
     GTEST_ASSERT_TRUE(result);
+}
+
+TEST(DigitalSignature, BLS)
+{
+    int TotalCount = _VOTERS_;
+    
+    PairingGeneration::initialize();
+    ev = new EVM();
+    
+    generateBallot(TotalCount);
+
+    for(int i=0; i < TotalCount; ++i)
+    {        
+        int vote = rand() % _CANDIDATES_;
+        
+        vector<int> w_m;
+        ballot_paper[i]->get_w_m_list(w_m);
+        check_vote = w_m[vote];
+
+        ev->candidate_selection(vote);
+        ev->ballot_scanning(ballot_paper[i]); // EVM receipt and VVPR receipt generated
+
+        Voter_Receipt* vt_receipt = new Voter_Receipt();
+        ev->get_voter_receipt(vt_receipt);
+        ballot_paper[i]->get_c_rid(vt_receipt->c_rid);
+        ballot_paper[i]->get_c_u(vt_receipt->c_u);
+
+        element_t private_key;
+        element_t public_key;
+        element_t gen;
+        element_t signature_c_rid;
+        element_t signature_c_u;
+        element_t signature_c_vote;
+
+        pg->generator_G1(gen);
+        pg->random_Zr(private_key);
+        pg->exp(public_key, gen, private_key);
+
+        Signature::bls_signature(signature_c_rid, vt_receipt->c_rid, private_key);
+        Signature::bls_signature(signature_c_u, vt_receipt->c_u, private_key);
+        Signature::bls_signature(signature_c_vote, vt_receipt->c_vote, private_key);
+
+        GTEST_ASSERT_TRUE(Signature::verify_signature(gen, signature_c_rid, public_key, vt_receipt->c_rid));
+        GTEST_ASSERT_TRUE(Signature::verify_signature(gen, signature_c_u, public_key, vt_receipt->c_u));
+        GTEST_ASSERT_TRUE(Signature::verify_signature(gen, signature_c_vote, public_key, vt_receipt->c_vote));
+
+        element_clear(private_key);
+        element_clear(public_key);
+        element_clear(gen);
+        element_clear(signature_c_rid);
+        element_clear(signature_c_u);
+        element_clear(signature_c_vote);
+        
+        delete(vt_receipt);    
+    }
 }
 
 int main(int argc, char* argv[])

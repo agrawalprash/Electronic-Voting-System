@@ -4,14 +4,16 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/include/pbc"
+                "/usr/local/include/pbc",
+                "${workspaceFolder}/include/util",
+                "${workspaceFolder}/include/protocol",
+                "${workspaceFolder}/include/protocol/ea"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c11",
             "cppStandard": "c++14",
-            "intelliSenseMode": "linux-clang-x64",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "intelliSenseMode": "linux-clang-x64"
         }
     ],
     "version": 4

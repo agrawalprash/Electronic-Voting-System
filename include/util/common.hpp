@@ -43,7 +43,7 @@ namespace PairingGeneration
 
 
 // =================================== a1 ===================================
-#define _VOTERS_    10
+#define _VOTERS_    100
 #define _CANDIDATES_ Candidate_List.size()
 // =================================== a1 ===================================
 
