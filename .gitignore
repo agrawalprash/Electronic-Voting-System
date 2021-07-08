@@ -5,3 +5,8 @@ main
 param
 docs/html
 docs/latex
+QR-Code-generator
+BarCode
+Aspose.BarCode_for_Cpp_Linux_21.5
+source_files
+qr_code.py

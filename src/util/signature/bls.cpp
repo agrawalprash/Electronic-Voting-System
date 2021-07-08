@@ -11,9 +11,9 @@ namespace Signature
         element_init_same_as(hash, message);
         element_init_same_as(signature, message);
         
-        char s[2000];
-        element_snprint(s, 2000, message);
-        element_from_hash(hash, s, sizeof(s)/sizeof(s[0]));
+        char s[_ARRAY_SIZE_];
+        element_snprint(s, _ARRAY_SIZE_, message);
+        element_from_hash(hash, s, _ARRAY_SIZE_);
         element_pow_zn(signature, hash, private_key);
 
         element_clear(hash);        
@@ -29,9 +29,9 @@ namespace Signature
         element_t hash;
         element_init_same_as(hash, message);
         
-        char s[2000];
-        element_snprint(s, 2000, message);
-        element_from_hash(hash, s, sizeof(s)/sizeof(s[0]));
+        char s[_ARRAY_SIZE_];
+        element_snprint(s, _ARRAY_SIZE_, message);
+        element_from_hash(hash, s, _ARRAY_SIZE_);
         
         pairing_apply(temp1, g, signature, pg->pairing);        
         pairing_apply(temp2, public_key, hash, pg->pairing);
