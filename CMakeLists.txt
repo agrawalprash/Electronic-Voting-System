@@ -33,6 +33,7 @@ include_directories(
     include/util/commitment
     include/util/encryption
     include/util/signature
+    include/util/hash
     include/protocol
     include/protocol/ea
     include/protocol/ea/ballot
@@ -52,6 +53,7 @@ add_executable(
     src/util/commitment/commitment.cpp
     src/util/bilinear-mapping/bilinear_mapping.cpp
     src/util/signature/bls.cpp
+    src/util/hash/sha256.cpp
     src/protocol/evm/evm.cpp    
     src/protocol/ea/ballot/ballot.cpp
     src/util/common.cpp

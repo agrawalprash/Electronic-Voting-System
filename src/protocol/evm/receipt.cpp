@@ -71,14 +71,21 @@ void voter_receipt(int VoterIndex)
     ballot_paper[VoterIndex]->get_c_u(vt_receipt->c_u);
 
     element_t private_key;
+    element_t public_key;
+    element_t gen;
     element_t signature_c_rid;
     element_t signature_c_u;
     element_t signature_c_vote;
+    
+    pg->generator_G1(gen);
     pg->random_Zr(private_key);
+    pg->exp(public_key, gen, private_key);
 
     Signature::bls_signature(signature_c_rid, vt_receipt->c_rid, private_key);
     Signature::bls_signature(signature_c_u, vt_receipt->c_u, private_key);
     Signature::bls_signature(signature_c_vote, vt_receipt->c_vote, private_key);
+
+    Signature::verify_signature(gen, signature_c_rid, public_key, vt_receipt->c_rid);
 
     #ifndef __UNIT_TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)

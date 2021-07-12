@@ -1,7 +1,6 @@
 #include "pbc.h"
-
-
 #include "pairing/pairing.hpp"
+#include "hash/sha256.h"
 
 namespace Signature
 {
