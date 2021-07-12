@@ -11,17 +11,20 @@ namespace Signature
         element_init_same_as(hash, message);
         element_init_same_as(signature, message);
         
+        // SHA-256 algorithm
+
         char s[_ARRAY_SIZE_];
         element_snprint(s, _ARRAY_SIZE_, message);
         element_from_hash(hash, s, _ARRAY_SIZE_);
+        cout << hash << endl;
         element_pow_zn(signature, hash, private_key);
 
-        element_clear(hash);        
+        element_clear(hash);
     }
 
     bool verify_signature(element_t g, element_t signature, element_t public_key, element_t message)
     {
-        element_t temp1, temp2;        
+        element_t temp1, temp2;
         
         element_init_GT(temp1, pg->pairing);
         element_init_GT(temp2, pg->pairing);
