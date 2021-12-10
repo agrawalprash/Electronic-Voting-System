@@ -3,6 +3,7 @@
 #include "signature/signature.hpp"
 
 Ballot* ballot_paper[_VOTERS_+1];
+Voter_Receipt* vt_receipt_list[_VOTERS_+1];
 EVM *ev = new EVM();
 int check_vote;
 
@@ -63,7 +64,7 @@ void evm_vvpr_receipt(int VoterIndex)
     delete(v_r);
 }
 
-void voter_receipt(int VoterIndex)
+Voter_Receipt* voter_receipt(int VoterIndex)
 {    
     Voter_Receipt* vt_receipt = new Voter_Receipt();
     ev->get_voter_receipt(vt_receipt);
@@ -84,8 +85,6 @@ void voter_receipt(int VoterIndex)
     Signature::bls_signature(signature_c_rid, vt_receipt->c_rid, private_key);
     Signature::bls_signature(signature_c_u, vt_receipt->c_u, private_key);
     Signature::bls_signature(signature_c_vote, vt_receipt->c_vote, private_key);
-
-    Signature::verify_signature(gen, signature_c_rid, public_key, vt_receipt->c_rid);
 
     #ifndef __UNIT_TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
@@ -127,7 +126,8 @@ void voter_receipt(int VoterIndex)
     }
     #endif
     element_clear(c_w);
-    delete(vt_receipt);
+    
+    return vt_receipt;
 }
 
 void procedure(int TotalCount)
@@ -163,13 +163,13 @@ void procedure(int TotalCount)
             
         #ifndef __UNIT_TESTING__
         if(PRINT_PROCEDURE && i%REMAINDER_FOR_PRINT==0)
-        {            
+        {
             cout << "\e[1m\n\n========================================= Voter: " << i+1 << " =========================================" << endl;
             for(size_t i=0;i<w_m.size();i++)
             {
                 cout << i << ".) " << candidates[i] << ": " << w_m[i] << "\n";
             }
-            cout << "\nVote: " << vote << "\n\n";            
+            cout << "\nVote: " << vote << "\n\n";
         }
         #endif
 
@@ -179,13 +179,15 @@ void procedure(int TotalCount)
 
         evm_vvpr_receipt(i);
 
-        voter_receipt(i);
+        Voter_Receipt* vt_receipt = voter_receipt(i);
+
+        vt_receipt_list[i] = vt_receipt;
 
         #ifndef __UNIT_TESTING__
         if(i == TotalCount - 1)std::cout << "Processed: " << i+1 << "/" << TotalCount<<"\n";
         else std::cout << "Processed: " << i+1 << "/" << TotalCount  << "    " << '\r' << flush;
         // else std::cout << "Processed: " << i+1 << "/" << TotalCount  << "\n";
-        #endif        
+        #endif
     }
 
     #ifndef __UNIT_TESTING__

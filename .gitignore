@@ -5,9 +5,14 @@ main
 param
 docs/html
 docs/latex
-QR-Code-generator
 BarCode
 Aspose.BarCode_for_Cpp_Linux_21.5
 source_files
 qr_code.py
 docs/Doxyfile
+img
+img_qr
+googletest
+pybind11
+testing_pybind11
+QR_Code_generator

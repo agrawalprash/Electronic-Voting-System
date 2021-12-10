@@ -20,7 +20,7 @@ namespace PairingGeneration
 
 // ================================= defines  ===============================
 #define __DEBUG__
-#define __UNIT_TESTING__
+// #define __UNIT_TESTING__
 // #define __INTERACTIVE__
 #define _QR_CODE_
 #define PRINT_PROCEDURE     true
@@ -44,12 +44,12 @@ namespace PairingGeneration
 
 
 // =================================== a1 ===================================
-#define _VOTERS_    100
+#define _VOTERS_    10
 #define _CANDIDATES_ Candidate_List.size()
 // =================================== a1 ===================================
 
 // =================================== BLS ===================================
-#define _ARRAY_SIZE_ 300
+#define _ARRAY_SIZE_ 2000
 // =================================== BLS ===================================
 
 #endif

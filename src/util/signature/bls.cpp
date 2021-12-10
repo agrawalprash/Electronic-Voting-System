@@ -13,7 +13,7 @@ namespace Signature
         element_init_same_as(signature, message);
         
         char c_msg[_ARRAY_SIZE_];
-        element_snprint(c_msg, _ARRAY_SIZE_, message);
+        element_snprintf(c_msg, _ARRAY_SIZE_, "%B", message);
 
         // SHA-256 algorithm
         SHA256 sha256;
@@ -38,7 +38,7 @@ namespace Signature
         element_init_same_as(hash, message);
         
         char c_msg[_ARRAY_SIZE_];
-        element_snprint(c_msg, _ARRAY_SIZE_, message);
+        element_snprintf(c_msg, _ARRAY_SIZE_, "%B", message);
 
         // SHA-256 algorithm
         SHA256 sha256;
