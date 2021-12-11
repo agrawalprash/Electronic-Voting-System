@@ -25,5 +25,7 @@ void generateBallot(int TotalCount)
     cout << "\nVoting Procedure ...\n";
     #endif
 
+    cout << "\e[0m\n";
+
     delete(bt);
 }

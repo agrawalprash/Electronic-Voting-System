@@ -47,8 +47,9 @@ void EVM::ballot_scanning(Ballot *ballot)
     //evm_receipt
     generate_evm();
 
-    populate_bb1();
-    populate_bb2();
+    //Database Population
+    // populate_bb1();
+    // populate_bb2();
 
     element_clear(obf_token);
 }

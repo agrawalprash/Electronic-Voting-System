@@ -72,7 +72,8 @@ shared: all
 	cd $(BUILD);\
 	cmake ..;\
 	make;\
-	cp -r protocol.cpython-38-x86_64-linux-gnu.so ../$(SHARED_LIB)/protocol.cpython-38-x86_64-linux-gnu.so;\
+	cp -r voting.cpython-38-x86_64-linux-gnu.so ../$(SHARED_LIB)/voting.cpython-38-x86_64-linux-gnu.so;\
+	cp -r voting.cpython-38-x86_64-linux-gnu.so ../testing_shared_lib/voting.cpython-38-x86_64-linux-gnu.so;\
 
 clean:
 	$(RM) $(BUILD)

@@ -4,9 +4,16 @@
 #include "encryption/encryption.hpp"
 // #include "qr/qrcode.hpp"
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/numpy.h>
+// #include "pypbc/pypbc.h"
+
+#include <chrono>
+#include <thread>
 
 // #include <boost/python.hpp>
 
+namespace py = pybind11;
 using namespace std;
 
 int func(int n) {
@@ -28,23 +35,27 @@ int func(int n) {
 
 class protocol
 {
-    private:
+    public:
         vector<int> w_m;
         vector<string> candidates;
         int TotalCount;
-    public:
-        protocol(int n = _VOTERS_)
+        
+        protocol(int n)
         {
             PairingGeneration::initialize();
             int TotalCount = n;
             generateBallot(TotalCount);
         }
+        // protocol()
+        // {
+        //     PairingGeneration::initialize();
+        //     int TotalCount = _VOTERS_;
+        //     generateBallot(TotalCount);
+        // }
 
-        int candidate_list(int VoterIndex)
+        int candidate_list_python(int VoterIndex)
         {
             int vote;
-            
-            
             ballot_paper[VoterIndex]->get_w_m_list(w_m);
             ballot_paper[VoterIndex]->get_candidate_list(candidates);
 
@@ -66,12 +77,7 @@ class protocol
             return vote;
         }
 
-        void partial_evm_receipt(int VoterIndex)
-        {
-            partial_evm_receipt(VoterIndex);
-        }
-
-        void candidate_selection(int VoterIndex, int vote)
+        void candidate_selection_python(int VoterIndex, int vote)
         {
             ev->candidate_selection(vote);
             #ifndef __UNIT_TESTING__
@@ -84,15 +90,25 @@ class protocol
                 }
                 cout << "\nVote: " << vote << "\n\n";
             }
-            #endif
+            #endif            
         }
 
-        void evm_vvpr_receipt(int VoterIndex)
+        void partial_evm_receipt_python(int VoterIndex, int Vote)
+        {
+            partial_evm_receipt(VoterIndex, Vote);
+        }
+        
+        void ballot_scanning_python(int VoterIndex)
+        {
+            ballot_scanning_wrapper(VoterIndex);
+        }
+
+        void evm_vvpr_receipt_python(int VoterIndex)
         {
             evm_vvpr_receipt(VoterIndex);
         }
 
-        void voter(int VoterIndex)
+        void voter_receipt_python(int VoterIndex)
         {
             Voter_Receipt* vt_receipt = voter_receipt(VoterIndex);
             vt_receipt_list[VoterIndex] = vt_receipt;
@@ -103,16 +119,36 @@ class protocol
             // else std::cout << "Processed: " << i+1 << "/" << TotalCount  << "\n";
             #endif
         }
-        
 
 };
+
+protocol class_generation(int n)
+{
+    return protocol(n);
+}
+
+// PYBIND11_MODULE(voting, handle) {
+//     handle.doc() = "Pairing Initializing"; // optional module docstring
+//     handle.def("func", &func, "A function which multiplies the number by 10");
+// }
 
 
 PYBIND11_MODULE(voting, handle) {
     handle.doc() = "Pairing Initializing"; // optional module docstring
     handle.def("func", &func, "A function which multiplies the number by 10");
+    handle.def("class_generation", &class_generation, "Protocol class generation");
+    py::class_<protocol>(
+        handle, "protocol").def(py::init<int>())
+        .def("candidate_list", &protocol::candidate_list_python)
+        .def("candidate_selection", &protocol::candidate_selection_python)
+        .def("partial_evm_receipt", &protocol::partial_evm_receipt_python)
+        .def("ballot_scanning", &protocol::ballot_scanning_python)
+        .def("evm_vvpr_receipt", &protocol::evm_vvpr_receipt_python)
+        .def("voter_receipt", &protocol::voter_receipt_python);
+        ;
+        
+    // handle.def("protocol", &protocol, "A function which multiplies the number by 10");
 }
-
 
 int main(int argc, char *argv[])
 {

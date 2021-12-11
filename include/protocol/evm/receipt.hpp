@@ -8,10 +8,12 @@
 #include <string>
 #include <iostream>
 
-extern Ballot* ballot_paper[_VOTERS_+1];
-extern Voter_Receipt* vt_receipt_list[_VOTERS_+1];
+extern Ballot* ballot_paper[_VOTERS_+3];
+extern Voter_Receipt* vt_receipt_list[_VOTERS_+3];
 extern EVM *ev;
 extern int check_vote;
+
+void ballot_scanning_wrapper(int VoterIndex);
 
 void partial_evm_receipt(int VoterIndex, int vote);
 

@@ -26,12 +26,13 @@ include_directories(
     include/protocol/evm
     include/protocol/po
     include/protocol/verif
+    # include/pypbc/
     
 ) # this is so we can #include <gtest/gtest.h>
 
 
 pybind11_add_module(
-    protocol SHARED 
+    voting SHARED 
     # src/QR_Code_generator/QrCode.cpp
     # src/util/io/qr/qrcode.cpp
     main.cpp 
@@ -48,9 +49,10 @@ pybind11_add_module(
     src/protocol/evm/receipt.cpp 
     src/protocol/verif/generate_ballot.cpp 
     src/util/encryption/encryption.cpp
+    # pypbc/pypbc.c
 )
 
-target_link_libraries(protocol PRIVATE pbc gmp)
+target_link_libraries(voting PRIVATE pbc gmp python3.8)
 
 # MACRO(SUBDIRLIST result firstdir curdir)
 #     file(GLOB ENDF6_SRC_TOP RELATIVE

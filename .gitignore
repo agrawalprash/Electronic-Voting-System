@@ -16,3 +16,4 @@ googletest
 pybind11
 testing_pybind11
 QR_Code_generator
+pypbc

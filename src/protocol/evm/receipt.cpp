@@ -2,8 +2,8 @@
 #include "evm/receipt.hpp"
 #include "signature/signature.hpp"
 
-Ballot* ballot_paper[_VOTERS_+1];
-Voter_Receipt* vt_receipt_list[_VOTERS_+1];
+Ballot* ballot_paper[_VOTERS_+3];
+Voter_Receipt* vt_receipt_list[_VOTERS_+3];
 EVM *ev = new EVM();
 int check_vote;
 
@@ -37,7 +37,7 @@ void evm_vvpr_receipt(int VoterIndex)
 
     ev->get_evm_receipt(e_r);
     ev->get_vvpr_receipt(v_r);
-
+    
     #ifndef __UNIT_TESTING__
     if(PRINT_PROCEDURE && !VVPR_ONLY && VoterIndex%REMAINDER_FOR_PRINT==0)
     {
@@ -130,6 +130,11 @@ Voter_Receipt* voter_receipt(int VoterIndex)
     return vt_receipt;
 }
 
+void ballot_scanning_wrapper(int VoterIndex)
+{
+    ev->ballot_scanning(ballot_paper[VoterIndex]);
+}
+
 void procedure(int TotalCount)
 {
     bool error = false;
@@ -189,6 +194,8 @@ void procedure(int TotalCount)
         // else std::cout << "Processed: " << i+1 << "/" << TotalCount  << "\n";
         #endif
     }
+
+    cout << "\e[0m";
 
     #ifndef __UNIT_TESTING__
     for(size_t i=0;i<ev->BB2.size();++i)
