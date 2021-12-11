@@ -136,7 +136,7 @@ void procedure(int TotalCount)
     
     for(int i=0; i < TotalCount; ++i)
     {
-        int vote;        
+        int vote;
         vector<int> w_m;
         vector<string> candidates;
         
