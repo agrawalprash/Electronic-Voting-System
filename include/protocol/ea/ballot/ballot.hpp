@@ -14,6 +14,7 @@ class Ballot
         ~Ballot();
 
         void get_rid(element_t t);
+        void get_r_rid(element_t t);
         void get_c_rid(element_t t);
         void get_c_u(element_t t);
         void get_r_obf_token(element_t t);
@@ -33,8 +34,7 @@ class Ballot
         
         // Ballot id
         element_t rid;
-        // Proves by birthday paradox 
-        // Two ballot id's should not have same rid
+
         element_t c_rid;
         element_t r_rid;
         

@@ -3,9 +3,9 @@
 #include "verif/generate_ballot.hpp"
 #include "encryption/encryption.hpp"
 // #include "qr/qrcode.hpp"
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/numpy.h>
+#include "/home/abhishek/Downloads/e-voting-project_12thDec_1_python_To_cpp/e-voting-project/pybind11/include/pybind11/pybind11.h"
+#include "/home/abhishek/Downloads/e-voting-project_12thDec_1_python_To_cpp/e-voting-project/pybind11/include/pybind11/stl.h"
+#include "/home/abhishek/Downloads/e-voting-project_12thDec_1_python_To_cpp/e-voting-project/pybind11/include/pybind11/numpy.h"
 // #include "pypbc/pypbc.h"
 
 #include <chrono>
@@ -53,71 +53,53 @@ class protocol
         //     generateBallot(TotalCount);
         // }
 
-        int candidate_list_python(int VoterIndex)
+        map<string,string> ballot_paper_python(int VoterIndex)
+        {
+            return ballot_paper_wrapper(VoterIndex);
+        }
+
+        vector<string> candidate_list_python(int VoterIndex)
         {
             int vote;
             ballot_paper[VoterIndex]->get_w_m_list(w_m);
             ballot_paper[VoterIndex]->get_candidate_list(candidates);
 
-            #ifndef __INTERACTIVE__
+            vector<string> list_of_candidates_w_m;
+            for(size_t i=0;i<w_m.size();i++)
+            {
+                string s = candidates[i] + "," + to_string(w_m[i]);
+                list_of_candidates_w_m.push_back(s);
+            }
+
             vote = rand() % _CANDIDATES_;
-            #else
-                for(size_t i=0;i<w_m.size();i++)
-                {
-                    cout << i << ".) " << candidates[i] << ": " << w_m[i] << "\n";
-                }
-                cin >> vote;
-                while(vote > (int)candidates.size())
-                {
-                    cout << "Invalid option: Choose again\n";
-                    cin >> vote;
-                }
-            #endif
-            check_vote = w_m[vote];
-            return vote;
+
+            return list_of_candidates_w_m;
         }
 
         void candidate_selection_python(int VoterIndex, int vote)
         {
             ev->candidate_selection(vote);
-            #ifndef __UNIT_TESTING__
-            if(PRINT_PROCEDURE && VoterIndex%REMAINDER_FOR_PRINT==0)
-            {
-                cout << "\e[1m\n\n========================================= Voter: " << VoterIndex+1 << " =========================================" << endl;
-                for(size_t i=0;i<w_m.size();i++)
-                {
-                    cout << i << ".) " << candidates[i] << ": " << w_m[i] << "\n";
-                }
-                cout << "\nVote: " << vote << "\n\n";
-            }
-            #endif            
+            return;
         }
 
-        void partial_evm_receipt_python(int VoterIndex, int Vote)
+        string partial_evm_receipt_python(int VoterIndex, int Vote)
         {
-            partial_evm_receipt(VoterIndex, Vote);
+            return partial_evm_receipt(VoterIndex, Vote);
         }
         
         void ballot_scanning_python(int VoterIndex)
         {
-            ballot_scanning_wrapper(VoterIndex);
+            return ballot_scanning_wrapper(VoterIndex);
         }
 
-        void evm_vvpr_receipt_python(int VoterIndex)
+        map<string,string> evm_vvpr_receipt_python(int VoterIndex)
         {
-            evm_vvpr_receipt(VoterIndex);
+            return evm_vvpr_receipt(VoterIndex);
         }
 
-        void voter_receipt_python(int VoterIndex)
+        map<string,string> voter_receipt_python(int VoterIndex)
         {
-            Voter_Receipt* vt_receipt = voter_receipt(VoterIndex);
-            vt_receipt_list[VoterIndex] = vt_receipt;
-            
-            #ifndef __UNIT_TESTING__
-            if(VoterIndex == TotalCount - 1)std::cout << "Processed: " << VoterIndex+1 << "/" << TotalCount<<"\n";
-            else std::cout << "Processed: " << VoterIndex+1 << "/" << TotalCount  << "    " << '\r' << flush;
-            // else std::cout << "Processed: " << i+1 << "/" << TotalCount  << "\n";
-            #endif
+            return voter_receipt(VoterIndex);
         }
 
 };

@@ -29,9 +29,9 @@ INCLUDE_PYBIND := -I ./pybind11/include/pybind11/
 PYTHON_H := -I/usr/include/python3.8/
 
 # PBC INCLUDES
-INCLUDE_PBC  := -I$(HOME)/.local/include/pbc 
-LIB_PBC      := -L$(HOME)/.local/lib
-LIB_PBC_PATH := -Wl,-rpath $(HOME)/.local/lib
+INCLUDE_PBC  := -I/usr/local/include/pbc 
+LIB_PBC      := -L/usr/local/lib
+LIB_PBC_PATH := -Wl,-rpath /usr/local/lib
 
 # FILE_TO_RUN
 TARGET        := main
@@ -74,6 +74,8 @@ shared: all
 	make;\
 	cp -r voting.cpython-38-x86_64-linux-gnu.so ../$(SHARED_LIB)/voting.cpython-38-x86_64-linux-gnu.so;\
 	cp -r voting.cpython-38-x86_64-linux-gnu.so ../testing_shared_lib/voting.cpython-38-x86_64-linux-gnu.so;\
+	cp -r voting.cpython-38-x86_64-linux-gnu.so ../app/server/voting.cpython-38-x86_64-linux-gnu.so;\
+	
 
 clean:
 	$(RM) $(BUILD)

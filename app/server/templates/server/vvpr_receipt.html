@@ -1,0 +1,21 @@
+{% load static %}
+<h2 style="text-align:center;">VVPR Receipt</h2>
+<h4 style="text-align:center;">Name: {{vvpr_receipt_name}}</h4>
+{% comment %} <h4 style="text-align:center;">C_vote: {{vvpr_receipt_c_vote}}</h4> {% endcomment %}
+<figure>
+        <img src={% static vvpr_receipt_c_vote %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
+        <figcaption style="text-align:center;"> C_vote </figcaption>
+</figure>
+{% comment %} <img src={% static vvpr_receipt_c_vote %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;"> {% endcomment %}
+{% comment %} <img src={% static vvpr_receipt_c_vote %} alt="C_vote" width="500" height="600"> {% endcomment %}
+<!-- <img src="{% static 'c_vote.png' %}"/ alt="C_vote" width="500" height="600"> -->
+
+<form method="post" action="voter_receipt">
+        {% csrf_token %}
+        <input type="hidden" name="voter_id" value={{voter_id}}>
+        <input type="hidden" name="vvpr_receipt_name" value={{vvpr_receipt_name}}>
+
+        <div style="text-align:center;">
+                <input type="submit">Proceed To Voter Receipt</input>
+        </div>
+</form>

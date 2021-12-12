@@ -50,6 +50,12 @@ void Ballot::get_rid(element_t t)
     element_set(t, rid);
 }
 
+void Ballot::get_r_rid(element_t t)
+{
+    element_init_same_as(t, r_rid);
+    element_set(t, r_rid);
+}
+
 void Ballot::get_c_rid(element_t t)
 {
     element_init_same_as(t, c_rid);

@@ -1,0 +1,31 @@
+{% load static %}
+
+<h2 style="text-align:center;">Voter ID = {{voter_id}}</h2>
+<h3 style="text-align:center;">Ballot Scanning Successfull...</h3>
+{% comment %} <p>{{evm_vvpr_receipt}}</p> {% endcomment %}
+<h2 style="text-align:center;">EVM Receipt</h2>
+<h4 style="text-align:center;">W_m: {{evm_vvpr_receipt.w_m}}</h4>
+{% comment %} <h4 style="text-align:center;">W: {{evm_vvpr_receipt.w}}</h4>
+<h4 style="text-align:center;">r_w: {{evm_vvpr_receipt.r_w}}</h4> {% endcomment %}
+<figure>
+        <img src={% static evm_vvpr_receipt_c_vote %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
+        <figcaption style="text-align:center;"> C_vote </figcaption>
+</figure>
+<figure>
+        <img src={% static w_rw_evm_vvpr_receipt %} alt="W_rw" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
+        <figcaption style="text-align:center;"> w and r_w </figcaption>
+</figure>
+{% comment %} <img src={% static evm_vvpr_receipt_c_vote %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
+<img src={% static w_rw_evm_vvpr_receipt %} alt="W_Rw" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;"> {% endcomment %}
+
+
+<form method="post" action="vvpr_receipt">
+        {% csrf_token %}
+        <input type="hidden" name="voter_id" value={{voter_id}}>
+        <input type="hidden" name="vvpr_receipt_name" value={{evm_vvpr_receipt.name}}>
+        <input type="hidden" name="vvpr_receipt_c_vote" value={{evm_vvpr_receipt.c_vote}}>
+        <div style="text-align:center;">
+                <input type="submit">Proceed To VVPR Receipt</input>
+        </div>
+</form>
+

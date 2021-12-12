@@ -1,0 +1,12 @@
+<h2> Voting Portal </h2>
+{% comment %} <h3> Voter ID = {{voter_id}} </h3> {% endcomment %}
+<form action="candidate" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="voter_id" value={{voter_id}}>
+        {% comment %} <textarea readonly>Your Voter ID is {{voter_id}}</textarea> {% endcomment %}
+        {% for candidate in candidate_list %}
+        <input type="radio" id={{candidate.name}} name="candidate_voted" value={{candidate.original}}>
+        <label for={{candidate.name}}>{{candidate.name}}, {{candidate.id}}</label><br>
+        {% endfor %}
+        <input type="submit">Submit</input>
+</form>

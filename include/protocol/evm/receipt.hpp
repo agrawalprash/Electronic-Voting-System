@@ -4,6 +4,7 @@
 #include "common.hpp"
 #include "ballot/ballot.hpp"
 
+#include <map>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -15,10 +16,10 @@ extern int check_vote;
 
 void ballot_scanning_wrapper(int VoterIndex);
 
-void partial_evm_receipt(int VoterIndex, int vote);
+string partial_evm_receipt(int VoterIndex, int vote);
 
-void evm_vvpr_receipt(int VoterIndex);
+map<string,string> evm_vvpr_receipt(int VoterIndex);
 
-Voter_Receipt* voter_receipt(int VoterIndex);
+map<string,string> voter_receipt(int VoterIndex);
 
 void procedure(int TotalCount);

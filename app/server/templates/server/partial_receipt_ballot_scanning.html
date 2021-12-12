@@ -1,0 +1,18 @@
+{% load static %}
+<h2 style="text-align:center;">Voter ID = {{voter_id}}</h2>
+<h3 style="text-align:center;">Partial EVM Receipt</h3>
+
+<figure>
+        <img src={% static partial_evm_receipt %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
+        <figcaption style="text-align:center;"> C_vote </figcaption>
+</figure>
+
+{% comment %} <img src={% static partial_evm_receipt %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;"> {% endcomment %}
+
+<form method="post" action="evm_vvpr_receipt">
+        {% csrf_token %}
+        <input type="hidden" name="voter_id" value={{voter_id}}>
+        <div style="text-align:center;">
+                <input type="submit">Proceed To Ballot Scanning</input>
+        </div>
+</form>
