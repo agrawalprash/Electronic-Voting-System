@@ -8,12 +8,12 @@ from django.db import models
 MAX_LENGTH = 2000
 MAX_LENGTH_RID = 200
 MAX_LENGTH_NAME = 200
-class BB1(models.Model):
+class Bulletin1(models.Model):
         c_rid = models.CharField(max_length=MAX_LENGTH)
-        c_u = models.CharField(max_length=MAX_LENGTH)
+        c_vote = models.CharField(max_length=MAX_LENGTH)
 
-class BB2(models.Model):
-        rid = models.CharField(max_length=MAX_LENGTH_RID)
+class Bulletin2(models.Model):
+        rid = models.CharField(max_length=MAX_LENGTH_RID,unique=True)
         name = models.CharField(max_length=MAX_LENGTH_NAME)
 
 

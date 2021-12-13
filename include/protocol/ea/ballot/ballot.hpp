@@ -18,6 +18,7 @@ class Ballot
         void get_c_rid(element_t t);
         void get_c_u(element_t t);
         void get_r_obf_token(element_t t);
+        void get_c_obf_token(element_t t);
         void get_obf_token(element_t t);
         void get_total_candidates(int &t);
         void get_obf_token_rem(int &t);

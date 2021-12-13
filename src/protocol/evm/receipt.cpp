@@ -146,13 +146,16 @@ map<string,string> ballot_paper_wrapper(int VoterIndex)
     ballot_paper[VoterIndex]->get_r_rid(t);
     m["r_rid"] = elem_to_string(t);
 
+    ballot_paper[VoterIndex]->get_rid(t);
+    m["rid"] = elem_to_string(t);
+
     ballot_paper[VoterIndex]->get_r_obf_token(t);
     m["r_obf_token"] = elem_to_string(t);
 
     ballot_paper[VoterIndex]->get_c_rid(t);
     m["c_rid"] = elem_to_string(t);
 
-    ballot_paper[VoterIndex]->c_obf_token(t);
+    ballot_paper[VoterIndex]->get_c_obf_token(t);
     m["c_obf_token"] = elem_to_string(t);
 
     element_clear(t);

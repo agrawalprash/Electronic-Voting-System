@@ -2,36 +2,20 @@
 #include "evm/receipt.hpp"
 #include "verif/generate_ballot.hpp"
 #include "encryption/encryption.hpp"
-// #include "qr/qrcode.hpp"
-#include "/home/abhishek/Downloads/e-voting-project_12thDec_1_python_To_cpp/e-voting-project/pybind11/include/pybind11/pybind11.h"
-#include "/home/abhishek/Downloads/e-voting-project_12thDec_1_python_To_cpp/e-voting-project/pybind11/include/pybind11/stl.h"
-#include "/home/abhishek/Downloads/e-voting-project_12thDec_1_python_To_cpp/e-voting-project/pybind11/include/pybind11/numpy.h"
-// #include "pypbc/pypbc.h"
+
+// #include "/home/abhishek/Downloads/e-voting-project/pybind11/include/pybind11/pybind11.h"
+// #include "/home/abhishek/Downloads/e-voting-project/pybind11/include/pybind11/stl.h"
+// #include "/home/abhishek/Downloads/e-voting-project/pybind11/include/pybind11/numpy.h"
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/numpy.h>
 
 #include <chrono>
 #include <thread>
 
-// #include <boost/python.hpp>
-
 namespace py = pybind11;
 using namespace std;
-
-int func(int n) {
-    cout << "It's working!" << endl;
-    return n*10;
-}
-
-
-// initialization, ballot generation
-// Loop over number of voters
-// ballot_paper[i]->get_w_m_list(w_m); ballot_paper[i]->get_candidate_list(candidates);
-// ev->candidate_selection(vote);
-// partial_evm_receipt(i,vote);
-// ev->ballot_scanning(ballot_paper[i]);
-// evm_vvpr_receipt(i);
-// voter_receipt(i)
-
-
 
 class protocol
 {
@@ -46,12 +30,6 @@ class protocol
             int TotalCount = n;
             generateBallot(TotalCount);
         }
-        // protocol()
-        // {
-        //     PairingGeneration::initialize();
-        //     int TotalCount = _VOTERS_;
-        //     generateBallot(TotalCount);
-        // }
 
         map<string,string> ballot_paper_python(int VoterIndex)
         {
@@ -101,7 +79,6 @@ class protocol
         {
             return voter_receipt(VoterIndex);
         }
-
 };
 
 protocol class_generation(int n)
@@ -109,18 +86,13 @@ protocol class_generation(int n)
     return protocol(n);
 }
 
-// PYBIND11_MODULE(voting, handle) {
-//     handle.doc() = "Pairing Initializing"; // optional module docstring
-//     handle.def("func", &func, "A function which multiplies the number by 10");
-// }
-
-
 PYBIND11_MODULE(voting, handle) {
-    handle.doc() = "Pairing Initializing"; // optional module docstring
-    handle.def("func", &func, "A function which multiplies the number by 10");
+    handle.doc() = "E-voting API"; // optional module docstring
     handle.def("class_generation", &class_generation, "Protocol class generation");
-    py::class_<protocol>(
-        handle, "protocol").def(py::init<int>())
+    
+    py::class_<protocol>
+        (handle, "protocol").def(py::init<int>())
+        .def("ballot_paper_details", &protocol::ballot_paper_python)
         .def("candidate_list", &protocol::candidate_list_python)
         .def("candidate_selection", &protocol::candidate_selection_python)
         .def("partial_evm_receipt", &protocol::partial_evm_receipt_python)
@@ -128,8 +100,6 @@ PYBIND11_MODULE(voting, handle) {
         .def("evm_vvpr_receipt", &protocol::evm_vvpr_receipt_python)
         .def("voter_receipt", &protocol::voter_receipt_python);
         ;
-        
-    // handle.def("protocol", &protocol, "A function which multiplies the number by 10");
 }
 
 int main(int argc, char *argv[])
@@ -173,8 +143,6 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-// HTTP Request
-// Apache
 // Django <- Python
 // handlers
 // Make functions interactive

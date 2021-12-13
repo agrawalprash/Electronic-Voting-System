@@ -22,10 +22,11 @@
 <form method="post" action="vvpr_receipt">
         {% csrf_token %}
         <input type="hidden" name="voter_id" value={{voter_id}}>
+        <input type="hidden" name="rid" value={{rid}}>
         <input type="hidden" name="vvpr_receipt_name" value={{evm_vvpr_receipt.name}}>
         <input type="hidden" name="vvpr_receipt_c_vote" value={{evm_vvpr_receipt.c_vote}}>
         <div style="text-align:center;">
-                <input type="submit">Proceed To VVPR Receipt</input>
+                <input type="submit" value="Proceed To VVPR Receipt">
         </div>
 </form>
 

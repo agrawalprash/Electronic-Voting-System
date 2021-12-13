@@ -44,6 +44,12 @@ void Ballot::get_r_obf_token(element_t t)
     element_set(t, r_obf_token);
 }
 
+void Ballot::get_c_obf_token(element_t t)
+{
+    element_init_same_as(t, c_obf_token);
+    element_set(t, c_obf_token);
+}
+
 void Ballot::get_rid(element_t t)
 {
     element_init_same_as(t, rid);

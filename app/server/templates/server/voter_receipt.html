@@ -18,3 +18,9 @@
 </figure>
 
 
+<form method="post" action="index">
+        {% csrf_token %}
+        <div style="text-align:center;">
+                <input type="submit" value="Go to HomePage">
+        </div>
+</form>

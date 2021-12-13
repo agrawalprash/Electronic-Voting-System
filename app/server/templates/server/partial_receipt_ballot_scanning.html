@@ -12,7 +12,8 @@
 <form method="post" action="evm_vvpr_receipt">
         {% csrf_token %}
         <input type="hidden" name="voter_id" value={{voter_id}}>
+        <input type="hidden" name="rid" value={{rid}}>
         <div style="text-align:center;">
-                <input type="submit">Proceed To Ballot Scanning</input>
+                <input type="submit" value="Scan Ballot">
         </div>
 </form>

@@ -14,6 +14,8 @@ extern Voter_Receipt* vt_receipt_list[_VOTERS_+3];
 extern EVM *ev;
 extern int check_vote;
 
+map<string,string> ballot_paper_wrapper(int VoterIndex);
+
 void ballot_scanning_wrapper(int VoterIndex);
 
 string partial_evm_receipt(int VoterIndex, int vote);
