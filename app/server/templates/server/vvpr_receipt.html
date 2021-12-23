@@ -1,21 +1,70 @@
 {% load static %}
-<h2 style="text-align:center;">VVPR Receipt</h2>
-<h4 style="text-align:center;">Name: {{vvpr_receipt_name}}</h4>
-{% comment %} <h4 style="text-align:center;">C_vote: {{vvpr_receipt_c_vote}}</h4> {% endcomment %}
-<figure>
-        <img src={% static vvpr_receipt_c_vote %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
-        <figcaption style="text-align:center;"> C_vote </figcaption>
-</figure>
-{% comment %} <img src={% static vvpr_receipt_c_vote %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;"> {% endcomment %}
-{% comment %} <img src={% static vvpr_receipt_c_vote %} alt="C_vote" width="500" height="600"> {% endcomment %}
-<!-- <img src="{% static 'c_vote.png' %}"/ alt="C_vote" width="500" height="600"> -->
 
-<form method="post" action="voter_receipt">
-        {% csrf_token %}
-        <input type="hidden" name="voter_id" value={{voter_id}}>
-        <input type="hidden" name="vvpr_receipt_name" value={{vvpr_receipt_name}}>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
 
-        <div style="text-align:center;">
-                <input type="submit" value="Voter Receipt">
-        </div>
-</form>
+<body>
+
+
+<h2 style="text-align:center;"> Voting Portal </h2>
+
+<div class="container">
+        <div class="row">
+                <div class="col-sm-6">
+                        <h2> Voter ID = {{voter_id}} </h2>
+                        <h2 style="font-weight: bold;"> Ballot Paper</h2>
+                        {% for candidate in candidate_list %}
+                        <label for={{candidate.name}}>{{candidate.name}}, {{candidate.id}}</label><br>
+                        {% endfor %}
+                        <div class="row">
+                                <div class="col-sm-6">
+                                        <figure>
+                                                <img src={% static left_qr %} alt="left_qr" width="150" height="150">
+                                                <figcaption> Ballot Secrets </figcaption>
+                                        </figure>
+                                </div>
+
+                                <div class="col-sm-6">
+                                        <figure>
+                                                <img src={% static right_qr %} alt="right_qr" width="150" height="150">
+                                                <figcaption> C_rid and C_obf </figcaption>
+                                        </figure>                                        
+                                </div>
+                                
+                        </div>
+
+                        
+                </div>
+
+                <div class="col-sm-6" style="text-align:center; padding:50px">
+                        <h2 style="font-weight: bold;"> VVPR Receipt </h2>
+                        <h3 style="text-align:center; font-weight: bold;">Name: {{vvpr_receipt_name}}</h3>
+                        <figure>
+                                <img src={% static vvpr_receipt_c_vote %} alt="C_vote" width="150" height="150" style="display:block;margin-left:auto;margin-right:auto;">
+                                <figcaption> C_vote </figcaption>
+                        </figure>
+
+                        <form method="post" action="voter_receipt">
+                                {% csrf_token %}
+                                <input type="hidden" name="voter_id" value={{voter_id}}>
+                                <input type="hidden" name="vvpr_receipt_name" value={{vvpr_receipt_name}}>
+                        
+                                <div style="text-align:center; padding:50px">
+                                        <input type="submit" value="Voter Receipt">
+                                </div>
+                        </form>                        
+
+                </div>
+        </div>  
+</div>
+
+</body>
+</html>

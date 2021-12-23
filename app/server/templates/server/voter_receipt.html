@@ -1,26 +1,78 @@
 {% load static %}
-<h2 style="text-align:center;">Voter ID = {{voter_id}}</h2>
 
-<h2 style="text-align:center;">Voter Receipt</h2>
-<h4 style="text-align:center;">W_m: {{w_m}}</h4>
-<figure>
-        <img src={% static c_vote %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
-        <figcaption style="text-align:center;"> C_vote </figcaption>
-</figure>
-<figure>
-        <img src={% static w_rm %} alt="W_rw" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
-        <figcaption style="text-align:center;"> w and r_w </figcaption>
-</figure>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
 
-<figure>
-        <img src={% static c_rid_cu %} alt="C_rid_Cu" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
-        <figcaption style="text-align:center;"> C_rid and C_u </figcaption>
-</figure>
+<body>
 
+<h2 style="text-align:center;"> Voting Portal </h2>
 
-<form method="post" action="index">
-        {% csrf_token %}
-        <div style="text-align:center;">
-                <input type="submit" value="Go to HomePage">
-        </div>
-</form>
+<div class="container">
+        <div class="row">
+                <div class="col-sm-6">
+                        <h2> Voter ID = {{voter_id}} </h2>
+                        <h2 style="font-weight: bold;"> Ballot Paper</h2>
+                        {% for candidate in candidate_list %}
+                        <label for={{candidate.name}}>{{candidate.name}}, {{candidate.id}}</label><br>
+                        {% endfor %}
+                        <div class="row">
+                                <div class="col-sm-6">
+                                        <figure>
+                                                <img src={% static left_qr %} alt="left_qr" width="150" height="150">
+                                                <figcaption> Ballot Secrets </figcaption>
+                                        </figure>
+                                </div>
+
+                                <div class="col-sm-6">
+                                        <figure>
+                                                <img src={% static right_qr %} alt="right_qr" width="150" height="150">
+                                                <figcaption> C_rid and C_obf </figcaption>
+                                        </figure>                                        
+                                </div>
+                                
+                        </div>
+
+                        
+                </div>
+
+                <div class="col-sm-6" style="text-align:center;">
+                        <h2 style="font-weight: bold;"> Voter Receipt </h2>
+                        <h3 style="text-align:center; font-weight: bold;">W_m: {{w_m}}</h3>
+                        
+                        <figure>
+                                <img src={% static w_rm %} alt="W_rw" width="150" height="150" style="display:block;margin-left:auto;margin-right:auto;">
+                                <figcaption style="text-align:center;"> w and r_w </figcaption>
+                        </figure>
+                        
+                        <figure style="padding:10px">
+                                <img src={% static c_vote %} alt="C_vote" width="150" height="150" style="display:block;margin-left:auto;margin-right:auto;">
+                                <figcaption style="text-align:center;"> C_vote </figcaption>
+                        </figure>
+                        
+                        <figure>
+                                <img src={% static c_rid_cu %} alt="C_rid_Cu" width="150" height="150" style="display:block;margin-left:auto;margin-right:auto;">
+                                <figcaption style="text-align:center;"> C_rid and C_u </figcaption>
+                        </figure>
+                        
+
+                        <form method="post" action="index">
+                                {% csrf_token %}
+                                <div style="text-align:center; padding:40px">
+                                        <input type="submit" value="Go to HomePage">
+                                </div>
+                        </form>                 
+
+                </div>
+        </div>  
+</div>
+
+</body>
+</html>

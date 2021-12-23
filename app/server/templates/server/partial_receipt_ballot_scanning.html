@@ -1,19 +1,67 @@
 {% load static %}
-<h2 style="text-align:center;">Voter ID = {{voter_id}}</h2>
-<h3 style="text-align:center;">Partial EVM Receipt</h3>
 
-<figure>
-        <img src={% static partial_evm_receipt %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;">
-        <figcaption style="text-align:center;"> C_vote </figcaption>
-</figure>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
 
-{% comment %} <img src={% static partial_evm_receipt %} alt="C_vote" width="300" height="300" style="display:block;margin-left:auto;margin-right:auto;"> {% endcomment %}
+<body>
 
-<form method="post" action="evm_vvpr_receipt">
-        {% csrf_token %}
-        <input type="hidden" name="voter_id" value={{voter_id}}>
-        <input type="hidden" name="rid" value={{rid}}>
-        <div style="text-align:center;">
-                <input type="submit" value="Scan Ballot">
-        </div>
-</form>
+<h2 style="text-align:center;"> Voting Portal </h2>
+
+<div class="container">
+        <div class="row">
+                <div class="col-sm-6">
+                        <h2> Voter ID = {{voter_id}} </h2>
+                        <h2 style="font-weight: bold;"> Ballot Paper</h2>
+                        {% for candidate in candidate_list %}
+                        <label for={{candidate.name}}>{{candidate.name}}, {{candidate.id}}</label><br>
+                        {% endfor %}
+                        <div class="row">
+                                <div class="col-sm-6">
+                                        <figure>
+                                                <img src={% static left_qr %} alt="left_qr" width="150" height="150">
+                                                <figcaption> Ballot Secrets </figcaption>
+                                        </figure>
+                                </div>
+
+                                <div class="col-sm-6">
+                                        <figure>
+                                                <img src={% static right_qr %} alt="right_qr" width="150" height="150">
+                                                <figcaption> C_rid and C_obf </figcaption>
+                                        </figure>                                        
+                                </div>
+                                
+                        </div>
+
+                        
+                </div>
+
+                <div class="col-sm-6" style="text-align:center; padding:50px">
+                        <h2 style="font-weight: bold;"> Partial EVM Receipt </h2>
+                        <figure>
+                                <img src={% static partial_evm_receipt %} alt="C_vote" width="150" height="150" style="display:block;margin-left:auto;margin-right:auto;">
+                                <figcaption> C_vote </figcaption>
+                        </figure>
+
+                        <form method="post" action="evm_vvpr_receipt">
+                                {% csrf_token %}
+                                <input type="hidden" name="voter_id" value={{voter_id}}>
+                                <input type="hidden" name="rid" value={{rid}}>
+                                <div style="text-align:center; padding:50px">
+                                        <input type="submit" value="Scan Ballot">
+                                </div>
+                        </form> 
+
+                </div>
+        </div>  
+</div>
+
+</body>
+</html>
