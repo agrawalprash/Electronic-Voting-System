@@ -14,7 +14,8 @@ def get_candidate(voter_id):
     return candidates 
 
 def index(request):
-    return HttpResponse("Welcome to Voting Booth")
+    # return HttpResponse("Welcome to Voting Booth")
+    return HttpResponse("Thank You for Voting")
 
 def voter(request):
     if request.method == "POST":

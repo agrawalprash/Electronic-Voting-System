@@ -33,7 +33,7 @@ class EVM
         element_t c_rid;
         element_t rid;
         element_t r_u;
-        element_t r_w;        
+        element_t r_w;
         element_t w;
 
         // Selected Candidate

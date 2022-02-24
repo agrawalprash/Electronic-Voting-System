@@ -2,7 +2,7 @@ from . import voting
 import re
 import qrcode
 
-TOTAL_COUNT = 5
+TOTAL_COUNT = 10
 
 m = voting.class_generation(TOTAL_COUNT)
 

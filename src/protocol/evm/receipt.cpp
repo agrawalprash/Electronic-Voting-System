@@ -54,7 +54,7 @@ map<string,string> evm_vvpr_receipt(int VoterIndex)
 }
 
 map<string,string> voter_receipt(int VoterIndex)
-{    
+{
     Voter_Receipt* vt_receipt = new Voter_Receipt();
     ev->get_voter_receipt(vt_receipt);
     ballot_paper[VoterIndex]->get_c_rid(vt_receipt->c_rid);
@@ -68,7 +68,7 @@ map<string,string> voter_receipt(int VoterIndex)
     m["r_w"]    = elem_to_string(vt_receipt->r_w);
     m["c_vote"] = elem_to_string(vt_receipt->c_vote);
     m["c_rid"]  = elem_to_string(vt_receipt->c_rid);
-    
+
     return m;
 
     element_t private_key;
