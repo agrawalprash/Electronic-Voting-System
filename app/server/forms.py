@@ -1,4 +1,6 @@
+from dataclasses import field
 from django import forms
+from .models import UploadImage
 
 
 class Voterform(forms.Form):
@@ -11,3 +13,9 @@ class Voterform(forms.Form):
 #                 self.candidate_list = candidate_list
 #                 self.wm = candidate_wm
 #         voting = forms.ChoiceField(choices=[(self.candidate_list[i],str(self.wm[i])) for i in range(len(self.candidate_list))])
+
+
+class UserImageForm(forms.ModelForm):
+        class Meta:
+                model = UploadImage
+                fields = '__all__'

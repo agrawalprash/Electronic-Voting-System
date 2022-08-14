@@ -78,6 +78,7 @@ TEST(Commitment, Equality)
         element_t commitment, g, msg, h, ran;
         pg->generator_G1(g);
         pg->generator_G2(h);
+        //pg->generator_G1(g);
 
         pg->random_Zr(msg);
         pg->random_Zr(ran);

@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 # from .common_imports import *
 
@@ -16,4 +17,8 @@ class Bulletin2(models.Model):
         rid = models.CharField(max_length=MAX_LENGTH_RID,unique=True)
         name = models.CharField(max_length=MAX_LENGTH_NAME)
 
-
+class UploadImage(models.Model):
+        image = models.ImageField(upload_to='images')
+        def __str__(self):
+                return self.image.name
+  

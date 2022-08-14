@@ -6,6 +6,7 @@
 #include "evm/voter_receipt.hpp"
 #include "evm/bb1_element.hpp"
 #include "evm/bb2_element.hpp"
+#include "evm/rvote_element.hpp"
 
 class EVM
 {
@@ -22,9 +23,16 @@ class EVM
         void candidate_selection(int vote);
         void ballot_scanning(Ballot *ballot);
 
+        void populate_bb1();
+        void populate_bb2();
+        void populate_rvote();
+
         // Bulletin Board
         vector<BB1_element> BB1;
         vector<BB2_element> BB2;
+
+        //R_vote values for EA backend
+        vector<Rvote_element> R_vote;
 
     private:
 
@@ -49,6 +57,4 @@ class EVM
         // Private functions
         void generate_vvpr();
         void generate_evm();
-        void populate_bb1();
-        void populate_bb2();
 };

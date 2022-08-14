@@ -18,8 +18,9 @@ include_directories(
     include/util/encryption
     include/util/signature
     include/util/hash
-    include/QR_Code_generator
-    include/util/io/qr
+    include/util/zk
+    # include/QR_Code_generator
+    # include/util/io/qr
     include/protocol
     include/protocol/ea
     include/protocol/ea/ballot
@@ -42,14 +43,19 @@ pybind11_add_module(
     src/util/bilinear-mapping/bilinear_mapping.cpp 
     src/util/signature/bls.cpp 
     src/util/hash/sha256.cpp
-    
+    src/util/zk/set_membership_zkp.cpp
+    src/util/zk/reverse_set_membership.cpp
+    src/util/zk/forwardZKPfolder/prover_f.cpp
+    src/util/zk/forwardZKPfolder/verifier_f.cpp
+    src/util/zk/reverseZKPfolder/prover_r.cpp
+    src/util/zk/reverseZKPfolder/verifier_r.cpp
     src/protocol/evm/evm.cpp 
     src/protocol/ea/ballot/ballot.cpp 
     src/util/common.cpp 
     src/protocol/evm/receipt.cpp 
     src/protocol/verif/generate_ballot.cpp 
-    src/util/encryption/encryption.cpp
     # pypbc/pypbc.c
+    src/util/encryption/encryption.cpp
 )
 
 target_link_libraries(voting PRIVATE pbc gmp python3.8)

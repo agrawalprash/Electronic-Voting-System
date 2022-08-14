@@ -7,6 +7,7 @@
 #include "helper_functions.hpp"
 #include "bilinear-mapping/bilinear_mapping.hpp"
 #include "commitment/commitment.hpp"
+#include "zk/set_membership_zkp.h"
 
 extern Pairing* pg;
 extern std::vector<std::string> Candidate_List;

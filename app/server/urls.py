@@ -10,4 +10,6 @@ urlpatterns = [
 	path('index',views.index,name='index'),
 	path('',views.voter,name="voter"),
 	# path('', views.index, name='index'),
+	path('bb1',views.bb1, name='bb1'),
+	path('bb2',views.bb2, name='bb2')
 ]

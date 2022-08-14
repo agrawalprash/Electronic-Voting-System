@@ -11,10 +11,153 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
+<style>
+        body {
+                font-family: 'Nunito Sans','Courier New', Courier, monospace;
+                margin: 0px;
+        } 
+        .header {
+                background-color: lightgreen;
+                padding: 1.5%;
+                box-shadow: 0 2px 4px 0 rgba(0,0, 0, 0.1);
+                font-size: 150%;
+        }
+        .ballotdre {
+                margin: 5%;
+                display: flex;
+        }
+        .left_right_ballot {
+                display: flex;
+        }
+        .ballot, .dre {
+                box-shadow: 0 2px 7px 0 rgba(0,0, 0, 0.1);
+                /* margin: 10%; */
+                float: left;
+                width: 50%;
+        }
+        
+        /* .crid-cobs, .ballot-secrets{
+                float:left;
+                width: 50%;     
+        } */
+        .leftballot, .rightballot {
+                float: left;
+                width: 50%;
+        }
+        .leftballot {
+                border-right: 1px dotted black;
+        }
+        .submitbutton {
+                font-family: 'Nunito Sans';
+                padding: 1%;
+                width: 95%;
+                margin: 3%;
+                background-color: lightgreen;
+        }
+        .ballot-secrets {
+                size: 60%;
+        }
+</style>
+
 <body>
 
+<!--
 <h2 style="text-align:center;"> Voting Portal </h2>
+-->
 
+<nav class="header">
+        <!--This is the nav bar-->
+        <span>Voting Portal</span>
+        <span style="position: absolute; right: 2px;">ID {{voter_id}}</span>
+</nav>
+
+<div class="ballotdre">
+        <div class="dre" style="text-align: center;">
+                <div style="padding: 3%; background-color: lightgreen; width: 100%" >DRE</div>
+                <form id="list-candidates" action="candidate" method="post" style="display:block;text-align:center;">
+                        {% csrf_token %}
+                        <input type="hidden" name="voter_id" value={{voter_id}}>
+                        <input type="hidden" name="rid" value={{rid}}>
+                        {% comment %} <textarea readonly>Your Voter ID is {{voter_id}}</textarea> {% endcomment %}
+                        <div style="margin: 3%;">
+                                <div style="text-align: center;">Choose your vote</div>
+                                        {% for candidate in candidate_list %}
+                                        <!-- <div style="display: flex;" >
+                                                <div style="float: left; width: 50%; border: black solid 1px;">
+                                                        <div style="margin: 2%;">
+                                                                <label for={{candidate.name}}>W_m: {{candidate.id}}</label><br>
+                                                        </div>
+                                                </div>
+                                                <div style="float: left; width: 50%; border: black solid 1px;">
+                                                        <div style="margin: 2%; background-color: cyan;">        
+                                                                <input type="radio" id={{candidate.name}} name="candidate_voted" value={{candidate.original}}>
+                                                                Vote
+                                                        </div>
+                                                </div>
+
+                                        </div> -->
+                                        <span style="border: 1px solid gray; border-radius: 4px; background-color: lightgray; margin: 1%;">
+                                                <input type="radio" id={{candidate.name}} name="candidate_voted" value={{candidate.original}}>
+                                                <label for={{candidate.name}}>{{candidate.id}}</label> &nbsp;
+                                        </span>
+                                        {% endfor %}
+                                </select>
+                        </div>
+                        
+                        
+                        <input type="submit" value="Vote" class="submitbutton">
+                        
+                        <div class="instructions">
+                                Choose the candidate from the list and click on vote to cast your vote.
+                        </div>
+                        
+                </form>
+        </div>
+        <div class="ballot" style="text-align: center;">
+                <div style="padding: 3%; background-color: lightgreen; width: 100%" >Ballot Paper</div>
+                <div class="left_right_ballot">
+                        <div class="leftballot">
+                                <div style="padding: 10%; background-color: lightgray; width: 100%"></div>
+                                <div style="display: flex; padding: 3%;">
+                                        <div style="float: right; width: 50%;">
+                                                <label><i>w_m</i></label>
+                                        </div>
+                                        <div style="float: left; width: 50%;">
+                                                <label>Candidate</label>
+                                        </div>
+                                </div>
+                                <hr style="width: 80%; color: black; margin-top: 0%; margin-bottom: 0%;">
+                                {% for candidate in candidate_list %}
+                                <div style="display: flex;">
+                                        <div style="float: right; width: 50%;">
+                                                <label for="{{candidate.id}}">{{candidate.id}}</label>
+                                        </div>
+                                        <div style="float: left; width: 50%;">
+                                                <label for="{{candidate.name}}">{{candidate.name}}</label>
+                                        </div>
+                                </div>
+                                
+                                <!-- <label for={{candidate.name}}>{{candidate.name}}, {{candidate.id}}</label><br> -->
+                                {% endfor %}
+                        </div>
+                        <div class="rightballot">
+                                <div style="padding: 10%; background-color: lightgray; width: 100%"></div>
+                                <figure class="ballot-secrets">
+                                        <img src={% static ballot_qr %} alt="ballot_qr" width="80%" style="margin-top: 3%;">
+                                        <figcaption> Ballot Secrets </figcaption>
+                                </figure>
+                                <!-- <figure class="crid-cobs">
+                                        <img src={% static right_qr %} alt="right_qr" width="150" height="150">
+                                        <figcaption> C_rid and C_obf </figcaption>
+                                </figure>  -->
+                        </div>
+                </div>
+        </div>
+        
+</div>                  
+
+                
+<!--
 <div class="container">
         <div class="row">
                 <div class="col-sm-6">
@@ -58,6 +201,9 @@
                 </div>
         </div>  
 </div>
+--> 
+
+
 
 </body>
 </html>

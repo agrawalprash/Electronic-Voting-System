@@ -1,6 +1,9 @@
 from . import voting
 import re
 import qrcode
+from qrtools.qrtools import QR
+import zbar
+import cv2
 
 TOTAL_COUNT = 10
 

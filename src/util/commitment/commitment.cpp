@@ -39,6 +39,7 @@ namespace Commitment
         element_t t1,t2;
         pairing->generator_G1(t1);
         pairing->generator_G2(t2);
+        //pairing->generator_G1(t2);
         
         commit(Commitment, t1, msg, t2, r);
 

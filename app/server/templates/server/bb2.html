@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Voting Portal</title>
+        <link href="https://fonts.googleapis.com/css?family=Nunito Sans" rel="stylesheet">
+        <link rel = "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+</head>
+<style>
+        body {
+                font-family: 'Nunito Sans','Courier New', Courier, monospace;
+                margin: 0px;
+        } 
+        .header {
+                background-color: lightgreen;
+                padding: 1.5%;
+                box-shadow: 0 2px 4px 0 rgba(0,0, 0, 0.1);
+                font-size: 150%;
+        }
+        .login-box {
+                border: 1px;
+                box-shadow: 0 0 4px #000000;
+                margin-top: 8%;
+                margin-left: 30%;
+                margin-right: 30%
+        }
+        .buttonclass {
+                font-family: 'Nunito Sans';
+                font-size: 130%;
+                padding: 2%;
+                width: 70%;
+                background-color: lightgreen;
+        }
+</style>
+<body>
+
+        
+        <nav class="header">
+                <!--This is the nav bar-->
+                <span>Voting Portal</span>
+        </nav>
+        
+        <div class="login-box">
+                <!-- This is the user login blox -->
+                <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div style="opacity: 0.5;text-align: center; padding: 7%">
+                                Reverse Set Membership ZKP Verification.
+                        </div>
+                        <!-- <div style="font-family: 'Nunito Sans'; text-align: center; padding: 2%; font-size: 130%;">
+                                {{ form }} 
+                        </div> -->
+                        <div style="padding-top: 7%; padding-bottom: 5%; text-align: center;">
+                                <button class="buttonclass" type="submit">Submit</button>
+                        </div>
+                        <!-- <div style="opacity: 0.5;text-align: center; padding: 7%">
+                                Bullentin Board 2 Verification. Upload qrcode
+                        </div>
+                        <div style="text-align: center; background: gray; padding: 0.5em; margin-left: 2%; margin-right: 2%">
+                                <input type="file" id="bb2qrcode" name="qrcode_filename" />
+                        </div>
+                        <div style="padding-top: 7%; padding-bottom: 5%; text-align: center;">
+                                <button class="buttonclass" type="submit">Submit</button>
+                        </div> -->
+                </form>
+        </div>
+         
+</body>
+</html>
+
+<!-- <form method="post">
+        {% csrf_token %}
+        <h1> {{ voter_form }} </h1>
+        <button type="submit">Submit</button>
+</form> -->

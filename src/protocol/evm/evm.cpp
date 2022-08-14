@@ -4,18 +4,19 @@ EVM::EVM()
 {
     BB1.clear();
     BB2.clear();
+    R_vote.clear();
 }
 
 void EVM::candidate_selection(int vote_)
 {
     pg->random_Zr(r_vote);
     vote = vote_;
-
+    cout << "The voted candidate is "<< vote <<endl;
     element_t temp;
     element_init_same_as(temp, r_vote);
     element_set_si(temp, vote_);
     Commitment::commit(c_vote, temp, r_vote, pg);
-
+    cout<< "r_val is: "<< r_vote <<endl;
     element_clear(temp);
 }
 
@@ -76,25 +77,38 @@ void EVM::generate_vvpr()
 
 void EVM::populate_bb1()
 {
-    BB1_element *bb1_ = new BB1_element();
-    element_init_same_as(bb1_->c_rid, c_rid);
-    element_set(bb1_->c_rid, c_rid);
 
-    element_init_same_as(bb1_->c_vote, c_vote);
-    element_set(bb1_->c_vote, c_vote);
-    BB1.push_back(*bb1_);
-    delete(bb1_);
+    cout<<"This function ran for population"<<endl;
+
+    BB1_element *bb1 = new BB1_element();
+    element_init_same_as(bb1->c_rid, c_rid);
+    element_set(bb1->c_rid, c_rid);
+
+    element_init_same_as(bb1->c_vote, c_vote);
+    element_set(bb1->c_vote, c_vote);
+    BB1.push_back(*bb1);
+    delete(bb1);
 }
 
 void EVM::populate_bb2()
 {
-    BB2_element* bb2_ = new BB2_element();
-    element_init_same_as(bb2_->rid, rid);
-    element_set(bb2_->rid, rid);
+    BB2_element* bb2 = new BB2_element();
+    element_init_same_as(bb2->rid, rid);
+    element_set(bb2->rid, rid);
 
-    bb2_->candidate = Candidate_List[vote];
-    BB2.push_back(*bb2_);
-    delete(bb2_);
+    bb2->candidate = Candidate_List[vote];
+    BB2.push_back(*bb2);
+    delete(bb2);
+}
+
+void EVM::populate_rvote()
+{
+    Rvote_element* rv = new Rvote_element();
+    element_init_same_as(rv->r_vote, r_vote);
+    element_set(rv->r_vote, r_vote);
+
+    R_vote.push_back(*rv);
+    delete(rv);
 }
 
 void EVM::get_vvpr_receipt(VVPR_Receipt* t)

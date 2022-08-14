@@ -8,9 +8,6 @@ namespace PairingGeneration
     void initialize()
     {
         pg = new Pairing("a", RBITS, QBITS);
-        Candidate_List = {"Alice", "Bob", "Carrol", "David", "Eve", "Jade", 
-                            "Harry", "Kristen", "Lacey", "Pablo", "Pacey", 
-                            "Rachel", "Radley", "Rafael", "Ragnarok", "Sabina", "Sachi",
-                            "Sally" };
+        Candidate_List = {"Alice", "Bob", "Carrol", "David", "Eve"};
     }
 }

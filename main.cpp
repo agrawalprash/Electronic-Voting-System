@@ -3,13 +3,13 @@
 #include "verif/generate_ballot.hpp"
 #include "encryption/encryption.hpp"
 
-// #include "/home/abhishek/Downloads/e-voting-project/pybind11/include/pybind11/pybind11.h"
-// #include "/home/abhishek/Downloads/e-voting-project/pybind11/include/pybind11/stl.h"
-// #include "/home/abhishek/Downloads/e-voting-project/pybind11/include/pybind11/numpy.h"
+#include "/home/varuncomputer/Desktop/e-voting-project/pybind11/include/pybind11/pybind11.h"
+#include "/home/varuncomputer/Desktop/e-voting-project/pybind11/include/pybind11/stl.h"
+#include "/home/varuncomputer/Desktop/e-voting-project/pybind11/include/pybind11/numpy.h"
 
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/numpy.h>
+// #include <pybind11/pybind11.h>
+// #include <pybind11/stl.h>
+// #include <pybind11/numpy.h>
 
 #include <chrono>
 #include <thread>
@@ -79,6 +79,17 @@ class protocol
         {
             return voter_receipt(VoterIndex);
         }
+
+        //adding new functionality forwardZKP
+        bool forwardZeroKP_python()
+        {
+            return forwardZeroKP();
+        }
+        //adding new functionality reverseZKP
+        bool reverseZeroKP_python()
+        {
+            return reverseZeroKP();
+        }
 };
 
 protocol class_generation(int n)
@@ -98,7 +109,9 @@ PYBIND11_MODULE(voting, handle) {
         .def("partial_evm_receipt", &protocol::partial_evm_receipt_python)
         .def("ballot_scanning", &protocol::ballot_scanning_python)
         .def("evm_vvpr_receipt", &protocol::evm_vvpr_receipt_python)
-        .def("voter_receipt", &protocol::voter_receipt_python);
+        .def("voter_receipt", &protocol::voter_receipt_python)
+        .def("forwardZeroKP", &protocol::forwardZeroKP_python) // adding forward ZKP
+        .def("reverseZeroKP", &protocol::reverseZeroKP_python) // addition reverse ZKP
         ;
 }
 
